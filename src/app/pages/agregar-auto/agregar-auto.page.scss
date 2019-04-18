@@ -1,0 +1,32 @@
+.mainSlide, .mainSlide ion-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.img-tipo {
+    width: 120px;
+}
+
+.pick-tipo_vehiculo {
+    width: 80px;
+    opacity: 0.3;
+}
+
+.pick-tipo_vehiculo-seleccionado {
+    transition: opacity 0.5s linear;
+    opacity: 1 !important;
+}
+
+.pick-color {
+    width: 80px;
+    opacity: 0.3;
+}
+
+.pick-color-seleccionado {
+    transition: opacity 0.5s linear;
+    opacity: 1 !important;
+}
+
+.img-color {
+    width: 40px;
+}

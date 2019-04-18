@@ -1,0 +1,70 @@
+<ion-header no-border>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button text=""  defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button>
+          <img slot="start" src = "/assets/iconos/notificacion.png">
+        </ion-button>
+      </ion-buttons>
+      <ion-title class="md title-android">
+        Historial
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content color="secondary">
+    <p style="color:#3277D8; margin: 16px;">Toca para más información</p>
+    <ion-card style="background-color: #FFFFFF" (click)="pushDetalleLavado()">
+        <ion-grid>
+            <ion-row>
+              <ion-col size="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
+                  <ion-item  lines="none">
+                      <ion-icon  name="pin" slot="start"></ion-icon>
+                      <ion-label style="font-size: 14px;margin-right: 0px;">16th Avenue, 4th Cross Street, Chennai</ion-label>
+                  </ion-item>
+                  <ion-item lines="none" style="margin-top:5%">
+                      <ion-card-subtitle color="primary">Lavado por:</ion-card-subtitle>
+                      <ion-label style="font-size: 14px;margin:0px; padding: 10px 0px 14px 10px"> Didier Ramirez</ion-label>
+                  </ion-item>
+              </ion-col>
+              <ion-col size="4" size-lg="5" size-md="5" size-sm="5" size-xs="5">
+                  <ion-item lines="none">
+                      <ion-label style="font-size: 14px;">01 May 2018</ion-label>
+                  </ion-item>
+                  <ion-item lines="none">
+                      <ion-label style="color:#28A745;font-size: 14px;margin-top: 20px;">Hecho</ion-label>
+                    </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+    
+      </ion-card>
+      <ion-card style="background-color: #FFFFFF" (click)="pushDetalleLavado()">
+          <ion-grid>
+              <ion-row>
+                <ion-col size="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
+                    <ion-item lines="none">
+                        <ion-icon  name="pin" slot="start"></ion-icon>
+                        <ion-label style="font-size: 14px;margin-right: 0px;">16th Avenue, 4th Cross Street, Chennai</ion-label>
+                    </ion-item>
+                    <ion-item lines="none" style="margin-top:5%">
+                        <ion-card-subtitle color="primary">Lavado por:</ion-card-subtitle>
+                        <ion-label style="font-size: 14px;margin:0px; padding: 10px 0px 14px 10px"> Didier Ramirez</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="4" size-lg="5" size-md="5" size-sm="5" size-xs="5">
+                    <ion-item lines="none">
+                        <ion-label style="font-size: 14px;">01 May 2018</ion-label>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label style="color:#FF4E3A;font-size: 14px;margin-top: 20px;">Cancelado</ion-label>
+                      </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+      
+        </ion-card>
+  
+</ion-content>

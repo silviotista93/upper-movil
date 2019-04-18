@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -11,29 +11,49 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
+      title: 'Solicitar Servicio',
       url: '/home',
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
+      title: 'Subscripciones',
+      url: '/subscripcion',
+      icon: 'subscripcion'
+    },
+    {
+      title: 'Historial',
+      url: '/historial',
+      icon: 'historial'
+    },
+    {
+      title: 'Mis Autos',
+      url: '/autos',
+      icon: 'autos'
+    },
+    {
+      title: 'Contacto',
+      url: '/contacto',
+      icon: 'contacto'
+    },
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private navCtrl: NavController
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
     });
+  }
+
+  pushPerfil() {
+    this.navCtrl.navigateForward('/cuenta');
   }
 }
