@@ -50,7 +50,8 @@ export class LoginPage implements OnInit {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
       console.log('no hay acceso');
-      this.uiService.alertInfo('Usuario y contraseña incorrectas.');
+      //this.uiService.alertInfo('Usuario y contraseña incorrectas.');
+      this.uiService.presentToast('Usuario y contraseña incorrectas');
     }
   }
 
