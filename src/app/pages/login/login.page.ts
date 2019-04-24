@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { IonSlides, NavController, MenuController, LoadingController } from '@ionic/angular';
 import { UserService } from '../../service/user.service';
 import { UiServiceService } from '../../service/ui-service.service';
+import { Usuario } from '../../interfaces/interfaces';
 
 
 @Component({
@@ -17,6 +18,13 @@ export class LoginPage implements OnInit {
     email: '',
     password: ''
   };
+  registerUser: Usuario = {
+    email: 'didier@gmail.com',
+    name: 'Didier',
+    last_name: 'Ramirez',
+    phone_1: '3123121231',
+  };
+
   constructor(
     private userService: UserService,
     private navCtrl: NavController,
@@ -32,8 +40,8 @@ export class LoginPage implements OnInit {
   // LOGICA DE FORMULARIO LOGIN
   async login(fLogin: NgForm) {
     console.log(fLogin.valid);
-    
-    // CREACION DEL LOADING 
+
+    // CREACION DEL LOADING
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
@@ -41,7 +49,7 @@ export class LoginPage implements OnInit {
 
     if (fLogin.invalid) { return; }
     const validated = await this.userService.login(this.loginUser.email, this.loginUser.password);
-    
+
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
@@ -55,8 +63,15 @@ export class LoginPage implements OnInit {
   }
 
   // LOGICA DEL FORMULARIO DE REGISTRO
-  registro(fRegistro: NgForm) {
-    console.log(fRegistro.valid);
+  async registro(fRegistro: NgForm) {
+    if ( fRegistro.invalid ) { return; }
+   const validated = await this.userService.registro ( this.registerUser );
+
+    if ( validated ) {
+      this.mostrarLogin();
+    } else {
+
+    }
   }
 
 
