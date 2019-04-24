@@ -128,28 +128,28 @@
                   <span slot="start">
                     <ion-icon style="color:#606470" name="person"></ion-icon>
                   </span>
-                  <ion-input type="text" placeholder="  Nombres" name="username" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="registerUser.name" placeholder="  Nombres" name="name" required></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <span slot="start">
                     <ion-icon style="color:#606470" name="person"></ion-icon>
                   </span>
-                  <ion-input type="text" placeholder="  Apellidos" name="lastname" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="registerUser.last_name" placeholder="  Apellidos" name="last_name" required></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <span slot="start">
                     <ion-icon slot="start" style="color:#606470" name="phone-portrait"></ion-icon>
                   </span>
-                  <ion-input type="text" placeholder="  Teléfono" name="phone" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="registerUser.phone_1" placeholder="  Teléfono" name="phone_1" required></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <span slot="start">
                     <ion-icon style="color:#606470" name="mail"></ion-icon>
                   </span>
-                  <ion-input type="email" placeholder="  Email" name="username" required></ion-input>
+                  <ion-input type="email" [(ngModel)]="registerUser.email" placeholder="  Email" name="email" required></ion-input>
                 </ion-item>
 
                 <ion-label float-right class="text-size-body" href="#">

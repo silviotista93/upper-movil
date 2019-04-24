@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
+import { Usuario } from '../interfaces/interfaces';
 
 
 
@@ -40,6 +41,17 @@ export class UserService {
           this.storage.clear();
           resolve(false);
         });
+    });
+
+  }
+
+  registro ( usuario: Usuario ) {
+
+    return new Promise( resolve => {
+      this.http.post(`${URL}/api/auth/signup`, usuario, { headers: headers })
+      .subscribe( resp => {
+        console.log(resp);
+      });
     });
 
   }
