@@ -13,8 +13,8 @@ export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal') slides: IonSlides;
 
   loginUser = {
-    email: 'watson.paucek@example.com',
-    password: 'secret'
+    email: '',
+    password: ''
   };
   constructor( private userService: UserService, private navCtrl: NavController ) { }
 
