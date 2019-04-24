@@ -65,13 +65,21 @@ export class LoginPage implements OnInit {
 
   // LOGICA DEL FORMULARIO DE REGISTRO
   async registro(fRegistro: NgForm) {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+
     if ( fRegistro.invalid ) { return; }
    const validated = await this.userService.registro ( this.registerUser );
 
     if ( validated ) {
+      loading.dismiss();
+      this.uiService.presentToast('Hemos enviado a tu correo constraseña de acceso');
       this.mostrarLogin();
     } else {
-
+      loading.dismiss();
+      this.uiService.presentToast('Correo ya esta en uso');
     }
   }
 

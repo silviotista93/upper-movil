@@ -27,7 +27,4 @@ export class UiServiceService {
     });
     toast.present();
   }
-
-  
-
 }

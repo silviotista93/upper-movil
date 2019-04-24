@@ -50,7 +50,14 @@ export class UserService {
     return new Promise( resolve => {
       this.http.post(`${URL}/api/auth/signup`, usuario, { headers: headers })
       .subscribe( resp => {
-        console.log(resp);
+        if (!resp['ERROR']) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }, err => {
+
+        resolve(false);
       });
     });
 
