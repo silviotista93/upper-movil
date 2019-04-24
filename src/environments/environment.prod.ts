@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://upper.dev'
+  url: 'http://localhost:8000'
 };
