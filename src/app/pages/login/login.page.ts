@@ -45,21 +45,25 @@ export class LoginPage implements OnInit {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-    loading.present();
+    // loading.present();
 
-    if (fLogin.invalid) { return; }
+    if (fLogin.invalid) {
+      this.uiService.errorToast('Todos los campos son obligatorios');
+      return;
+    }
     const validated = await this.userService.login(this.loginUser.email, this.loginUser.password);
 
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
-      this.navCtrl.navigateRoot('home', { animated: true });
+      // this.navCtrl.navigateRoot('home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
       console.log('no hay acceso');
+
       //this.uiService.alertInfo('Usuario y contraseña incorrectas.');
-      this.uiService.presentToast('Usuario y contraseña incorrectas');
+      this.uiService.errorToast('Usuario y contraseña incorrectas');
     }
   }
 
@@ -70,16 +74,16 @@ export class LoginPage implements OnInit {
     });
     loading.present();
 
-    if ( fRegistro.invalid ) { return; }
-   const validated = await this.userService.registro ( this.registerUser );
+    if (fRegistro.invalid) { return; }
+    const validated = await this.userService.registro(this.registerUser);
 
-    if ( validated ) {
+    if (validated) {
       loading.dismiss();
-      this.uiService.presentToast('Hemos enviado a tu correo constraseña de acceso');
+      this.uiService.successToast('Hemos enviado a tu correo constraseña de acceso');
       this.mostrarLogin();
     } else {
       loading.dismiss();
-      this.uiService.presentToast('Correo ya esta en uso');
+      this.uiService.errorToast('Correo ya esta en uso');
     }
   }
 

@@ -25,8 +25,10 @@ export class UserService {
     const data = { email, password };
 
     return new Promise(resolve => {
+
       this.http.post(`${URL}/api/auth/login`, data, { headers: headers })
         .subscribe(resp => {
+          console.log(resp);
           if (resp['access_token']) {
             const token = resp['token_type'] + ' ' + resp['access_token'];
             this.saveToken(token);
@@ -45,20 +47,20 @@ export class UserService {
 
   }
 
-  registro ( usuario: Usuario ) {
+  registro(usuario: Usuario) {
 
-    return new Promise( resolve => {
+    return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/signup`, usuario, { headers: headers })
-      .subscribe( resp => {
-        if (!resp['ERROR']) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      }, err => {
+        .subscribe(resp => {
+          if (!resp['ERROR']) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, err => {
 
-        resolve(false);
-      });
+          resolve(false);
+        });
     });
 
   }

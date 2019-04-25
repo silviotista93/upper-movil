@@ -19,11 +19,20 @@ export class UiServiceService {
     await alert.present();
   }
 
-  async presentToast(message: string) {
+  async successToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2500,
-      color: 'danger'
+      color: 'error'
+    });
+    toast.present();
+  }
+
+  async errorToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2500,
+      color: 'error'
     });
     toast.present();
   }
