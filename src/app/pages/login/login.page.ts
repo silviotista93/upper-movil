@@ -4,6 +4,7 @@ import { IonSlides, NavController, MenuController, LoadingController } from '@io
 import { UserService } from '../../service/user.service';
 import { UiServiceService } from '../../service/ui-service.service';
 import { Usuario } from '../../interfaces/interfaces';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Usuario } from '../../interfaces/interfaces';
 })
 export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal') slides: IonSlides;
-
+  userData: any;
   loginUser = {
     email: '',
     password: ''
@@ -26,6 +27,7 @@ export class LoginPage implements OnInit {
   };
 
   constructor(
+    private facebook: Facebook,
     private userService: UserService,
     private navCtrl: NavController,
     private menu: MenuController,
@@ -36,6 +38,22 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
   }
+
+  loginWithFB() {
+    this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
+      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
+        this.userData = {
+          driver: profile['driver'],
+          id: profile['id'],
+          email: profile['email'],
+          first_name: profile['first_name'],
+          picture: profile['picture_large']['data']['url'],
+          username: profile['name']};
+          console.log(this.userData);
+      });
+    });
+  }
+
 
   // LOGICA DE FORMULARIO LOGIN
   async login(fLogin: NgForm) {
@@ -70,10 +88,10 @@ export class LoginPage implements OnInit {
     });
     loading.present();
 
-    if ( fRegistro.invalid ) { return; }
-   const validated = await this.userService.registro ( this.registerUser );
+    if (fRegistro.invalid) { return; }
+    const validated = await this.userService.registro(this.registerUser);
 
-    if ( validated ) {
+    if (validated) {
       loading.dismiss();
       this.uiService.presentToast('Hemos enviado a tu correo constraseña de acceso');
       this.mostrarLogin();

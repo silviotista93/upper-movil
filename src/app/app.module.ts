@@ -12,6 +12,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImageModalPageModule } from './pages/image-modal/image-modal.module';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,8 +28,9 @@ import { ImageModalPageModule } from './pages/image-modal/image-modal.module';
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
     Geolocation,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })
