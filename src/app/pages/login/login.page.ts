@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
   }
-
+  // LOGIN DE FACEBOOK
   async loginWithFB() {
     // CREACION DEL LOADING
     const loading = await this.loadCtrl.create({
@@ -47,6 +47,7 @@ export class LoginPage implements OnInit {
     this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
       this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
       .then(profile => {
+        // Datos del Usuario
         this.usuario = {
           id: profile['id'],
           email: profile['email'],
@@ -86,7 +87,7 @@ export class LoginPage implements OnInit {
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
-      // this.navCtrl.navigateRoot('home', { animated: true });
+      this.navCtrl.navigateRoot('home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
