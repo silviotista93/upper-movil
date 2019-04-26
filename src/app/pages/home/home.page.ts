@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
 declare var google;
@@ -13,10 +13,15 @@ declare var google;
 export class HomePage implements OnInit {
   mapRef = null;
 
-  constructor(private geolocation: Geolocation, public alertController: AlertController, private loadCtrl: LoadingController) {}
+  constructor(
+    private geolocation: Geolocation,
+    public alertController: AlertController,
+    private menu: MenuController,
+    private loadCtrl: LoadingController) { }
 
   ngOnInit() {
-    setTimeout(()  => {
+    this.menu.enable(true);
+    setTimeout(() => {
       this.loadMap();
     }, 500);
   }
@@ -33,18 +38,18 @@ export class HomePage implements OnInit {
       console.log(myLatLng);
       const mapEle: HTMLElement = document.getElementById('map');
       this.mapRef = new google.maps.Map(mapEle, {
-          center: myLatLng,
-          zoom: 18,
-          disableDefaultUI: true
+        center: myLatLng,
+        zoom: 18,
+        disableDefaultUI: true
       });
       google.maps.event.addListenerOnce(this.mapRef, 'idle', () => {
         loading.dismiss();
         this.addMarker(resp.coords.latitude, resp.coords.longitude);
       });
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
-    const rta =  this.geolocation.getCurrentPosition();
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+    const rta = this.geolocation.getCurrentPosition();
   }
 
   ubicacionActual() {
@@ -56,22 +61,22 @@ export class HomePage implements OnInit {
       console.log(myLatLng);
       const mapEle: HTMLElement = document.getElementById('map');
       this.mapRef = new google.maps.Map(mapEle, {
-          center: myLatLng,
-          zoom: 18,
-          disableDefaultUI: true
+        center: myLatLng,
+        zoom: 18,
+        disableDefaultUI: true
       });
       google.maps.event.addListenerOnce(this.mapRef, 'idle', () => {
         this.addMarker(resp.coords.latitude, resp.coords.longitude);
       });
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   private addMarker(lat: number, lng: number) {
     const image = '/assets/iconos/ubicacion.png';
     const marker = new google.maps.Marker({
-      position: { lat, lng},
+      position: { lat, lng },
       map: this.mapRef,
       icon: image,
       animation: google.maps.Animation.BOUNCE,

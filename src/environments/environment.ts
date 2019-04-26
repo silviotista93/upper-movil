@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-   url: 'https://upper.website'
+  //  url: 'https://upper.website'
   // url: 'https://upper.dev'
+  url: 'http://localhost:8000'
 };
 
 /*

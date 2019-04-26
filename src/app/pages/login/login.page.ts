@@ -13,6 +13,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
   @ViewChild('slidePrincipal') slides: IonSlides;
   usuario: Usuario;
   loginUser = {
@@ -34,11 +35,14 @@ export class LoginPage implements OnInit {
     private uiService: UiServiceService,
     private loadCtrl: LoadingController) { }
 
+    
+    
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
   }
 
+  //#region LOGIN CON FACEBOOK
   async loginWithFB() {
     // CREACION DEL LOADING
     const loading = await this.loadCtrl.create({
@@ -65,9 +69,10 @@ export class LoginPage implements OnInit {
       });
     });
   }
+  //#endregion
 
 
-  // LOGICA DE FORMULARIO LOGIN
+  //#region LOGICA DE FORMULARIO LOGIN
   async login(fLogin: NgForm) {
     console.log(fLogin.valid);
 
@@ -75,7 +80,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-    // loading.present();
+    loading.present();
 
     if (fLogin.invalid) {
       this.uiService.errorToast('Todos los campos son obligatorios');
@@ -86,7 +91,7 @@ export class LoginPage implements OnInit {
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
-      // this.navCtrl.navigateRoot('home', { animated: true });
+      this.navCtrl.navigateRoot('home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
@@ -96,8 +101,9 @@ export class LoginPage implements OnInit {
       this.uiService.errorToast('Usuario y contraseña incorrectas');
     }
   }
+  //#endregion
 
-  // LOGICA DEL FORMULARIO DE REGISTRO
+  //#region LOGICA DEL FORMULARIO DE REGISTRO
   async registro(fRegistro: NgForm) {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -116,6 +122,7 @@ export class LoginPage implements OnInit {
       this.uiService.errorToast('Correo ya esta en uso');
     }
   }
+  //#endregion
 
 
   // EVENTO DE BOTON REGISTRAR
