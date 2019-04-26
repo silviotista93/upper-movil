@@ -47,6 +47,28 @@ export class UserService {
 
   }
 
+  loginFacebook(usuario: Usuario) {
+    return new Promise(resolve => {
+      this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
+      .subscribe(resp => {
+        console.log(resp);
+        if (resp['access_token']) {
+          const token = resp['token_type'] + ' ' + resp['access_token'];
+          this.saveToken(token);
+          resolve(true);
+        } else {
+          this.token = null;
+          this.storage.clear();
+          resolve(false);
+        }
+      }, err => {
+        this.token = null;
+        this.storage.clear();
+        resolve(false);
+      });
+    });
+  }
+
   registro(usuario: Usuario) {
 
     return new Promise(resolve => {

@@ -14,16 +14,16 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 })
 export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal') slides: IonSlides;
-  userData: any;
+  usuario: Usuario;
   loginUser = {
     email: '',
     password: ''
   };
   registerUser: Usuario = {
-    email: 'didier@gmail.com',
-    name: 'Didier',
-    last_name: 'Ramirez',
-    phone_1: '3123121231',
+    email: '',
+    name: '',
+    last_name: '',
+    phone_1: '',
   };
 
   constructor(
@@ -39,17 +39,29 @@ export class LoginPage implements OnInit {
     this.menu.enable(false);
   }
 
-  loginWithFB() {
+  async loginWithFB() {
+    // CREACION DEL LOADING
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
     this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
-        this.userData = {
-          driver: profile['driver'],
+      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
+      .then(profile => {
+        this.usuario = {
           id: profile['id'],
           email: profile['email'],
-          first_name: profile['first_name'],
-          picture: profile['picture_large']['data']['url'],
-          username: profile['name']};
-          console.log(this.userData);
+          avatar: profile['picture_large']['data']['url'],
+          name: profile['name']
+          };
+          console.log(this.usuario);
+          const validated = this.userService.loginFacebook(this.usuario);
+           if (validated) {
+          //   NAVEGA A LA PAGINA PRINCIPAL
+            loading.dismiss();
+             this.navCtrl.navigateRoot('home', { animated: true });
+           } else {
+            //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+            }
       });
     });
   }
@@ -80,7 +92,7 @@ export class LoginPage implements OnInit {
       loading.dismiss();
       console.log('no hay acceso');
 
-      //this.uiService.alertInfo('Usuario y contraseña incorrectas.');
+      // this.uiService.alertInfo('Usuario y contraseña incorrectas.');
       this.uiService.errorToast('Usuario y contraseña incorrectas');
     }
   }
@@ -94,7 +106,7 @@ export class LoginPage implements OnInit {
 
     if (fRegistro.invalid) { return; }
     const validated = await this.userService.registro(this.registerUser);
-
+    console.log(this.registerUser);
     if (validated) {
       loading.dismiss();
       this.uiService.successToast('Hemos enviado a tu correo constraseña de acceso');

@@ -20,7 +20,7 @@
 
           <ion-row>
             <ion-col size="6">
-              <ion-button float-right color="medium" class="button-icon">
+              <ion-button (click)="loginWithFB()" float-right color="medium" class="button-icon">
                 <ion-img class="size-icons" src="/assets/images/icons/facebook.png"></ion-img>
               </ion-button>
             </ion-col>
@@ -153,7 +153,7 @@
                 </ion-item>
 
                 <ion-label float-right class="text-size-body" href="#">
-                  ¿Olvidó su contraseña?
+                  Enviaremos a tu correo credenciales de acceso
                 </ion-label>
 
               </ion-list>
