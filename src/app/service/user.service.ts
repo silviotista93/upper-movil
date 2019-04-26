@@ -20,6 +20,7 @@ const headers = new HttpHeaders({
 export class UserService {
   token: string = null;
   constructor(private http: HttpClient, private storage: Storage) { }
+  private usuario: Usuario = {};
 
   login(email: string, password: string) {
     const data = { email, password };
@@ -85,6 +86,10 @@ export class UserService {
         });
     });
 
+  }
+
+  getUsuario () {
+    return { ...this.usuario };
   }
 
   async saveToken(token: string) {

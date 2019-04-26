@@ -51,6 +51,7 @@ export class LoginPage implements OnInit {
     this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
       this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
       .then(profile => {
+        // Datos del Usuario
         this.usuario = {
           id: profile['id'],
           email: profile['email'],
