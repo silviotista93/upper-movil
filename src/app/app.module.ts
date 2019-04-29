@@ -13,6 +13,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImageModalPageModule } from './pages/image-modal/image-modal.module';
 import { Facebook } from '@ionic-native/facebook/ngx';
+import { environment } from '../environments/environment';
+import { Usuario } from './interfaces/interfaces';
+import { UserService } from './service/user.service';
 
 @NgModule({
   declarations: [AppComponent],
