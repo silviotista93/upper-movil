@@ -23,7 +23,7 @@ export class UiServiceService {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2500,
-      color: 'error'
+      color: 'success'
     });
     toast.present();
   }

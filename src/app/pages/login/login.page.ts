@@ -34,9 +34,6 @@ export class LoginPage implements OnInit {
     private menu: MenuController,
     private uiService: UiServiceService,
     private loadCtrl: LoadingController) { }
-
-    
-    
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
@@ -116,6 +113,7 @@ export class LoginPage implements OnInit {
     console.log(this.registerUser);
     if (validated) {
       loading.dismiss();
+      this.loginUser.email = this.registerUser.email;
       this.uiService.successToast('Hemos enviado a tu correo constraseña de acceso');
       this.mostrarLogin();
     } else {
