@@ -8,4 +8,5 @@ export interface Usuario {
     avatar?: string;
     phone_1?: string;
     phone_2?: string;
+    social_acounts?: string;
 }
