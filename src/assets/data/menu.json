@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Solicitar Servicio",
+        "url": "/home",
+        "icon": "home"
+    },
+    {
+        "title": "Subscripciones",
+        "url": "/subscripcion",
+        "icon": "subscripcion"
+    },
+    {
+        "title": "Historial",
+        "url": "/historial",
+        "icon": "historial"
+    },
+    {
+        "title": "Mis Autos",
+        "url": "/autos",
+        "icon": "autos"
+    },
+    {
+        "title": "Contacto",
+        "url": "/contacto",
+        "icon": "contacto"
+    }
+]

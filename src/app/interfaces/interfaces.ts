@@ -9,3 +9,10 @@ export interface Usuario {
     phone_1?: string;
     phone_2?: string;
 }
+
+
+export interface ComponentMenu {
+    title: string;
+    url: string;
+    icon: string;
+}

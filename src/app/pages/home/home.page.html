@@ -1,11 +1,15 @@
 <ion-header no-border>
-  <ion-toolbar  mode="ios" color="primary">
+  <ion-toolbar mode="ios" color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <!-- <ion-button (click)="toggleMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button> -->
+      <ion-menu-button> </ion-menu-button>
+
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
-        <img slot="start" src = "/assets/iconos/notificacion.png">
+        <img slot="start" src="/assets/iconos/notificacion.png">
       </ion-button>
     </ion-buttons>
     <ion-title class="md title-android">
@@ -14,20 +18,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="ubicacionActual()" color="light"><img style="width: 40%" src="/assets/iconos/location.png"></ion-fab-button>
+    <ion-fab-button (click)="ubicacionActual()" color="light"><img style="width: 40%" src="/assets/iconos/location.png">
+    </ion-fab-button>
   </ion-fab>
-    <div id="map"></div>
+  <div id="map"></div>
 </ion-content>
 
-<ion-footer >
+<ion-footer>
   <ion-toolbar style="background: transparent;">
-      <ion-button 
-    color="primary"
-    expand="block">
-    Solicitar Servicio
-</ion-button>
+    <ion-button color="primary" expand="block">
+      Solicitar Servicio
+    </ion-button>
   </ion-toolbar>
-  
+
 </ion-footer>

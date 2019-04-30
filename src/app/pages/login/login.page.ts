@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     private loadCtrl: LoadingController) { }
   ngOnInit() {
     this.slides.lockSwipes(true);
-    this.menu.enable(false);
+    this.menu.enable(false)
   }
 
   //#region LOGIN CON FACEBOOK
@@ -68,7 +68,6 @@ export class LoginPage implements OnInit {
     });
   }
   //#endregion
-
 
   //#region LOGICA DE FORMULARIO LOGIN
   async login(fLogin: NgForm) {

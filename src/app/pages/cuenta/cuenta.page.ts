@@ -12,12 +12,14 @@ export class CuentaPage implements OnInit {
 
    URL = environment.url;
 
+  
   usuario: Usuario = {};
   constructor( private userService: UserService) { }
-
+  
   ngOnInit() {
+    
     this.usuario = this.userService.getUsuario();
-    console.log(this.usuario);
+    console.log('Este es el usuario malo'+this.usuario);
   }
 
 }

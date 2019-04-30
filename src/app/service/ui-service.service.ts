@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { ComponentMenu } from '../interfaces/interfaces';
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +11,8 @@ export class UiServiceService {
 
   constructor(
     private alertCtrl: AlertController,
-    public toastCtrl: ToastController) { }
+    public toastCtrl: ToastController,
+    private http : HttpClient) { }
 
   async alertInfo(message: string) {
     const alert = await this.alertCtrl.create({
@@ -36,4 +40,11 @@ export class UiServiceService {
     });
     toast.present();
   }
+
+  //#region Metodo que devuelve la url para llenar el menu
+  getMenuOptions() {
+    return this.http.get<ComponentMenu[]>('/assets/data/menu.json');
+  }
+  //#endregion
+
 }

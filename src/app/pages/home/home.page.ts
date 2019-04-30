@@ -3,6 +3,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AlertController, MenuController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 
+
 declare var google;
 
 @Component({
@@ -11,6 +12,7 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  
   mapRef = null;
 
   constructor(
@@ -20,11 +22,14 @@ export class HomePage implements OnInit {
     private loadCtrl: LoadingController) { }
 
   ngOnInit() {
-    this.menu.enable(true);
+    this.menu.enable(true)
     setTimeout(() => {
       this.loadMap();
     }, 500);
   }
+
+
+  //#region Logica de mapas
   async loadMap() {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -83,6 +88,7 @@ export class HomePage implements OnInit {
       title: 'Ubicación Actual'
     });
   }
+  //#endregion
 
 
 }
