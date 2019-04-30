@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { Usuario } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
+import { async } from 'q';
 
 
 
@@ -27,11 +28,11 @@ export class UserService {
     return new Promise(resolve => {
 
       this.http.post(`${URL}/api/auth/login`, data, { headers: headers })
-        .subscribe(resp => {
+        .subscribe(async resp => {
           console.log(resp);
           if (resp['access_token']) {
             this.token = resp['token_type'] + ' ' + resp['access_token'];
-            this.saveToken(this.token);
+            await this.saveToken(this.token);
             resolve(true);
           } else {
             this.token = null;
@@ -50,11 +51,11 @@ export class UserService {
   loginFacebook(usuario: Usuario) {
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
-      .subscribe(resp => {
+      .subscribe( async resp => {
         console.log(resp);
         if (resp['access_token']) {
           this.token = resp['token_type'] + ' ' + resp['access_token'];
-          this.saveToken(this.token);
+          await this.saveToken(this.token);
           resolve(true);
         } else {
           this.token = null;
@@ -69,11 +70,20 @@ export class UserService {
     });
   }
 
+  logout() {
+    this.token = null;
+    this.usuario = null;
+    this.storage.clear();
+    console.log('limpio el storage');
+    this.navCtrl.navigateRoot('login', { animated: true });
+  }
+
+
   registro(usuario: Usuario) {
 
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/signup`, usuario, { headers: headers })
-        .subscribe(resp => {
+        .subscribe(async resp => {
           if (!resp['ERROR']) {
             resolve(true);
           } else {
@@ -94,9 +104,11 @@ export class UserService {
     return { ...this.usuario };
   }
 
-  async saveToken(token: string) {
+  async  saveToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
+
+    await this.validaToken();
   }
 
   async loadToken () {
@@ -107,7 +119,7 @@ export class UserService {
 
       await this.loadToken();
       if ( !this.token) {
-        this.navCtrl.navigateRoot('/login');
+        this.navCtrl.navigateRoot('login');
         return Promise.resolve(false);
       }
     const headerToken = new HttpHeaders({

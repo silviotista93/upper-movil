@@ -20,7 +20,8 @@
         <ion-row>
           <ion-col style="text-align: -webkit-center;" align-self-center>
               <ion-avatar  style="width: 110px !important; height: 110px !important;">
-                  <img  src="{{ URL + usuario.avatar}}">
+                  <img *ngIf="usuario.social_acounts === null" src="{{ URL + usuario.avatar}}">
+                  <img *ngIf="usuario.social_acounts " src="{{ usuario.avatar}}">
                   <ion-badge style="font-size: 25px;margin-top: -34px;margin-bottom: 15px;margin-left: 32px;margin-right: -34px;" color="dark"><ion-icon name="camera"></ion-icon></ion-badge>
                </ion-avatar> 
             </ion-col>
@@ -48,31 +49,42 @@
                 </ion-item>
                 <ion-item>
                     <ion-label position="stacked">Email</ion-label>
-                    <ion-input [(ngModel)]="usuario.email"></ion-input>
+                    <ion-input type="email" [(ngModel)]="usuario.email"></ion-input>
                 </ion-item>
-                <ion-button style="margin: 10px; float: right" color="primary">Actualizar</ion-button>
+                <ion-item>
+                  <ion-label position="stacked">Telefono 1</ion-label>
+                  <ion-input  [(ngModel)]="usuario.phone_1"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Telefono 2</ion-label>
+                <ion-input  [(ngModel)]="usuario.phone_2"></ion-input>
+              </ion-item>
+                <ion-button class="ion-margin-top" expand="block" color="primary">Actualizar</ion-button>
               </ion-list>
-              <ion-list style="margin-bottom: 1px !important" list="none">
+              <form (ngSubmit)="updatePassword( fPassword )" #fPassword="ngForm">
+              <ion-list *ngIf="usuario.social_acounts === null" style="margin-bottom: 1px !important" list="none">
                   <ion-list-header>
                     <ion-label>Actualizar Contraseña</ion-label>
                   </ion-list-header>
                   <ion-item>
                       <ion-label position="stacked">Contraseña nueva</ion-label>
-                      <ion-input type="password"></ion-input>
+                      <ion-input [(ngModel)]="dataPassword.password" name="password" type="password"></ion-input>
                   </ion-item>
                   <ion-item>
                       <ion-label position="stacked">Confirmar Contraseña</ion-label>
-                      <ion-input type="password"></ion-input>
+                      <ion-input [(ngModel)]="dataPassword.password_confirmation" name="password_confirmation" type="password"></ion-input>
                   </ion-item>
-                  <ion-button style="margin: 10px; float: right" color="primary">Actualizar</ion-button>
-                </ion-list>
+                
+                  <ion-button type="submit" style="margin: 10px; float: right" color="primary">Actualizar</ion-button>
+              </ion-list>
+            </form>
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item detail="false" style="padding: 0px 0px 15px;" lines="none" [routerDirection]="'root'" [routerLink]="">
+          <ion-item (click) ="logout()" detail="false" style="padding: 0px 0px 15px;" lines="none" [routerDirection]="'root'" [routerLink]="">
             <!-- <ion-icon slot="start" color="primary" [name]="p.icon"></ion-icon> -->
             <img slot="start" src = "/assets/iconos/logout.png">
             <ion-label style="font-weight: 500">

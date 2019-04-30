@@ -80,6 +80,7 @@ export class LoginPage implements OnInit {
     loading.present();
 
     if (fLogin.invalid) {
+      loading.dismiss();
       this.uiService.errorToast('Todos los campos son obligatorios');
       return;
     }
@@ -107,7 +108,11 @@ export class LoginPage implements OnInit {
     });
     loading.present();
 
-    if (fRegistro.invalid) { return; }
+    if (fRegistro.invalid) {
+      loading.dismiss();
+      this.uiService.errorToast('Todos los campos son obligatorios');
+      return;
+    }
     const validated = await this.userService.registro(this.registerUser);
     console.log(this.registerUser);
     if (validated) {

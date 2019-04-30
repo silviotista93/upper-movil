@@ -5,7 +5,7 @@ import { UserGuardGuard } from './guards/user-guard.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
