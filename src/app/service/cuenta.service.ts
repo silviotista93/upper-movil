@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
 import { UserService } from './user.service';
+import { Usuario } from '../interfaces/interfaces';
 
 
 @Injectable({
@@ -23,6 +24,8 @@ export class CuentaService {
     private http: HttpClient
     ) { }
 
+  private usuario: Usuario = {};
+
   updatePassword ( password: string, password_confirmation: string, id: string ) {
     const data = { password, password_confirmation, id };
     console.log(this.userService.token);
@@ -41,5 +44,22 @@ export class CuentaService {
             resolve(false);
           });
       });
+  }
+
+  updateProfile (usuario: Usuario) {
+    return new Promise(resolve => {
+      this.http.post(`${URL}/api/profile/update`, usuario, { headers: this.headers })
+        .subscribe(async resp => {
+          console.log('prueba');
+          if (!resp['ERROR']) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, err => {
+
+          resolve(false);
+        });
+    });
   }
 }

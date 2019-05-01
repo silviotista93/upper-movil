@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController, MenuController, Events } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+import { NgZone  } from '@angular/core';
 
 
 declare var google;
@@ -12,17 +13,24 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  
   mapRef = null;
 
   constructor(
+    public events: Events,
     private geolocation: Geolocation,
     public alertController: AlertController,
     private menu: MenuController,
-    private loadCtrl: LoadingController) { }
+    private zone: NgZone,
+    private loadCtrl: LoadingController) {
+      this.events.subscribe('updateScreen', () => {
+        this.zone.run(() => {
+          console.log('force update the screen');
+        });
+      });
+    }
 
   ngOnInit() {
-    this.menu.enable(true)
+    this.menu.enable(true);
     setTimeout(() => {
       this.loadMap();
     }, 500);

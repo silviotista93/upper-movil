@@ -43,24 +43,39 @@
                 <ion-list-header>
                   <ion-label>Información Personal</ion-label>
                 </ion-list-header>
-                <ion-item>
-                    <ion-label position="stacked">Nombre</ion-label>
-                    <ion-input [(ngModel)]="usuario.name"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Email</ion-label>
-                    <ion-input type="email" [(ngModel)]="usuario.email"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="stacked">Telefono 1</ion-label>
-                  <ion-input  [(ngModel)]="usuario.phone_1"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Telefono 2</ion-label>
-                <ion-input  [(ngModel)]="usuario.phone_2"></ion-input>
-              </ion-item>
-                <ion-button class="ion-margin-top" expand="block" color="primary">Actualizar</ion-button>
-              </ion-list>
+                <form (ngSubmit)="updateProfile( fProfile )" #fProfile="ngForm">
+                        <ion-item>
+                            <ion-label position="stacked">Nombre</ion-label>
+                            <ion-input *ngIf="usuario.social_acounts === null" name="name" [(ngModel)]="usuario.name"></ion-input>
+                            <ion-input *ngIf="usuario.social_acounts !== null" name="name"  [(ngModel)]="usuario.name"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                          <ion-label position="stacked">Apellidos</ion-label>
+                          <ion-input *ngIf="usuario.social_acounts === null" name="last_name"  [(ngModel)]="usuario.last_name"></ion-input>
+                          <ion-input *ngIf="usuario.social_acounts !== null" name="last_name" [(ngModel)]="usuario.last_name"></ion-input>
+                      </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Email</ion-label>
+                            <ion-input *ngIf="usuario.social_acounts === null" name="email" readonly type="email" [(ngModel)]="usuario.email"></ion-input>
+                            <ion-input *ngIf="usuario.social_acounts !== null" name="email" readonly type="email" [(ngModel)]="usuario.email"></ion-input>
+
+                        </ion-item>
+                        <ion-item>
+                          <ion-label position="stacked">Telefono 1</ion-label>
+                          <ion-input name="phone_1" [(ngModel)]="usuario.phone_1"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="stacked">Telefono 2</ion-label>
+                        <ion-input name="phone_2"  [(ngModel)]="usuario.phone_2"></ion-input>
+                      </ion-item>
+                      <ion-item style="display: none">
+                        <ion-label position="stacked">id</ion-label>
+                        <ion-input name="id"  [(ngModel)]="usuario.id"></ion-input>
+                      </ion-item>
+                        <ion-button type="submit" class="ion-margin-top" expand="block" color="primary">Actualizar</ion-button>
+                      </form>
+             </ion-list>
+            
               <form (ngSubmit)="updatePassword( fPassword )" #fPassword="ngForm">
               <ion-list *ngIf="usuario.social_acounts === null" style="margin-bottom: 1px !important" list="none">
                   <ion-list-header>
@@ -75,7 +90,7 @@
                       <ion-input [(ngModel)]="dataPassword.password_confirmation" name="password_confirmation" type="password"></ion-input>
                   </ion-item>
                 
-                  <ion-button type="submit" style="margin: 10px; float: right" color="primary">Actualizar</ion-button>
+                  <ion-button expand="block" type="submit" style="margin: 10px; float: right" color="primary">Actualizar</ion-button>
               </ion-list>
             </form>
         </ion-col>
