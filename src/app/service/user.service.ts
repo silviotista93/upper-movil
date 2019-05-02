@@ -98,7 +98,7 @@ export class UserService {
   }
 
   getUsuario () {
-    if ( !this.usuario.id ) {
+    if ( !this.usuario ) {
       this.validaToken();
     }
     return { ...this.usuario };
@@ -116,7 +116,6 @@ export class UserService {
   }
 
   async validaToken (): Promise<boolean> {
-
       await this.loadToken();
       if ( !this.token) {
         this.navCtrl.navigateRoot('login');
@@ -129,7 +128,6 @@ export class UserService {
       this.http.get( `${URL}/api/auth/user`, { headers: headerToken })
       .subscribe (resp => {
         if (resp['user']) {
-          console.log(' didiera ramirez', resp);
             this.usuario = resp['user'];
             resolve(true);
         } else {

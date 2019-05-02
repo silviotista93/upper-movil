@@ -15,7 +15,6 @@ export class CuentaService {
  headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-    'Authorization': this.userService.token
   });
 
 
@@ -48,9 +47,8 @@ export class CuentaService {
 
   updateProfile (usuario: Usuario) {
     return new Promise(resolve => {
-      this.http.post(`${URL}/api/profile/update`, usuario, { headers: this.headers })
+      this.http.post(`${this.URL}/api/profile/update`, usuario, { headers: this.headers })
         .subscribe(async resp => {
-          console.log('prueba');
           if (!resp['ERROR']) {
             resolve(true);
           } else {

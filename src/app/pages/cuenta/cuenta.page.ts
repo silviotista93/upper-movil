@@ -3,7 +3,7 @@ import { UserService } from '../../service/user.service';
 import { Usuario } from '../../interfaces/interfaces';
 import { environment } from '../../../environments/environment';
 import { NgForm } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { UiServiceService } from '../../service/ui-service.service';
 import { CuentaService } from '../../service/cuenta.service';
 
@@ -15,25 +15,17 @@ import { CuentaService } from '../../service/cuenta.service';
 export class CuentaPage implements OnInit {
 
    URL = environment.url;
-  usuario: Usuario = {};
   constructor( private userService: UserService,
      private cuentaService: CuentaService,
      private loadCtrl: LoadingController,
+     private navCtrl: NavController,
      private uiService: UiServiceService) { }
 
      dataPassword = {
       password: '',
       password_confirmation: '',
     };
-
-    datUser: Usuario = {
-      id: '',
-      email: '',
-      name: '',
-      last_name: '',
-      phone_1: '',
-      phone_2: '',
-    };
+    usuario: Usuario = {};
 
   ngOnInit() {
     this.usuario = this.userService.getUsuario();
@@ -79,11 +71,10 @@ export class CuentaPage implements OnInit {
       this.uiService.errorToast('Todos los campos son obligatorios');
       return;
     }
-    const validated = await this.cuentaService.updateProfile(this.datUser);
-    console.log(this.usuario);
+    const validated = await this.cuentaService.updateProfile(this.usuario);
     if (validated) {
       loading.dismiss();
-      this.uiService.successToast('Perfil Actualizado Actualizada');
+      this.uiService.successToast('Perfil Actualizado Actualizado');
     } else {
       loading.dismiss();
       this.uiService.errorToast('Error');
