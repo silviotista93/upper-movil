@@ -108,6 +108,7 @@ export class UserService {
   }
   // #endregion
 
+  // #region OBTENER USUARIO
   getUsuario () {
     if ( !this.usuario ) {
       this.validaToken();
@@ -132,7 +133,6 @@ export class UserService {
   // #endregion
 
   // #region VALIDAR TOKEN
-
   async validaToken(): Promise<boolean> {
 
     await this.loadToken();

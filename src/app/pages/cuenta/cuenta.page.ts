@@ -83,7 +83,7 @@ export class CuentaPage implements OnInit {
       this.uiService.errorToast('Todos los campos son obligatorios');
       return;
     }
-    const validated = await this.cuentaService.updateProfile(this.usuario);
+    const validated = await this.cuentaService.updateProfile2(this.usuario);
     if (validated) {
       loading.dismiss();
       this.uiService.successToast('Perfil Actualizado Actualizado');
