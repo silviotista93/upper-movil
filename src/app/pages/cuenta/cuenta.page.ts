@@ -31,9 +31,9 @@ export class CuentaPage implements OnInit {
   };
 
   ngOnInit() {
-    setTimeout(() => {
-      this.usuario = this.userService.getUsuario();
-      console.log('Este es el usuario malo', this.usuario);
+    setTimeout(async () => {
+      this.usuario = await this.userService.getUsuario();
+      console.log('Este es el usuario cuenta', this.usuario);
     }, 500);
 
   }
@@ -44,7 +44,7 @@ export class CuentaPage implements OnInit {
 
   async updatePassword(fPassword: NgForm) {
 
-    this.usuario = this.userService.getUsuario();
+    this.usuario = await this.userService.getUsuario();
     // console.log(this.usuario.id);
 
     // CREACION DEL LOADING
@@ -73,7 +73,7 @@ export class CuentaPage implements OnInit {
     }
   }
 
-  async updateProfile( fProfile: NgForm ) {
+  async updateProfile(fProfile: NgForm) {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
@@ -86,10 +86,10 @@ export class CuentaPage implements OnInit {
     const validated = await this.cuentaService.updateProfile2(this.usuario);
     if (validated) {
       loading.dismiss();
-      this.uiService.successToast('Perfil Actualizado Actualizado');
+      // this.uiService.successToast('Perfil Actualizado Actualizado');
     } else {
       loading.dismiss();
-      this.uiService.errorToast('Error');
+      // this.uiService.errorToast('Error');
     }
   }
 }

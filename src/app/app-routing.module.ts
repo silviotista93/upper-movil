@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { UserGuard } from './guards/user.guard';
+import { MenuComponent } from './components/menu/menu.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'image-modal', loadChildren: './pages/image-modal/image-modal.module#ImageModalPageModule', canLoad: [ UserGuard ] },
   { path: 'contacto', loadChildren: './pages/contacto/contacto.module#ContactoPageModule', canLoad: [ UserGuard ] },
   { path: 'agregar-auto', loadChildren: './pages/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [ UserGuard ] },
+  { path: 'menu', component: MenuComponent, canLoad: [ UserGuard ] },
 
 ];
 

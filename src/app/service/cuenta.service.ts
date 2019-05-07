@@ -27,17 +27,17 @@ export class CuentaService {
   updatePassword(password: string, password_confirmation: string, id: string) {
     const data = { password, password_confirmation, id };
 
-    // console.log(this.userService.token);
     return new Promise(resolve => {
       console.log(data);
+      
       this.http.post(`${this.URL}/api/auth/update-password`, data, { headers: this.headers })
-        .subscribe(resp => {
+        .subscribe(async resp => {
           console.log('esta es la respuesta ', resp);
 
           if (resp['access_token']) {
             console.log(resp);
             this.userService.token = resp['token_type'] + ' ' + resp['access_token'];
-            this.userService.saveToken(this.userService.token);
+            await this.userService.saveToken(this.userService.token);
             this.uiService.successToast(resp['message']);
             resolve(true);
 
@@ -73,23 +73,22 @@ export class CuentaService {
     });
   }
   // #endregion
+
+  // #region Actualizar usuario
   updateProfile2(user: Usuario) {
     return new Promise(resolve => {
       this.http.post(`${this.URL}/api/profile/update`, user, { headers: this.headers })
         .subscribe(async resp => {
-
           if (resp['access_token']) {
             console.log(resp);
-            this.userService.token = resp['token_type'] + ' ' + resp['access_token'];
-            this.userService.saveToken(this.userService.token);
+            // this.userService.token = resp['token_type'] + ' ' + resp['access_token'];
+            await this.userService.saveToken(resp['token_type'] + ' ' + resp['access_token']);
             this.uiService.successToast(resp['message']);
             resolve(true);
 
           } else if (resp['error']) {
 
             this.uiService.errorToast(resp['error']);
-
-            console.log(resp);
             resolve(false);
           }
 
@@ -117,23 +116,6 @@ export class CuentaService {
         });
     });
   }
+  // #endregion
 
-
-
-
-  updateProfile(usuario: Usuario) {
-    return new Promise(resolve => {
-      this.http.post(`${this.URL}/api/profile/update`, usuario, { headers: this.headers })
-        .subscribe(async resp => {
-          if (!resp['ERROR']) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        }, err => {
-
-          resolve(false);
-        });
-    });
-  }
 }
