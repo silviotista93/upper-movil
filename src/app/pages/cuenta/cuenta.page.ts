@@ -72,4 +72,24 @@ export class CuentaPage implements OnInit {
       // this.uiService.errorToast('Error');
     }
   }
+
+  async updateProfile( fProfile: NgForm ) {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+    if (fProfile.invalid) {
+      loading.dismiss();
+      this.uiService.errorToast('Todos los campos son obligatorios');
+      return;
+    }
+    const validated = await this.cuentaService.updateProfile(this.usuario);
+    if (validated) {
+      loading.dismiss();
+      this.uiService.successToast('Perfil Actualizado Actualizado');
+    } else {
+      loading.dismiss();
+      this.uiService.errorToast('Error');
+    }
+  }
 }

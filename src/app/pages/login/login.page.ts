@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     private loadCtrl: LoadingController) { }
   ngOnInit() {
     this.slides.lockSwipes(true);
-    this.menu.enable(false)
+    this.menu.enable(false);
   }
 
   //#region LOGIN CON FACEBOOK

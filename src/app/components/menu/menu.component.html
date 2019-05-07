@@ -7,7 +7,8 @@
           <ion-col size="4">
             <ion-avatar style="width: 90px !important; height: 90px !important;">
               <!-- <img src="../assets/images/avatar_perfil.png"> -->
-              <img src="{{ URL + usuario.avatar}}">
+              <img *ngIf="usuario.social_acounts === null" src="{{ URL + usuario.avatar}}">
+              <img *ngIf="usuario.social_acounts " src="{{ usuario.avatar}}">
             </ion-avatar>
           </ion-col>
           <ion-col size="8" style="padding: 22px 0px 0px 18px;">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController, MenuController, Events } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/interfaces';
 import { UserService } from 'src/app/service/user.service';
@@ -14,11 +14,11 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
   mapRef = null;
   private usuario: Usuario = {};
 
   constructor(
+    public events: Events,
     private geolocation: Geolocation,
     public alertController: AlertController,
     private menu: MenuController,

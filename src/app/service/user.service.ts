@@ -108,9 +108,8 @@ export class UserService {
   }
   // #endregion
 
-  // #region OBTENER USUARIO
-  getUsuario() {
-    if (!this.usuario.id) {
+  getUsuario () {
+    if ( !this.usuario ) {
       this.validaToken();
       console.log('id usuario ',this.usuario);
     }

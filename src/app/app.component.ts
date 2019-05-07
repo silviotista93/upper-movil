@@ -10,8 +10,6 @@ import { UserService } from './service/user.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
