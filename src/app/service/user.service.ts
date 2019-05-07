@@ -4,8 +4,6 @@ import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { Usuario } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
-import { async } from 'q';
-
 
 
 const URL = environment.url;
@@ -17,11 +15,19 @@ const headers = new HttpHeaders({
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
+
   token: string = null;
-  constructor(private http: HttpClient, private storage: Storage, private navCtrl: NavController) { }
   private usuario: Usuario = {};
 
+  constructor(
+    private http: HttpClient,
+    private storage: Storage,
+    private navCtrl: NavController) { }
+
+
+  // #region LOGIN
   login(email: string, password: string) {
     const data = { email, password };
 
@@ -47,29 +53,33 @@ export class UserService {
     });
 
   }
+  //#endregion
 
+  // #region LOGIN DE FACEBOOK
   loginFacebook(usuario: Usuario) {
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
-      .subscribe( async resp => {
-        console.log(resp);
-        if (resp['access_token']) {
-          this.token = resp['token_type'] + ' ' + resp['access_token'];
-          await this.saveToken(this.token);
-          resolve(true);
-        } else {
+        .subscribe(async resp => {
+          console.log(resp);
+          if (resp['access_token']) {
+            this.token = resp['token_type'] + ' ' + resp['access_token'];
+            await this.saveToken(this.token);
+            resolve(true);
+          } else {
+            this.token = null;
+            this.storage.clear();
+            resolve(false);
+          }
+        }, err => {
           this.token = null;
           this.storage.clear();
           resolve(false);
-        }
-      }, err => {
-        this.token = null;
-        this.storage.clear();
-        resolve(false);
-      });
+        });
     });
   }
+  // #endregion
 
+  // #region LOGOUT 
   logout() {
     this.token = null;
     this.usuario = null;
@@ -77,8 +87,9 @@ export class UserService {
     console.log('limpio el storage');
     this.navCtrl.navigateRoot('login', { animated: true });
   }
+  // #endregion
 
-
+  // #region REGISTRO DE USUARIO
   registro(usuario: Usuario) {
 
     return new Promise(resolve => {
@@ -94,49 +105,64 @@ export class UserService {
           resolve(false);
         });
     });
-
   }
+  // #endregion
 
-  getUsuario () {
-    if ( !this.usuario.id ) {
+  // #region OBTENER USUARIO
+  getUsuario() {
+    if (!this.usuario.id) {
       this.validaToken();
+      console.log('id usuario ',this.usuario);
     }
     return { ...this.usuario };
+    
   }
+  // #endregion
 
+  // #region GUARDAR TOKEN
   async  saveToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
 
-    await this.validaToken();
   }
+  // #endregion
 
-  async loadToken () {
+  // #region CARGAR TOKEN
+  async loadToken() {
     this.token = await this.storage.get('token') || null;
   }
+  // #endregion
 
-  async validaToken (): Promise<boolean> {
+  // #region VALIDAR TOKEN
 
-      await this.loadToken();
-      if ( !this.token) {
-        this.navCtrl.navigateRoot('login');
-        return Promise.resolve(false);
-      }
-    const headerToken = new HttpHeaders({
-      'Authorization': this.token,
-    });
-    return new Promise<boolean>( resolve => {
-      this.http.get( `${URL}/api/auth/user`, { headers: headerToken })
-      .subscribe (resp => {
-        if (resp['user']) {
-          console.log(' didiera ramirez', resp);
-            this.usuario = resp['user'];
-            resolve(true);
-        } else {
-          this.navCtrl.navigateRoot('/login');
-          resolve(false);
-        }
+  async validaToken(): Promise<boolean> {
+
+    await this.loadToken();
+
+    if (!this.token) {
+      this.navCtrl.navigateRoot('/login');
+      return Promise.resolve(false);
+    }
+    return new Promise<boolean>(resolve => {
+
+      const headerToken = new HttpHeaders({
+        'Authorization': this.token,
       });
+
+      this.http.get(`${URL}/api/auth/user/`, { headers: headerToken })
+        .subscribe(resp => {
+          console.log('respuesta antes de validar token ', resp);
+          if (resp['user']) {
+            console.log('respuesta de validar token ', resp);
+            this.usuario = resp['user'];
+            console.log('este es el usuario ',this.usuario);
+            resolve(true);
+          } else {
+            this.navCtrl.navigateRoot('/login');
+            resolve(false);
+          }
+        });
     });
   }
+  // #endregion
 }

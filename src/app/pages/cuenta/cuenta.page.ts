@@ -3,7 +3,7 @@ import { UserService } from '../../service/user.service';
 import { Usuario } from '../../interfaces/interfaces';
 import { environment } from '../../../environments/environment';
 import { NgForm } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { UiServiceService } from '../../service/ui-service.service';
 import { CuentaService } from '../../service/cuenta.service';
 
@@ -14,34 +14,40 @@ import { CuentaService } from '../../service/cuenta.service';
 })
 export class CuentaPage implements OnInit {
 
-   URL = environment.url;
+  URL = environment.url;
 
-  
-  usuario: Usuario = {};
-  constructor( private userService: UserService,
-     private cuentaService: CuentaService,
-     private loadCtrl: LoadingController,
-     private uiService: UiServiceService) { }
+  private usuario: Usuario = {};
 
-     dataPassword = {
-      password: '',
-      password_confirmation: '',
-    };
+  constructor(
+    private userService: UserService,
+    private cuentaService: CuentaService,
+    private loadCtrl: LoadingController,
+    private navCtrl: NavController,
+    private uiService: UiServiceService) { }
+
+  dataPassword = {
+    password: '',
+    password_confirmation: '',
+  };
 
   ngOnInit() {
-    
-    this.usuario = this.userService.getUsuario();
-    console.log('Este es el usuario malo'+this.usuario);
+    setTimeout(() => {
+      this.usuario = this.userService.getUsuario();
+      console.log('Este es el usuario malo', this.usuario);
+    }, 500);
+
   }
 
-  logout () {
+  logout() {
     this.userService.logout();
   }
 
-  async updatePassword( fPassword: NgForm ) {
+  async updatePassword(fPassword: NgForm) {
 
     this.usuario = this.userService.getUsuario();
-    console.log(this.usuario.id);
+    // console.log(this.usuario.id);
+
+    // CREACION DEL LOADING
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
@@ -52,15 +58,18 @@ export class CuentaPage implements OnInit {
       this.uiService.errorToast('Todos los campos son obligatorios');
       return;
     }
+
     const validated = await this.cuentaService.updatePassword(
       this.dataPassword.password, this.dataPassword.password_confirmation, this.usuario.id
-      );
+    );
+
+
     if (validated) {
       loading.dismiss();
-      this.uiService.successToast('Constraseña Actualizada');
+      // this.uiService.successToast('Constraseña Actualizada');
     } else {
       loading.dismiss();
-      this.uiService.errorToast('Error');
+      // this.uiService.errorToast('Error');
     }
   }
 }

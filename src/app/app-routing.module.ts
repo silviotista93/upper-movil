@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { UserGuardGuard } from './guards/user-guard.guard';
+import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
   {
@@ -11,11 +11,11 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: './pages/home/home.module#HomePageModule',
-    canLoad: [UserGuardGuard]
+    canLoad: [ UserGuard ]
   },
   {
     path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule'
+    loadChildren: './pages/list/list.module#ListPageModule',
   },
   { path: 'login',
     loadChildren: './pages/login/login.module#LoginPageModule'

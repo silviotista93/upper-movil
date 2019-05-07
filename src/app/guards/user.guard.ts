@@ -6,10 +6,11 @@ import { UserService } from '../service/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuardGuard implements CanLoad {
+export class UserGuard implements CanLoad  {
+  
+  constructor(private userService: UserService) { }
 
-    constructor ( private userService: UserService) {}
-  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.userService.validaToken();
-  }
+    canLoad(): Observable<boolean> | Promise<boolean> | boolean {
+        return this.userService.validaToken();
+    }
 }

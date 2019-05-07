@@ -22,7 +22,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private navCtrl: NavController,
     private uiServ: UiServiceService,
-    private userService: UserService) { }
+    private userService: UserService) { 
+      this.usuario = this.userService.getUsuario(); }
 
   pushPerfil() {
     this.navCtrl.navigateForward('/cuenta');
@@ -31,7 +32,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.componentMenu = this.uiServ.getMenuOptions();
     this.usuario = this.userService.getUsuario();
-    console.log(this.usuario);
+    console.log('usuario en menu',this.usuario);
   }
 
 }

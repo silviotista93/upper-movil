@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AlertController, MenuController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
+import { Usuario } from 'src/app/interfaces/interfaces';
+import { UserService } from 'src/app/service/user.service';
 
 
 declare var google;
@@ -12,18 +14,25 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  
+
   mapRef = null;
+  private usuario: Usuario = {};
 
   constructor(
     private geolocation: Geolocation,
     public alertController: AlertController,
     private menu: MenuController,
-    private loadCtrl: LoadingController) { }
+    private loadCtrl: LoadingController,
+    private userService: UserService, ) {
+
+  }
 
   ngOnInit() {
+
     this.menu.enable(true)
     setTimeout(() => {
+      this.usuario = this.userService.getUsuario();
+      console.log('Este es el usuario malo', this.usuario);
       this.loadMap();
     }, 500);
   }
