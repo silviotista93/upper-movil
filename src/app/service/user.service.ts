@@ -127,7 +127,7 @@ export class UserService {
 
   // #region CARGAR TOKEN
   async loadToken() {
-    this.token = await this.storage.get('token') || null;
+   return this.token = await this.storage.get('token') || null;
   }
   // #endregion
 
@@ -149,11 +149,11 @@ export class UserService {
 
       this.http.get(`${URL}/api/auth/user/`, { headers: headerToken })
         .subscribe(resp => {
-          console.log('respuesta antes de validar token ', resp);
+          console.log('respuesta antes de validar token ');
           if (resp['user']) {
             console.log('respuesta de validar token ', resp);
             this.usuario = resp['user'];
-            console.log('este es el usuario ',this.usuario);
+            console.log('este es el usuario ', this.usuario);
             resolve(true);
           } else {
             this.navCtrl.navigateRoot('/login');

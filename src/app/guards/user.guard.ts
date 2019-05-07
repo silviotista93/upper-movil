@@ -7,7 +7,6 @@ import { UserService } from '../service/user.service';
   providedIn: 'root'
 })
 export class UserGuard implements CanLoad  {
-  
   constructor(private userService: UserService) { }
 
     canLoad(): Observable<boolean> | Promise<boolean> | boolean {
