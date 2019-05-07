@@ -16,7 +16,7 @@ export class CuentaPage implements OnInit {
 
   URL = environment.url;
 
-  private usuario: Usuario = {};
+  public usuario: Usuario = {};
 
   constructor(
     private userService: UserService,
