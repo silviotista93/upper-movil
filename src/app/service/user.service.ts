@@ -19,7 +19,7 @@ const headers = new HttpHeaders({
 export class UserService {
 
   token: string = null;
-  private usuario: Usuario = {};
+  public usuario: Usuario = {};
 
   constructor(
     private http: HttpClient,
@@ -79,7 +79,7 @@ export class UserService {
   }
   // #endregion
 
-  // #region LOGOUT 
+  // #region LOGOUT
   logout() {
     this.token = null;
     this.usuario = null;
@@ -111,10 +111,9 @@ export class UserService {
   getUsuario () {
     if ( !this.usuario ) {
       this.validaToken();
-      console.log('id usuario ',this.usuario);
+      console.log('id usuario ', this.usuario);
     }
     return { ...this.usuario };
-    
   }
   // #endregion
 

@@ -28,8 +28,16 @@ export class MenuComponent implements OnInit {
     public events: Events,
     private navCtrl: NavController,
     private uiServ: UiServiceService,
-    private userService: UserService) { 
-      this.usuario = this.userService.getUsuario(); }
+    private http: HttpClient,
+    private storage: Storage,
+    private zone: NgZone,
+    private userService: UserService) {
+      this.events.subscribe('updateScreen', () => {
+        this.zone.run(() => {
+          console.log('force update the screen');
+        });
+      });
+     }
 
   pushPerfil() {
     this.navCtrl.navigateForward('/cuenta');
@@ -37,8 +45,20 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.componentMenu = this.uiServ.getMenuOptions();
-    this.usuario = this.userService.getUsuario();
-    console.log('usuario en menu',this.usuario);
+     this.storage.get('token').then(async res => {
+        console.log(res);
+        console.log('hola natalia te quiero mucho hagamoslo otra vez');
+        this.tokenService = res;
+        const headerToken = new HttpHeaders({
+          'Authorization': this.tokenService,
+        });
+        this.http.get( `${this.URL}/api/auth/user`, { headers: headerToken })
+        .subscribe (resp => {
+          this.usuario = resp['user'];
+          console.log('hola bebe', this.usuario);
+          return this.usuario;
+         });
+        return this.tokenService;
+      });
   }
-
 }
