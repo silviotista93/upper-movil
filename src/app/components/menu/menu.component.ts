@@ -4,7 +4,7 @@ import { ComponentMenu, Usuario } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../../service/ui-service.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/service/user.service';
+import { UserService } from 'src/app/service/cliente/user.service';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { async } from '@angular/core/testing';
@@ -45,9 +45,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.componentMenu = this.uiServ.getMenuOptions();
-    
     this.storage.get('token').then(async res => {
       console.log(res);
       console.log('hola natalia te quiero mucho hagamoslo otra vez');

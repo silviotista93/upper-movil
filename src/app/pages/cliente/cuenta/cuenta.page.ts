@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../service/user.service';
-import { Usuario } from '../../interfaces/interfaces';
-import { environment } from '../../../environments/environment';
+import { UserService } from '../../../service/cliente/user.service';
+import { Usuario } from '../../../interfaces/interfaces';
+import { environment } from '../../../../environments/environment';
 import { NgForm } from '@angular/forms';
 import { LoadingController, NavController } from '@ionic/angular';
-import { UiServiceService } from '../../service/ui-service.service';
-import { CuentaService } from '../../service/cuenta.service';
+import { UiServiceService } from '../../../service/ui-service.service';
+import { CuentaService } from '../../../service/cliente/cuenta.service';
 
 @Component({
   selector: 'app-cuenta',

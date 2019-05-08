@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
-import { Usuario } from '../interfaces/interfaces';
+import { Usuario } from '../../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
 
 

@@ -3,7 +3,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AlertController, MenuController, Events } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/interfaces';
-import { UserService } from 'src/app/service/user.service';
+import { UserService } from 'src/app/service/cliente/user.service';
 
 
 declare var google;

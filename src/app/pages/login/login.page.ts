@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonSlides, NavController, MenuController, LoadingController } from '@ionic/angular';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../service/cliente/user.service';
 import { UiServiceService } from '../../service/ui-service.service';
 import { Usuario } from '../../interfaces/interfaces';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';

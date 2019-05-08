@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
 import { UserService } from './user.service';
-import { UiServiceService } from './ui-service.service';
-import { Usuario } from '../interfaces/interfaces';
+import { UiServiceService } from '../ui-service.service';
+import { Usuario } from '../../interfaces/interfaces';
 
 
 @Injectable({

@@ -11,7 +11,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ImageModalPageModule } from './pages/image-modal/image-modal.module';
+import { ImageModalPageModule } from './pages/cliente/image-modal/image-modal.module';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { ComponentsModule } from './components/components.module';
 

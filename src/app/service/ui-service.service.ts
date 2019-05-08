@@ -12,7 +12,7 @@ export class UiServiceService {
   constructor(
     private alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private http : HttpClient) { }
+    private http: HttpClient) { }
 
   async alertInfo(message: string) {
     const alert = await this.alertCtrl.create({

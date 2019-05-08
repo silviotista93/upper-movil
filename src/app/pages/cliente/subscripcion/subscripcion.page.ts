@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../service/user.service';
-import { Usuario } from '../../interfaces/interfaces';
+
+import { Usuario } from '../../../interfaces/interfaces';
+import { UserService } from '../../../service/cliente/user.service';
 
 @Component({
   selector: 'app-subscripcion',
