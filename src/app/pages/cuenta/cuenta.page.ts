@@ -31,8 +31,8 @@ export class CuentaPage implements OnInit {
   };
 
   ngOnInit() {
-    setTimeout(async () => {
-      this.usuario = await this.userService.getUsuario();
+    setTimeout(() => {
+      this.usuario = this.userService.getUsuario();
       console.log('Este es el usuario cuenta', this.usuario);
     }, 500);
 
