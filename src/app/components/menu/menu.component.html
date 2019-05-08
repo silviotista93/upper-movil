@@ -20,7 +20,7 @@
     </ion-menu-toggle>
   </ion-header>
 
-  <ion-content>
+  <ion-content *ngIf="rolesUsuario.roles_id === '3'">
       <ion-list style="padding: 30px 10px 10px 10px;">
         <ion-menu-toggle auto-hide="false" *ngFor="let p of componentMenu | async">
           <ion-item style="padding: 0px 0px 15px;" lines="none" [routerDirection]="'root'" [routerLink]="p.url">
@@ -31,6 +31,20 @@
           </ion-item>
         </ion-menu-toggle>
       </ion-list>
-    </ion-content>
+  </ion-content>
+
+  <ion-content *ngIf="rolesUsuario.roles_id === '2'">
+    <ion-list style="padding: 30px 10px 10px 10px;">
+      <ion-menu-toggle auto-hide="false" *ngFor="let p of componentMenu | async">
+        <ion-item style="padding: 0px 0px 15px;" lines="none" [routerDirection]="'root'" [routerLink]="p.url">
+          <img slot="start" [src]="'/assets/iconos/'+p.icon+'.png'">
+          <ion-label style="font-weight: 500">
+            lavador
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+</ion-content>
+
 
 </ion-menu>

@@ -9,6 +9,7 @@ export interface Usuario {
     phone_1?: string;
     phone_2?: string;
     social_acounts?: string;
+    roles?: string;
 }
 
 
@@ -16,4 +17,10 @@ export interface ComponentMenu {
     title: string;
     url: string;
     icon: string;
+}
+
+export interface RolesUsers {
+    id?: string;
+    roles_id?: string;
+    users_id?: string;
 }

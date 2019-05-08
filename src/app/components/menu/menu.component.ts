@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Events } from '@ionic/angular';
-import { ComponentMenu, Usuario } from 'src/app/interfaces/interfaces';
+import { ComponentMenu, Usuario, RolesUsers } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../../service/ui-service.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
 
   URL = environment.url;
   usuario: Usuario = {};
+  rolesUsuario: RolesUsers = {};
   tokenService = null;
 
   constructor(
@@ -45,21 +46,39 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.componentMenu = this.uiServ.getMenuOptions();
-    this.storage.get('token').then(async res => {
-      console.log(res);
-      console.log('hola natalia te quiero mucho hagamoslo otra vez');
+    // this.usuario = this.userService.getUsuario();
+    // console.log('usuario menu', this.usuario);
+     this.componentMenu = this.uiServ.getMenuOptions();
+     this.storage.get('token').then(async res => {
+       console.log(res);
+       this.tokenService = res;
+       const headerToken = new HttpHeaders({
+         'Authorization': this.tokenService,
+       });
+       this.http.get(`${this.URL}/api/auth/user`, { headers: headerToken })
+         .subscribe(resp => {
+           this.usuario = resp['user'];
+           return this.usuario;
+         });
+       return this.tokenService;
+     });
+
+     this.storage.get('token').then(async res => {
       this.tokenService = res;
       const headerToken = new HttpHeaders({
         'Authorization': this.tokenService,
       });
-      this.http.get(`${this.URL}/api/auth/user`, { headers: headerToken })
+      this.http.get(`${this.URL}/api/auth/user-roles`, { headers: headerToken})
         .subscribe(resp => {
-          this.usuario = resp['user'];
-          console.log('hola bebe', this.usuario);
-          return this.usuario;
+          console.log(resp);
+          this.rolesUsuario = resp['roles'];
+          console.log('id rol', this.rolesUsuario.id);
+          return this.rolesUsuario;
         });
       return this.tokenService;
     });
+
   }
+
+
 }
