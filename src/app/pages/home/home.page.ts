@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-    this.menu.enable(true)
+    this.menu.enable(true);
     setTimeout(() => {
       this.usuario = this.userService.getUsuario();
       console.log('Este es el usuario malo', this.usuario);

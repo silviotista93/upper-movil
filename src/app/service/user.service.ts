@@ -109,9 +109,9 @@ export class UserService {
   // #endregion
 
   // #region OBTENER USUARIO
-  async getUsuario() {
+   getUsuario() {
     if (!this.usuario) {
-      await this.validaToken();
+       this.validaToken();
       console.log('id usuario ', this.usuario);
     }
     return { ...this.usuario };
