@@ -1,91 +1,116 @@
 <ion-header no-border>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button text=""  defaultHref="/autos"></ion-back-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button>
-          <img slot="start" src = "/assets/iconos/notificacion.png">
-        </ion-button>
-      </ion-buttons>
-      <ion-title class="md title-android">
-        Agregar Auto
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/autos"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <img slot="start" src="/assets/iconos/notificacion.png">
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="md title-android">
+      Agregar Auto
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content color="secondary">
-    <ion-toolbar color="secondary">
-        <ion-grid style="margin-top: 15px">
-            <ion-row>
-              <ion-col style="text-align: -webkit-center;" align-self-center>
-                      <img src="../assets/banner_add_auto.png">
-                </ion-col>
-            </ion-row>
-          </ion-grid>
-    </ion-toolbar>
-    <ion-grid>
+  <ion-toolbar color="secondary">
+    <ion-grid style="margin-top: 15px">
       <ion-row>
-          <ion-col>
-              <ion-list list="none">
-                  <ion-list-header>Marca</ion-list-header>
-                
-                  <ion-item lines="none">
-                    <ion-label>Seleciona Marca</ion-label>
-                    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
-                      <ion-select-option value="brown">Mazda</ion-select-option>
-                      <ion-select-option value="blonde">Renault</ion-select-option>
-                      <ion-select-option value="black">Mercedez</ion-select-option>
-                      <ion-select-option value="red">Jeep</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                
-                </ion-list>
-                <ion-list>
-                    <ion-list-header>Placa</ion-list-header>
-                    <ion-item>
-                        <ion-label position="floating">Ingrese placa de su auto</ion-label>
-                        <ion-input></ion-input>
-                      </ion-item>
-                </ion-list>
-                <ion-list>
-                  <ion-list-header>Tipo</ion-list-header>
-                  <ion-item lines="none">
-                      <ion-slides [options]="tipoVehiculoSlides">
-                        <ion-slide *ngFor="let vehiculos of tipo_vehiculo">
-                            <ion-img class="pick-tipo_vehiculo"
-                                      src="/assets/tipo_vehiculos/{{ vehiculos.img }}"
-                                      [ngClass]="{ 'pick-tipo_vehiculo-seleccionado': vehiculos.seleccionado }"
-                                      (click)="seleccionado_tipo_vehiculo(vehiculos)">
-
-                            </ion-img>
-                        </ion-slide>
-                      </ion-slides>
-                    </ion-item>
-              </ion-list>
-              <ion-list>
-                <ion-list-header>Color</ion-list-header>
-                <ion-item lines="none">
-                    <ion-slides [options]="colorSlides">
-                      <ion-slide *ngFor="let color of colores">
-                          <ion-img class="pick-color img-color"
-                                    src="/assets/color/{{ color.img }}"
-                                    [ngClass]="{ 'pick-color-seleccionado': color.seleccionado }"
-                                    (click)="seleccionado_color(color)">
-
-                          </ion-img>
-                      </ion-slide>
-                    </ion-slides>
-                  </ion-item>
-            </ion-list>
-          </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button expand="block" color="primary">Agregar Auto</ion-button>
+        <ion-col style="text-align: -webkit-center;" align-self-center>
+          <!-- <img src="../assets/banner_add_auto.png"> -->
+          <ion-button expand="full"
+                      (click)="openCamera()"
+                      shape="round">
+                      <ion-icon slot="start" name="camera"></ion-icon>
+            Camara
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list list="none">
+          <ion-list-header>Marca</ion-list-header>
+
+          <ion-item lines="none">
+            <ion-label>Seleciona Marca</ion-label>
+            <ion-select okText="Okay" cancelText="Dismiss" 
+                        [(ngModel)]="registerCar.brand_id" 
+                        (ionChange)="selectedBrand(registerCar.brand_id)">
+              <ion-select-option *ngFor="let brand of brands"
+                                 value="{{brand.id}}" >{{brand.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-list>
+        <ion-list>
+          <ion-list-header>Placa</ion-list-header>
+          <ion-item>
+            <ion-label position="floating">Ingrese placa de su auto</ion-label>
+            <ion-input [(ngModel)]="registerCar.board" 
+                       type="text" 
+                       id="input"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>Tipo</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesCar">
+              <ion-slide *ngFor="let types of carTypes">
+                <ion-img class="pick-item"   
+                         src="{{ URL + types.picture}}"
+                         (click)="selectedCar(types)"
+                         [class.pick-selected-item]="types.picture === carSel">
+                </ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>Cilindraje</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesCar">
+              <ion-slide *ngFor="let cilin of cilindrajes">
+                <ion-img class="pick-item"   
+                         src="{{ URL + cilin.picture}}"
+                         (click)="selectedCilindraje(cilin)"
+                         [class.pick-selected-item]="cilin.picture === cilindrajeSel">
+                </ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>Color</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesColor">
+              <ion-slide *ngFor="let color of colors">
+                <ion-img class="pick-item img-color" 
+                         src="{{ URL + color.picture }}"
+                         (click)="selectedColor(color)"
+                         [class.pick-selected-item]="color.picture === colorSel">
+                </ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" 
+                    color="primary" 
+                    (click)="saveCar(registerCar)">
+                    Agregar Auto
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

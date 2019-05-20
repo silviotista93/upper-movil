@@ -29,7 +29,7 @@ export class CuentaService {
 
     return new Promise(resolve => {
       console.log(data);
-      this.http.post(`${this.URL}/api/auth/update-password`, data, { headers: this.headers })
+      this.http.post(`${this.URL}/api/profile/update-password`, data, { headers: this.headers })
         .subscribe(async resp => {
           console.log('esta es la respuesta ', resp);
 
@@ -76,13 +76,14 @@ export class CuentaService {
   // #region Actualizar usuario
   updateProfile2(user: Usuario) {
     return new Promise(resolve => {
-      this.http.put(`${this.URL}/api/profile/update`, user, { headers: this.headers })
+      this.http.post(`${this.URL}/api/profile/update`, user, { headers: this.headers })
         .subscribe(async resp => {
           if (resp['access_token']) {
             console.log(resp);
-            // this.userService.token = resp['token_type'] + ' ' + resp['access_token'];
+            
             await this.userService.saveToken(resp['token_type'] + ' ' + resp['access_token']);
             this.uiService.successToast(resp['message']);
+            window.location.reload();
             resolve(true);
 
           } else if (resp['error']) {
