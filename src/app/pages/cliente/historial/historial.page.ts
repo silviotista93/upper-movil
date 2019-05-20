@@ -13,6 +13,6 @@ export class HistorialPage implements OnInit {
   ngOnInit() {
   }
   pushDetalleLavado() {
-     this.navCtrl.navigateForward('/detalle-lavado');
+     this.navCtrl.navigateForward('/menu/detalle-lavado');
   }
 }

@@ -60,7 +60,8 @@ export class LoginPage implements OnInit {
            if (validated) {
           //   NAVEGA A LA PAGINA PRINCIPAL
             loading.dismiss();
-             this.navCtrl.navigateRoot('home', { animated: true });
+             this.navCtrl.navigateRoot('/menu/home', { animated: true });
+             window.location.reload();
            } else {
             //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
             }
@@ -89,7 +90,7 @@ export class LoginPage implements OnInit {
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
-      this.navCtrl.navigateRoot('home', { animated: true });
+      this.navCtrl.navigateRoot('/menu/home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
