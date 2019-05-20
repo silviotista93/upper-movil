@@ -44,7 +44,7 @@ export class AutosPage implements OnInit {
   }
 
   pushAgregarAuto() {
-    this.navCtrl.navigateForward('/agregar-auto');
+    this.navCtrl.navigateForward('/menu/agregar-auto');
   }
 
   // #region Cargar Datos

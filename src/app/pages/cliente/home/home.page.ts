@@ -29,14 +29,17 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-    this.menu.enable(true);
+    this.menu.enable(true , 'content');
     setTimeout(() => {
       this.usuario = this.userService.getUsuario();
       console.log('Este es el usuario malo', this.usuario);
       this.loadMap();
     }, 500);
   }
-
+  openFirst() {
+    this.menu.enable(true, 'content');
+    this.menu.open('content');
+  }
 
   //#region Logica de mapas
   async loadMap() {
@@ -98,6 +101,9 @@ export class HomePage implements OnInit {
     });
   }
   //#endregion
+  toggleMenu() {
+    this.menu.open('main');
+  }
 
 
 }
