@@ -14,9 +14,10 @@ const routes: Routes = [
   //   loadChildren: './pages/cliente/list/list.module#ListPageModule',
   //   canLoad: [ UserGuard ]
   // },
- { path: 'login',
-   loadChildren: './pages/login/login.module#LoginPageModule',
- },
+  {
+    path: 'login',
+    loadChildren: './pages/login/login.module#LoginPageModule',
+  },
   // { path: 'subscripcion', loadChildren: './pages/cliente/subscripcion/subscripcion.module#SubscripcionPageModule', canLoad: [ UserGuard ] },
   // { path: 'historial', loadChildren: './pages/cliente/historial/historial.module#HistorialPageModule', canLoad: [ UserGuard ] },
   // { path: 'autos', loadChildren: './pages/cliente/autos/autos.module#AutosPageModule', canLoad: [ UserGuard ] },
@@ -28,6 +29,7 @@ const routes: Routes = [
   // { path: 'agregar-auto', loadChildren: './pages/cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [ UserGuard ] },
   // { path: 'menu', component: MenuComponent, canLoad: [ UserGuard ] },
    { path: '', loadChildren: './pages/menu/menu.module#MenuPageModule', canLoad: [ UserGuard ] },
+ 
 ];
 
 @NgModule({
@@ -36,4 +38,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
