@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ImageModalPageModule } from './pages/cliente/image-modal/image-modal.module';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { ComponentsModule } from './components/components.module';
+import { PipesModule } from './pipes/pipes.module';
+
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import { ComponentsModule } from './components/components.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ImageModalPageModule,
+    PipesModule,
     HttpClientModule,
     ComponentsModule,
     IonicStorageModule.forRoot()

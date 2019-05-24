@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NavController, LoadingController } from '@ionic/angular';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NavController, LoadingController, IonSlides } from '@ionic/angular';
 import { CarService } from '../../../service/cliente/car.service';
 import { Car, Usuario } from '../../../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,7 @@ import { UserService } from '../../../service/cliente/user.service';
 
 export class AutosPage implements OnInit {
 
+  
   cars: Car[] = [];
 
   URL = environment.url;
@@ -27,20 +28,9 @@ export class AutosPage implements OnInit {
   public user: Usuario = {};
 
   ngOnInit() {
-
     this.loadData();
-
     this.user = this.userService.getUsuario();
     console.log('usuario ', this.user);
-
-    // this.carService.newCar.subscribe(car => {
-    //   this.cars.unshift(car);
-    // });
-
-    // this.carService.newPost.subscribe(car => {
-    //   this.cars.unshift(car);
-    //   this.cars.reverse();
-    // });
   }
 
   pushAgregarAuto() {

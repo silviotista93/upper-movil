@@ -14,14 +14,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="secondary" >
+<ion-content color="secondary">
   <ion-toolbar color="secondary" style="padding: 10px;">
     <ion-grid>
       <ion-row>
         <ion-col size="5" size-lg="5" size-md="5" size-sm="5" size-xs="5">
 
           <ion-avatar style="width: 90px !important; height: 90px !important;">
-            <img src="{{ URL + user.avatar }}">            
+            <img src="{{ URL + user.avatar }}">
           </ion-avatar>
         </ion-col>
         <ion-col style="margin-top: 16px; margin-bottom: 16px; align-items: center;justify-content: center" size="7"
@@ -32,9 +32,17 @@
     </ion-grid>
   </ion-toolbar>
 
-  <ion-card style="margin-top: 10px;" *ngFor="let car of cars " >
+  <ion-slides class="swiper-no-swiping" #slideAutos mode="ios" *ngIf="cars.length <= 0">
+    <ion-slide>
+      <ion-label>No hay carros registrados</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+
+  <ion-card style="margin-top: 10px;" *ngFor="let car of cars ">
     <ion-card-header style="padding: 5px;">
-      <ion-grid >
+
+      <ion-grid>
         <ion-row>
           <ion-col size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
             <!-- <img class="img-autos" src="/assets/images/autos/4.jpg"> -->
@@ -45,7 +53,9 @@
           <ion-col size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
             <ion-card-title style="font-size: 21px;">{{car.brand.name}}</ion-card-title>
             <!-- <ion-card-subtitle>Clase B</ion-card-subtitle> -->
-            <ion-card-title style="font-size: 13px;padding: 5px 0px;"><h6>Cilindraje: {{car.car_type.name}}</h6></ion-card-title>
+            <ion-card-title style="font-size: 13px;padding: 5px 0px;">
+              <h6>Cilindraje: {{car.car_type.name}}</h6>
+            </ion-card-title>
             <ion-row size="12">
               <ion-col size="3">
                 <ion-card-title style="font-size: 13px;padding: 5px 0px;">placa</ion-card-title>

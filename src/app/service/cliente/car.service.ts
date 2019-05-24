@@ -120,9 +120,29 @@ export class CarService {
             this.streamPost(resp['car']);
             resolve(true);
           } else {
+            this.uiService.successToast(resp['No se creo el carro']);
             resolve(false);
           }
-        });
+        },
+          async err => {
+            console.log('esta es la respuesta error');
+            console.log(err);
+
+            if (err['error']["errors"]) {
+              const errores = err['error']["errors"];
+              let msgError = "";
+
+              Object.keys(errores).map(error => {
+                const detalle = errores[error][0];
+                msgError += `${detalle}\n`;
+              });
+              if (msgError !== "") {
+                this.uiService.errorToast(msgError);
+              }
+              resolve(true);
+            }
+            resolve(false);
+          });
     });
   }
 

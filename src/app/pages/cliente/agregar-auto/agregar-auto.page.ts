@@ -3,9 +3,11 @@ import { Brand, Color, Car_type, Usuario, Car } from 'src/app/interfaces/interfa
 import { CarService } from 'src/app/service/cliente/car.service';
 import { UserService } from 'src/app/service/cliente/user.service';
 import { environment } from 'src/environments/environment';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Cilindraje } from '../../../interfaces/interfaces';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { NgForm } from '@angular/forms';
+import { UiServiceService } from 'src/app/service/ui-service.service';
 
 
 declare var window: any;
@@ -29,7 +31,7 @@ export class AgregarAutoPage implements OnInit {
   };
   //#endregion
 
-  @Output() avatarSel = new EventEmitter<string>();
+  avatarSel = new EventEmitter<string>();
 
   brands: Brand[] = [];
   colors: Color[] = [];
@@ -38,6 +40,7 @@ export class AgregarAutoPage implements OnInit {
   user: Usuario = {};
 
   tempImages: string[] = [];
+  image: string = "../assets/banner_add_auto.png";
 
   public carSel: string;
   public colorSel: string;
@@ -51,7 +54,7 @@ export class AgregarAutoPage implements OnInit {
 
   registerCar: Car = {
     board: '',
-    picture: '/storage/cars/b40daba2f22937be7fc1b47899d8e382.jpg',
+    picture: '',
     car_type_id: '',
     cilindraje_id: '',
     brand_id: '',
@@ -66,6 +69,8 @@ export class AgregarAutoPage implements OnInit {
     private loadCtrl: LoadingController,
     private navCtrl: NavController,
     private userService: UserService,
+    private actSheetCtrl: ActionSheetController,
+    private uiService: UiServiceService,
     private camera: Camera) { }
 
   ngOnInit() {
@@ -145,26 +150,109 @@ export class AgregarAutoPage implements OnInit {
   }
   // #endregion
 
+  // #region Abrir Camera
   openCamera() {
-    const options: CameraOptions = {
+    const optionsCamera: CameraOptions = {
       quality: 60,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
-      sourceType: this.camera.PictureSourceType.CAMERA
+      sourceType: this.camera.PictureSourceType.CAMERA,
     }
+    this.getPicture(optionsCamera);
+  }
+  // #endregion
 
+  // #region Abrir Galeria
+  openGallery() {
+    const optionsGallery: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    this.getPicture(optionsGallery);
+  }
+  // #endregion
+
+  // #region Obtener imagen
+  getPicture(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       // let base64Image = 'data:image/jpeg;base64,' + imageData;
       const img = window.Ionic.WebView.convertFileSrc(imageData);
+
+      this.image = img;
       console.log(img)
 
-      this.tempImages.push( img );
+      this.tempImages.push(img);
+
     }, (err) => {
       // Handle error
     });
   }
+  // #endregion
+
+  // #region action sheet
+  async presentActionSheet() {
+    const actionSheet = await this.actSheetCtrl.create({
+      header: 'Selecciona una opción',
+      buttons: [
+        {
+          text: 'Camara',
+          icon: 'camera',
+          handler: () => {
+            this.openCamera();
+            console.log('Camara clicked');
+          }
+        }, {
+          text: 'Galeria',
+          icon: 'images',
+          handler: () => {
+            this.openGallery();
+            console.log('Galeria clicked');
+          }
+        }]
+    });
+    await actionSheet.present();
+  }
+  // #endregion
+
+  // async createCar(fCar: NgForm) {
+  //   this.registerCar.car_type_id = this.carId;
+  //   this.registerCar.color_id = this.colorId;
+  //   this.registerCar.cilindraje_id = this.cilindrajeId;
+  //   this.registerCar.user_id = this.user.id.toString();
+
+  //   console.log('data', this.registerCar);
+  //   const loading = await this.loadCtrl.create({
+  //     spinner: 'crescent'
+  //   });
+  //   loading.present();
+
+  //   if (fCar.invalid) {
+  //     loading.dismiss();
+  //     this.uiService.errorToast('Todos los campos son obligatorios');
+  //     return;
+  //   }
+  //   const validated = this.carService.createCar(this.registerCar);
+
+  //   console.log(this.registerCar);
+
+  //   if (validated) {
+  //     loading.dismiss();
+  //     console.log("paila");
+  //     // this.navCtrl.navigateRoot('menu/autos', { animated: true });
+
+  //   } else {
+  //     loading.dismiss();
+  //     this.uiService.errorToast('paila');
+  //   }
+  // }
+
+
 }

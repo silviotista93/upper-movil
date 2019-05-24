@@ -14,6 +14,7 @@ export class UiServiceService {
     public toastCtrl: ToastController,
     private http: HttpClient) { }
 
+  // #region ALERTA INFORMATIVA
   async alertInfo(message: string) {
     const alert = await this.alertCtrl.create({
       message,
@@ -22,7 +23,9 @@ export class UiServiceService {
 
     await alert.present();
   }
+  // #endregion
 
+  // #region Toast de Error y Succes
   async successToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -31,7 +34,7 @@ export class UiServiceService {
     });
     toast.present();
   }
-
+ 
   async errorToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -40,6 +43,7 @@ export class UiServiceService {
     });
     toast.present();
   }
+   // #endregion
 
   //#region Metodo que devuelve la url para llenar el menu
   getMenuOptions() {

@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-    // loading.present();
+    loading.present();
     this.geolocation.getCurrentPosition().then((resp) => {
       const myLatLng = {
         lat: resp.coords.latitude,
@@ -60,7 +60,7 @@ export class HomePage implements OnInit {
         disableDefaultUI: true
       });
       google.maps.event.addListenerOnce(this.mapRef, 'idle', () => {
-        // loading.dismiss();
+        loading.dismiss();
         this.addMarker(resp.coords.latitude, resp.coords.longitude);
       });
     }).catch((error) => {

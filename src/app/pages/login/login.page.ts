@@ -15,6 +15,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 export class LoginPage implements OnInit {
 
   @ViewChild('slidePrincipal') slides: IonSlides;
+  
   usuario: Usuario;
   loginUser = {
     email: '',
