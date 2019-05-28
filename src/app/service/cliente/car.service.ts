@@ -40,16 +40,28 @@ export class CarService {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
-    return this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken })
+    return this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken });
   }
+   getCarsPlans() {
+     const headerToken = new HttpHeaders({
+       'Authorization': this.userService.token,
+     });
+     return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
+   }
+   getPlanTypeWashes() {
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+    return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
+   }
   // #endregion
 
-  // #region OBTENER MARCAS/BRANDS 
+  // #region OBTENER MARCAS/BRANDS
   getBrand() {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
-    return this.http.get(`${this.URL}/api/car/brand`, { headers: headerToken })
+    return this.http.get(`${this.URL}/api/car/brand`, { headers: headerToken });
   }
   // #endregion
 
@@ -97,7 +109,7 @@ export class CarService {
             resolve(true);
           } else {
             // this.navCtrl.navigateRoot('/login');
-            console.log('else de la promesa')
+            console.log('else de la promesa');
             resolve(false);
           }
         });

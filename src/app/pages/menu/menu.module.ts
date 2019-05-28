@@ -37,7 +37,15 @@ const routes: Routes = [
       { path: 'contacto', loadChildren: '../cliente/contacto/contacto.module#ContactoPageModule', canLoad: [UserGuard] },
       // tslint:disable-next-line:max-line-length
       { path: 'agregar-auto', loadChildren: '../cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [UserGuard] },
+      { path: 'modal-solicitar', loadChildren: '../cliente/modal-solicitar/modal-solicitar.module#ModalSolicitarPageModule'},
+      {
+        path: 'modal-confirmar-solicitud',
+        loadChildren: '../cliente/modal-confirmar-solicitud/modal-confirmar-solicitud.module#ModalConfirmarSolicitudPageModule' },
 
+      {
+        path: 'modal-alert-agregar-auto',
+        loadChildren: '../cliente/modal-alert-agregar-auto/modal-alert-agregar-auto.module#ModalAlertAgregarAutoPageModule' 
+      },
 
     ]
 

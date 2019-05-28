@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AlertController, MenuController, Events } from '@ionic/angular';
+import { AlertController, MenuController, Events, ModalController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
-import { Usuario } from 'src/app/interfaces/interfaces';
+import { Usuario, Car } from 'src/app/interfaces/interfaces';
 import { UserService } from 'src/app/service/cliente/user.service';
+import { ModalSolicitarPage } from '../modal-solicitar/modal-solicitar.page';
+import { CarService } from '../../../service/cliente/car.service';
+import { ModalAlertAgregarAutoPage } from '../modal-alert-agregar-auto/modal-alert-agregar-auto.page';
 
 
 declare var google;
@@ -16,6 +19,7 @@ declare var google;
 export class HomePage implements OnInit {
   mapRef = null;
   private usuario: Usuario = {};
+  cars: Car[] = [];
 
   constructor(
     public events: Events,
@@ -23,7 +27,10 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     private menu: MenuController,
     private loadCtrl: LoadingController,
-    private userService: UserService, ) {
+    private userService: UserService,
+    private modalCtrl: ModalController,
+    private carService: CarService,
+    ) {
 
   }
 
@@ -104,6 +111,44 @@ export class HomePage implements OnInit {
   toggleMenu() {
     this.menu.open('main');
   }
+   loadData() {
+    this.carService.getCars().subscribe(resp => {
+      console.log(resp['cars']);
+      this.cars = resp['cars'];
+      return resp['cars'];
+    });
+  }
+  // #region Cargar Datos
 
-
+ async abrirModal () {
+  const loading = await this.loadCtrl.create({
+    spinner: 'crescent'
+  });
+  this.carService.getCarsPlans().subscribe( async resp => {
+    this.cars = resp['cars'];
+    if ( this.cars.length ) {
+      const modal = await this.modalCtrl.create({
+        component: ModalSolicitarPage,
+        cssClass: 'my-custom-modal-css',
+        componentProps: {
+        nombre: this.cars
+      }
+      });
+      await modal.present();
+      loading.dismiss();
+      return resp['cars'];
+    } else {
+      const modal = await this.modalCtrl.create({
+        component: ModalAlertAgregarAutoPage,
+        cssClass: 'modal-alert-css',
+        componentProps: {
+        nombre: this.cars
+      }
+      });
+      await modal.present();
+      loading.dismiss();
+      return resp['cars'];
+    }
+  });
+  }
 }

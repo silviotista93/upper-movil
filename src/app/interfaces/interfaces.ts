@@ -1,6 +1,6 @@
 export interface Usuario {
     id?: string;
-    name?: string;
+    names?: string;
     last_name?: string;
     email?: string;
     password?: string;
@@ -26,6 +26,7 @@ export interface RolesUsers {
 
 //#region interfaces de Carros
 export interface Car {
+  subscription?: any;
     id?: string;
     board?: string;
     picture?: string;
@@ -34,6 +35,7 @@ export interface Car {
     brand_id?: string;
     color_id?: string;
     user_id?: string;
+    seleccionado?: boolean;
 }
 export interface Brand {
     id?: string;
@@ -57,5 +59,23 @@ export interface Car_type {
     id?: string;
     name?: string;
     picture?: string;
-}      
-// #endregion    
+}
+
+export interface Type_Wash {
+    id?: string;
+    type?: string;
+    price?: string;
+    description?: string;
+    seleccionado?: boolean;
+}
+export interface Order {
+    id?: string;
+    latitude?: string;
+    longitude?: string;
+    sign?: string;
+    description?: string;
+    subscription?: string;
+    washer_id?: string;
+    address?: string;
+}
+// #endregion
