@@ -80,7 +80,6 @@ export class CuentaService {
         .subscribe(async resp => {
           if (resp['access_token']) {
             console.log(resp);
-            
             await this.userService.saveToken(resp['token_type'] + ' ' + resp['access_token']);
             this.uiService.successToast(resp['message']);
             window.location.reload();

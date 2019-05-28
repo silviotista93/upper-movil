@@ -15,7 +15,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 export class LoginPage implements OnInit {
 
   @ViewChild('slidePrincipal') slides: IonSlides;
-  
+
   usuario: Usuario;
   loginUser = {
     email: '',
@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   };
   registerUser: Usuario = {
     email: '',
-    name: '',
+    names: '',
     last_name: '',
     phone_1: '',
   };
@@ -54,10 +54,11 @@ export class LoginPage implements OnInit {
           id: profile['id'],
           email: profile['email'],
           avatar: profile['picture_large']['data']['url'],
-          name: profile['name']
+          names: profile['name']
           };
           console.log(this.usuario);
           const validated = this.userService.loginFacebook(this.usuario);
+          console.log('AQUI ESTAMOS MAURICIO');
            if (validated) {
           //   NAVEGA A LA PAGINA PRINCIPAL
             loading.dismiss();

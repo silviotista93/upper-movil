@@ -30,7 +30,7 @@
     <ion-grid>
         <ion-row>
           <ion-col style="text-align: center" align-self-center>
-              <ion-label style="font-weight: bold; font-size: 20px;">{{ usuario.name}} {{ usuario.last_name}}</ion-label>
+              <ion-label style="font-weight: bold; font-size: 20px;">{{ usuario.names}} {{ usuario.last_name}}</ion-label>
               <p style="font-size: 16px; margin: 5px 0px;">{{ usuario.email }}</p>
             </ion-col>
         </ion-row>
@@ -46,8 +46,8 @@
               <form (ngSubmit)="updateProfile( fProfile )" #fProfile="ngForm">
                       <ion-item>
                           <ion-label position="stacked">Nombre</ion-label>
-                          <ion-input *ngIf="usuario.social_acounts === null" name="name" [(ngModel)]="usuario.name"></ion-input>
-                          <ion-input *ngIf="usuario.social_acounts !== null" name="name"  [(ngModel)]="usuario.name"></ion-input>
+                          <ion-input *ngIf="usuario.social_acounts === null" name="name" [(ngModel)]="usuario.names"></ion-input>
+                          <ion-input *ngIf="usuario.social_acounts !== null" name="name"  [(ngModel)]="usuario.names"></ion-input>
                       </ion-item>
                       <ion-item>
                         <ion-label position="stacked">Apellidos</ion-label>

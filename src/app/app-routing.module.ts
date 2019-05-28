@@ -18,6 +18,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: './pages/login/login.module#LoginPageModule',
   },
+  // tslint:disable-next-line:max-line-length
   // { path: 'subscripcion', loadChildren: './pages/cliente/subscripcion/subscripcion.module#SubscripcionPageModule', canLoad: [ UserGuard ] },
   // { path: 'historial', loadChildren: './pages/cliente/historial/historial.module#HistorialPageModule', canLoad: [ UserGuard ] },
   // { path: 'autos', loadChildren: './pages/cliente/autos/autos.module#AutosPageModule', canLoad: [ UserGuard ] },
@@ -26,10 +27,10 @@ const routes: Routes = [
   // canLoad: [ UserGuard ] },
   // { path: 'image-modal', loadChildren: './pages/cliente/image-modal/image-modal.module#ImageModalPageModule', canLoad: [ UserGuard ] },
   // { path: 'contacto', loadChildren: './pages/cliente/contacto/contacto.module#ContactoPageModule', canLoad: [ UserGuard ] },
+  // tslint:disable-next-line:max-line-length
   // { path: 'agregar-auto', loadChildren: './pages/cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [ UserGuard ] },
   // { path: 'menu', component: MenuComponent, canLoad: [ UserGuard ] },
    { path: '', loadChildren: './pages/menu/menu.module#MenuPageModule', canLoad: [ UserGuard ] },
- 
 ];
 
 @NgModule({
