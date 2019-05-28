@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { LoadingController, NavController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Cilindraje } from '../../../interfaces/interfaces';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UiServiceService } from 'src/app/service/ui-service.service';
 
 
@@ -45,7 +45,8 @@ export class AgregarAutoPage implements OnInit {
   public carSel: string;
   public colorSel: string;
   public cilindrajeSel: string;
-  public brandSel: string;
+
+  public brandId: string;
 
   public carId: string;
   public cilindrajeId: string;
@@ -54,13 +55,15 @@ export class AgregarAutoPage implements OnInit {
 
   registerCar: Car = {
     board: '',
-    picture: '',
+    picture: 'cars/8CO5OD33Y1BuYIm0TvAeifFkCzce95fmn0cJ7cqI.jpeg',
     car_type_id: '',
     cilindraje_id: '',
     brand_id: '',
     color_id: '',
     user_id: ''
   };
+
+
 
   URL = environment.url;
 
@@ -100,13 +103,27 @@ export class AgregarAutoPage implements OnInit {
     // console.log(this.colorId);
   }
 
-  selectedBrand(registerCar) {
-    console.log(registerCar.brand_id)
+  selectedBrand(brand) {
+    this.avatarSel.emit(brand.id)
+    this.brandId = brand.id;
+    console.log("marca", brand.id)
   }
   // #endregion
 
   // #region Guardar carro
   async saveCar(registerCar) {
+
+    // registerCar = new FormGroup ({
+    //   board: new FormControl('', Validators.required),
+    //   picture: new FormControl('', Validators.required), 
+    //   car_type_id: new FormControl('', Validators.required), 
+    //   cilindraje_id: new FormControl('', Validators.required), 
+    //   brand_id: new FormControl('', Validators.required), 
+    //   color_id: new FormControl('', Validators.required), 
+    //   user_id: new FormControl('', Validators.required),   
+    // });
+
+    // registerCar.brand_id = this.brandId;
     registerCar.car_type_id = this.carId;
     registerCar.color_id = this.colorId;
     registerCar.cilindraje_id = this.cilindrajeId;
@@ -189,6 +206,8 @@ export class AgregarAutoPage implements OnInit {
       this.image = img;
       console.log(img)
 
+      //this.carService.createCar(imageData);
+      this.registerCar.picture = imageData;
       this.tempImages.push(img);
 
     }, (err) => {
@@ -222,37 +241,37 @@ export class AgregarAutoPage implements OnInit {
   }
   // #endregion
 
-  // async createCar(fCar: NgForm) {
-  //   this.registerCar.car_type_id = this.carId;
-  //   this.registerCar.color_id = this.colorId;
-  //   this.registerCar.cilindraje_id = this.cilindrajeId;
-  //   this.registerCar.user_id = this.user.id.toString();
+  async createCar(fCar: NgForm) {
+    this.registerCar.car_type_id = this.carId;
+    this.registerCar.color_id = this.colorId;
+    this.registerCar.cilindraje_id = this.cilindrajeId;
+    this.registerCar.user_id = this.user.id.toString();
 
-  //   console.log('data', this.registerCar);
-  //   const loading = await this.loadCtrl.create({
-  //     spinner: 'crescent'
-  //   });
-  //   loading.present();
+    console.log('data', this.registerCar);
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
 
-  //   if (fCar.invalid) {
-  //     loading.dismiss();
-  //     this.uiService.errorToast('Todos los campos son obligatorios');
-  //     return;
-  //   }
-  //   const validated = this.carService.createCar(this.registerCar);
+    if (fCar.invalid) {
+      loading.dismiss();
+      this.uiService.errorToast('Todos los campos son obligatorios');
+      return;
+    }
+    const validated = this.carService.createCar(this.registerCar);
 
-  //   console.log(this.registerCar);
+    console.log(this.registerCar);
 
-  //   if (validated) {
-  //     loading.dismiss();
-  //     console.log("paila");
-  //     // this.navCtrl.navigateRoot('menu/autos', { animated: true });
+    if (validated) {
+      loading.dismiss();
+      console.log("paila");
+      // this.navCtrl.navigateRoot('menu/autos', { animated: true });
 
-  //   } else {
-  //     loading.dismiss();
-  //     this.uiService.errorToast('paila');
-  //   }
-  // }
+    } else {
+      loading.dismiss();
+      this.uiService.errorToast('paila');
+    }
+  }
 
 
 }

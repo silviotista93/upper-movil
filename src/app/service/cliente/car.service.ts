@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { Car, Brand } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../ui-service.service';
 import { Subject } from 'rxjs';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 @Injectable({
@@ -30,7 +31,8 @@ export class CarService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private uiService: UiServiceService) { }
+    private uiService: UiServiceService,
+    private fileTransfer: FileTransfer) { }
 
 
   // #region OBTENER CARROS
@@ -107,7 +109,20 @@ export class CarService {
   createCar(car: Car) {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
+      // 'Content-Type': 'application/json'
     });
+    const options: FileUploadOptions = {
+      fileKey: 'picture',
+      headers: { 'Authorization': this.userService.token }
+    }
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+
+    fileTransfer.upload(car.picture, `${this.URL}/api/car/create-car`, options)
+      .then(data => {
+        console.log('hola la imagen', data)
+      }).catch(err => {
+        console.log('paila la imagen', err)
+      });
 
     console.log('car service', this.userService.token);
 

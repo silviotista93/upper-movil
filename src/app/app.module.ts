@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IonicStorageModule } from '@ionic/storage';
@@ -37,6 +38,7 @@ import { PipesModule } from './pipes/pipes.module';
     Camera,
     Facebook,
     Geolocation,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
