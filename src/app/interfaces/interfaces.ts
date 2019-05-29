@@ -68,14 +68,25 @@ export interface Type_Wash {
     description?: string;
     seleccionado?: boolean;
 }
+export interface Plan_type_Wash {
+    id?: string;
+    type_wash_id?: string;
+    plan_id?: string;
+    quantity?: string;
+
+}
 export interface Order {
     id?: string;
-    latitude?: string;
-    longitude?: string;
+    latitude?: any;
+    longitude?: any;
     sign?: string;
+    status?: any;
     description?: string;
     subscription?: string;
     washer_id?: string;
+    user_id?: string;
     address?: string;
+    typesWash?: any;
+    created_at?: any;
 }
 // #endregion

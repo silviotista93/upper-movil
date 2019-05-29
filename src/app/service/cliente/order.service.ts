@@ -49,13 +49,25 @@ export class OrderService {
     });
   }
 
-  createOrder(order: Order) {
-    console.log('token', this.userService.token);
+  getOrden() {
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+      'Content-Type': 'application/json',
+    });
+    return this.http.get(`${this.URL}/api/order/index-client-order`, { headers: headerToken });
+  }
 
+  createOrder(order: Order) {
+    const headerToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'Authorization': this.userService.token,
+    });
     return new Promise(resolve => {
-      this.http.post(`${URL}/api/order/create-order`, order, { headers: headers })
+      this.http.post(`${this.URL}/api/order/create-order`, order, { headers: headerToken })
         .subscribe(async resp => {
           if (!resp['ERROR']) {
+            console.log('ok, realizado');
             resolve(true);
           } else {
             resolve(false);

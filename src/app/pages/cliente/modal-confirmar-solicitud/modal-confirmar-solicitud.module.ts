@@ -5,9 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ModalConfirmarSolicitudPage } from './modal-confirmar-solicitud.page';
+import { ModalSolicitarPage } from '../modal-solicitar/modal-solicitar.page';
+import { ModalSolicitarPageModule } from '../modal-solicitar/modal-solicitar.module';
 
 
 @NgModule({
+  entryComponents: [
+    ModalSolicitarPage,
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -42,16 +42,25 @@ export class CarService {
   }
    getCarsPlans() {
      const headerToken = new HttpHeaders({
-       'Authorization': this.userService.token,
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'Authorization': this.userService.token,
      });
      return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
    }
-   getPlanTypeWashes() {
-    const headerToken = new HttpHeaders({
-      'Authorization': this.userService.token,
-    });
-    return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
-   }
+
+  //  getPlanTypeWashes(id: string) {
+  //   const data = { id };
+  //   const headerToken = new HttpHeaders({
+  //     'Authorization': this.userService.token,
+  //   });
+  //   return  this.http.post(`${this.URL}/api/car/plan-type-washes`, data, { headers: headerToken })
+  //       .subscribe(async resp => {
+  //         console.log(resp);
+  //         return resp['plan-type-washes'];
+  //       }, err => {
+  //       });
+  //  }
   // #endregion
 
   // #region OBTENER MARCAS/BRANDS
