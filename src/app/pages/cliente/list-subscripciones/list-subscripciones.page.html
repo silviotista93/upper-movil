@@ -1,0 +1,72 @@
+<ion-content class="background">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
+              <ion-item color="transparent" lines="none" (click) ="atras()" >
+                  <img slot="start" src = "/assets/iconos/atras_blanco.png" style="max-width: 25%;">   
+              </ion-item>
+                           
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
+              <ion-item color="transparent" lines="none">
+                    <ion-label color="light" style="font-size: 30px; font-weight: bold;">Selecciona Plán</ion-label>
+              </ion-item>
+                           
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-slides color="light" [options]= "sliderConfig">
+        <ion-slide >
+            <ion-card color="light" style="width: 85%;">
+                <ion-grid>
+                    <ion-row>
+                      <ion-col size="4" size-lg="8" size-md="8" size-sm="8" size-xs="8" style="padding-top: 13px;">
+                          <ion-card-title style="text-align: initial;font-size: 155%;">Lavado Exterior</ion-card-title>
+                          <ion-card-subtitle style="text-align: initial; color: #999999">Agregar 5 autos</ion-card-subtitle>
+                      </ion-col>
+                      <ion-col size="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+                          <ion-item lines="none">
+                              <img  slot="end" src="/assets/iconos/check_false.png" style="max-width: 70%; padding-top: 5px;">
+                          </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="12" size-lg="12" size-md="12" size-sm="12" size-xs="12" style="padding-top: 5px;">
+                          <ion-item lines="none">
+                              <img class="img-autos" style="width: 100%" src="/assets/images/carro_subscripcion.png">
+                          </ion-item>
+                      </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-card-content>
+                    <ion-button expand="block" color="primary">
+                      ver
+                    </ion-button>
+                </ion-card-content>
+                        
+            </ion-card>                    
+        </ion-slide>
+    
+      </ion-slides>
+      <ion-grid style="padding-left: 15px;">
+        <ion-row>
+          <ion-col size="12">
+            <p style="color: #ffffff;">Ofrecemos varios planes de lavado, escoge el que mas te guste.</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid style="padding-left: 15px;">
+        <ion-row>
+          <ion-col size="6">
+            <img style="width: 70%" src="/assets/iconos/select_1.png" alt="">
+          </ion-col>
+          <ion-col size="6">
+              <ion-button (click)="abriPaymet()" style="margin-top: -8px;" expand="block" color="primary" >
+                  Siguiente
+              </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-content>

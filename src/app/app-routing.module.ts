@@ -31,6 +31,7 @@ const routes: Routes = [
   // { path: 'agregar-auto', loadChildren: './pages/cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [ UserGuard ] },
   // { path: 'menu', component: MenuComponent, canLoad: [ UserGuard ] },
    { path: '', loadChildren: './pages/menu/menu.module#MenuPageModule', canLoad: [ UserGuard ] },
+  
 ];
 
 @NgModule({

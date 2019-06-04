@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Usuario } from '../../../interfaces/interfaces';
 import { UserService } from '../../../service/cliente/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-subscripcion',
@@ -11,11 +12,18 @@ import { UserService } from '../../../service/cliente/user.service';
 export class SubscripcionPage implements OnInit {
 
   usuario: Usuario = {};
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private navCtrl: NavController
+    ) { }
 
   ngOnInit() {
     this.usuario = this.userService.getUsuario();
     console.log(this.usuario);
+  }
+
+  abrirListSubscripciones() {
+    this.navCtrl.navigateForward('/menu/list-subscripciones');
   }
 
 }
