@@ -15,6 +15,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 export class CarService {
 
+  image;
   URL = environment.url;
   token: string = null;
 
@@ -32,6 +33,7 @@ export class CarService {
     private http: HttpClient,
     private userService: UserService,
     private uiService: UiServiceService,
+    private navCtrl: NavController,
     private fileTransfer: FileTransfer) { }
 
 
@@ -42,18 +44,18 @@ export class CarService {
     });
     return this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken });
   }
-   getCarsPlans() {
-     const headerToken = new HttpHeaders({
-       'Authorization': this.userService.token,
-     });
-     return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
-   }
-   getPlanTypeWashes() {
+  getCarsPlans() {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
     return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
-   }
+  }
+  getPlanTypeWashes() {
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+    return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
+  }
   // #endregion
 
   // #region OBTENER MARCAS/BRANDS
@@ -118,24 +120,12 @@ export class CarService {
   // #endregion
 
 
+  // #region Crear Carro
   createCar(car: Car) {
+
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
-      // 'Content-Type': 'application/json'
     });
-    const options: FileUploadOptions = {
-      fileKey: 'picture',
-      headers: { 'Authorization': this.userService.token }
-    }
-    const fileTransfer: FileTransferObject = this.fileTransfer.create();
-
-    fileTransfer.upload(car.picture, `${this.URL}/api/car/create-car`, options)
-      .then(data => {
-        console.log('hola la imagen', data)
-      }).catch(err => {
-        console.log('paila la imagen', err)
-      });
-
     console.log('car service', this.userService.token);
 
     return new Promise(resolve => {
@@ -143,8 +133,8 @@ export class CarService {
         .subscribe(async resp => {
           if (resp['car']) {
             this.uiService.successToast(resp['message']);
-            // this.newCar.emit(resp['car']);
             this.streamPost(resp['car']);
+            this.navCtrl.navigateRoot('/menu/autos', { animated: true });
             resolve(true);
           } else {
             this.uiService.successToast(resp['No se creo el carro']);
@@ -172,10 +162,29 @@ export class CarService {
           });
     });
   }
+  // #endregion
 
 
+  // #region Subir Foto
+  uploadPicture(img: string) {
 
+    const options: FileUploadOptions = {
+      fileKey: 'picture',
+      headers: { 'Authorization': this.userService.token }
+    }
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
+    fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
+      .then(data => {
+        console.log('imgen1', data.response)
+        this.image = data.response;
+        console.log('imgen2', this.image);
+        console.log('data', data)
+      }).catch(err => {
+        console.log('error', err)
+      });
+  }
+  // #endregion
 
 
 }
