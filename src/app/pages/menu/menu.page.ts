@@ -34,7 +34,7 @@ export class MenuPage implements OnInit {
 
     this.pages = [
       { title: 'Solicitar Servicio', url: '/menu/home', icon: 'home'},
-      { title: 'Subscripciones', url: '/menu/subscripcion', icon: 'subscripcion'},
+      { title: 'Suscripciones', url: '/menu/subscripcion', icon: 'subscripcion'},
       { title: 'Historial', url: '/menu/historial', icon: 'historial'},
       { title: 'Mis Autos', url: '/menu/autos', icon: 'autos'},
       { title: 'Contacto', url: '/menu/contacto', icon: 'contacto'},

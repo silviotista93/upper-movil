@@ -16,6 +16,7 @@ export class CuentaService {
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': this.userService.token,
   });
 
   constructor(
@@ -26,7 +27,7 @@ export class CuentaService {
   // #region Actualizar contraseña
   updatePassword(password: string, password_confirmation: string, id: string) {
     const data = { password, password_confirmation, id };
-
+    console.log(data);
     return new Promise(resolve => {
       console.log(data);
       this.http.post(`${this.URL}/api/profile/update-password`, data, { headers: this.headers })

@@ -25,6 +25,7 @@ export class ListSubscripcionesPage implements OnInit {
   }
   atras() {
     this.navCtrl.back();
+    this.statusBar.show();
   }
 
   abriPaymet() {
