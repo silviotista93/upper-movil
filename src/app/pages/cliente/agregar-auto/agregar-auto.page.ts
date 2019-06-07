@@ -6,8 +6,10 @@ import { environment } from 'src/environments/environment';
 import { LoadingController, NavController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Cilindraje } from '../../../interfaces/interfaces';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UiServiceService } from 'src/app/service/ui-service.service';
+import { Base64 } from '@ionic-native/base64/ngx';
+
 
 
 declare var window: any;
@@ -45,7 +47,8 @@ export class AgregarAutoPage implements OnInit {
   public carSel: string;
   public colorSel: string;
   public cilindrajeSel: string;
-  public brandSel: string;
+
+  public brandId: string;
 
   public carId: string;
   public cilindrajeId: string;
@@ -71,6 +74,7 @@ export class AgregarAutoPage implements OnInit {
     private userService: UserService,
     private actSheetCtrl: ActionSheetController,
     private uiService: UiServiceService,
+    private base64: Base64,
     private camera: Camera) { }
 
   ngOnInit() {
@@ -100,22 +104,26 @@ export class AgregarAutoPage implements OnInit {
     // console.log(this.colorId);
   }
 
-  selectedBrand(registerCar) {
-    console.log(registerCar.brand_id)
+  selectedBrand(brand) {
+    this.avatarSel.emit(brand.id)
+    this.brandId = brand.id;
+    console.log("marca", brand.id)
+
+
   }
   // #endregion
 
   // #region Guardar carro
   async saveCar(registerCar) {
+
+    registerCar.picture = this.carService.image;
     registerCar.car_type_id = this.carId;
     registerCar.color_id = this.colorId;
     registerCar.cilindraje_id = this.cilindrajeId;
     registerCar.user_id = this.user.id.toString();
 
     console.log('data', this.registerCar);
-
     await this.carService.createCar(registerCar);
-    this.navCtrl.navigateRoot('autos', { animated: true });
   }
   // #endregion
 
@@ -183,19 +191,23 @@ export class AgregarAutoPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      // let base64Image = 'data:image/jpeg;base64,' + imageData;
-      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      //let base64Image = 'data:image/jpeg;base64,' + imageData;
+      console.log('imagedata', imageData);
+      this.carService.uploadPicture(imageData);
 
-      this.image = img;
-      console.log(img)
-
-      this.tempImages.push(img);
+      this.base64.encodeFile(imageData).then((base64File: string) => {
+        this.image = base64File;
+        // this.registerCar.picture = base64File;
+      }, (err) => {
+        console.log(err);
+      });
 
     }, (err) => {
       // Handle error
     });
   }
   // #endregion
+
 
   // #region action sheet
   async presentActionSheet() {
@@ -222,16 +234,34 @@ export class AgregarAutoPage implements OnInit {
   }
   // #endregion
 
+  // #region de formulario 
   // async createCar(fCar: NgForm) {
+
+  //   // let data: FormData = new FormData();
+
   //   this.registerCar.car_type_id = this.carId;
   //   this.registerCar.color_id = this.colorId;
   //   this.registerCar.cilindraje_id = this.cilindrajeId;
   //   this.registerCar.user_id = this.user.id.toString();
 
-  //   console.log('data', this.registerCar);
+  //   // data.append('picture', this.registerCar.picture);
+  //   // data.append('board', this.registerCar.board);
+  //   // data.append('car_type_id', this.registerCar.car_type_id);
+  //   // data.append('brand_id', this.registerCar.brand_id);
+  //   // data.append('cilindraje_id', this.registerCar.cilindraje_id);
+  //   // data.append('color_id', this.registerCar.color_id);
+  //   // data.append('user_id', this.registerCar.user_id);
+
+  //   // const jsonString = JSON.stringify(this.registerCar);
+  //   // data.append('data', jsonString);
+
+  //   // console.log('data form', data.get('picture'));
+  //   // console.log('data form', data);
+
   //   const loading = await this.loadCtrl.create({
   //     spinner: 'crescent'
   //   });
+
   //   loading.present();
 
   //   if (fCar.invalid) {
@@ -245,7 +275,10 @@ export class AgregarAutoPage implements OnInit {
 
   //   if (validated) {
   //     loading.dismiss();
-  //     console.log("paila");
+  //     // data.forEach((value, key) => {
+  //     //   console.log("key %s: value %s", key, value);
+  //     // })
+  //     console.log("bien...");
   //     // this.navCtrl.navigateRoot('menu/autos', { animated: true });
 
   //   } else {
@@ -254,5 +287,6 @@ export class AgregarAutoPage implements OnInit {
   //   }
   // }
 
+  // #endregion
 
 }

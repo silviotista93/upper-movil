@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { Car, Brand } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../ui-service.service';
 import { Subject } from 'rxjs';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ import { Subject } from 'rxjs';
 
 export class CarService {
 
+  image;
   URL = environment.url;
   token: string = null;
 
@@ -30,7 +32,9 @@ export class CarService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private uiService: UiServiceService) { }
+    private uiService: UiServiceService,
+    private navCtrl: NavController,
+    private fileTransfer: FileTransfer) { }
 
 
   // #region OBTENER CARROS
@@ -125,11 +129,12 @@ export class CarService {
   // #endregion
 
 
+  // #region Crear Carro
   createCar(car: Car) {
+
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
-
     console.log('car service', this.userService.token);
 
     return new Promise(resolve => {
@@ -137,8 +142,8 @@ export class CarService {
         .subscribe(async resp => {
           if (resp['car']) {
             this.uiService.successToast(resp['message']);
-            // this.newCar.emit(resp['car']);
             this.streamPost(resp['car']);
+            this.navCtrl.navigateRoot('/menu/autos', { animated: true });
             resolve(true);
           } else {
             this.uiService.successToast(resp['No se creo el carro']);
@@ -166,10 +171,27 @@ export class CarService {
           });
     });
   }
+  // #endregion
 
 
+  // #region Subir Foto
+  uploadPicture(img: string) {
 
+    const options: FileUploadOptions = {
+      fileKey: 'picture',
+      headers: { 'Authorization': this.userService.token }
+    }
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
+    fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
+      .then(data => {
+        this.image = data.response;
+        console.log('imgen2', this.image);
+      }).catch(err => {
+        console.log('error', err)
+      });
+  }
+  // #endregion
 
 
 }
