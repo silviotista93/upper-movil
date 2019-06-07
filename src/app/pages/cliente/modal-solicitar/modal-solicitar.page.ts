@@ -38,6 +38,10 @@ export class ModalSolicitarPage implements OnInit {
     console.log('estos son tus coches', this.cars_2);
     this.statusBar.hide();
   }
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+    this.navCtrl.pop();
+  }
   cerrar_modal() {
     this.statusBar.show();
     this.modalCtrl.dismiss();

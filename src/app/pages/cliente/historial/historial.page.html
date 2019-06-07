@@ -16,55 +16,35 @@
 
 <ion-content color="secondary">
     <p style="color:#3277D8; margin: 16px;">Toca para más información</p>
-    <ion-card style="background-color: #FFFFFF" (click)="pushDetalleLavado()">
-        <ion-grid>
-            <ion-row>
-              <ion-col size="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
-                  <ion-item  lines="none">
-                      <ion-icon  name="pin" slot="start"></ion-icon>
-                      <ion-label style="font-size: 14px;margin-right: 0px;">16th Avenue, 4th Cross Street, Chennai</ion-label>
-                  </ion-item>
-                  <ion-item lines="none" style="margin-top:5%">
-                      <ion-card-subtitle color="primary">Lavado por:</ion-card-subtitle>
-                      <ion-label style="font-size: 14px;margin:0px; padding: 10px 0px 14px 10px"> Didier Ramirez</ion-label>
-                  </ion-item>
-              </ion-col>
-              <ion-col size="4" size-lg="5" size-md="5" size-sm="5" size-xs="5">
-                  <ion-item lines="none">
-                      <ion-label style="font-size: 14px;">01 May 2018</ion-label>
-                  </ion-item>
-                  <ion-item lines="none">
-                      <ion-label style="color:#28A745;font-size: 14px;margin-top: 20px;">Hecho</ion-label>
-                    </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+    <ion-grid fixed style="margin-top: -26px;">
+      <ion-row>
+        <ion-col>
+          <ion-card (click)="pushDetalleLavado()" *ngFor="let orders of order" color="light">
+            <ion-card-header>
+              <ion-card-subtitle style="color: #3c80f7">{{ orders.created_at }}</ion-card-subtitle>
+              <ion-card-title>Mazda 3</ion-card-title>
+            </ion-card-header>
+            <ion-item lines="none" style="margin-left: 2%">
+                <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
+                <ion-card-title slot="start" style="color: #FE7B37; font-size: 18px;">{{ orders.suscription.plans.name }}</ion-card-title>
+            </ion-item>
+            <div style="background-color: #97979759;height: 1px;margin-right: 8px;margin-left: 4%;margin-top: 2%;"></div>
+            <ion-card-content style="padding: 7px;">
+              <ion-item lines="none">
+                <img *ngIf="orders.status == 1" slot="start" src="/assets/estado_orden/img_pedido.png" style="max-width: 8%;">
+                <img *ngIf="orders.status == 2" slot="start" src="/assets/estado_orden/img_realizado.png" style="max-width: 8%;">
+                <img *ngIf="orders.status == 3" slot="start" src="/assets/estado_orden/img_cancelado.png" style="max-width: 8%;">
+                <ion-label *ngIf="orders.status == 1" slot="start">Pedido</ion-label>
+                <ion-label *ngIf="orders.status == 2" slot="start">Realizado</ion-label>
+                <ion-label *ngIf="orders.status == 3" slot="start">Cancelado</ion-label>
+                <img slot="end" src="/assets/iconos/flecha_siguiente.png" style="max-width: 8%;">
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
     
-      </ion-card>
-      <ion-card style="background-color: #FFFFFF" (click)="pushDetalleLavado()">
-          <ion-grid>
-              <ion-row>
-                <ion-col size="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
-                    <ion-item lines="none">
-                        <ion-icon  name="pin" slot="start"></ion-icon>
-                        <ion-label style="font-size: 14px;margin-right: 0px;">16th Avenue, 4th Cross Street, Chennai</ion-label>
-                    </ion-item>
-                    <ion-item lines="none" style="margin-top:5%">
-                        <ion-card-subtitle color="primary">Lavado por:</ion-card-subtitle>
-                        <ion-label style="font-size: 14px;margin:0px; padding: 10px 0px 14px 10px"> Didier Ramirez</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="4" size-lg="5" size-md="5" size-sm="5" size-xs="5">
-                    <ion-item lines="none">
-                        <ion-label style="font-size: 14px;">01 May 2018</ion-label>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <ion-label style="color:#FF4E3A;font-size: 14px;margin-top: 20px;">Cancelado</ion-label>
-                      </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-      
-        </ion-card>
+      </ion-row>
+    </ion-grid>
+
   
 </ion-content>

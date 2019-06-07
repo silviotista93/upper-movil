@@ -44,8 +44,21 @@ const routes: Routes = [
 
       {
         path: 'modal-alert-agregar-auto',
-        loadChildren: '../cliente/modal-alert-agregar-auto/modal-alert-agregar-auto.module#ModalAlertAgregarAutoPageModule' 
+        loadChildren: '../cliente/modal-alert-agregar-auto/modal-alert-agregar-auto.module#ModalAlertAgregarAutoPageModule'
       },
+      {
+        path: 'list-subscripciones',
+        loadChildren: '../cliente/list-subscripciones/list-subscripciones.module#ListSubscripcionesPageModule'
+      },
+      {
+         path: 'modal-info-plan',
+         loadChildren: '../cliente/modal-info-plan/modal-info-plan.module#ModalInfoPlanPageModule'
+      },
+      {
+        path: 'paymet', loadChildren: '../cliente/paymet/paymet.module#PaymetPageModule'
+      },
+
+
 
     ]
 

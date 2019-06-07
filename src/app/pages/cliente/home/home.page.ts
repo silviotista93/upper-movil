@@ -108,35 +108,21 @@ export class HomePage implements OnInit {
     });
   }
   //#endregion
-  toggleMenu() {
-    this.menu.open('main');
-  }
-   loadData() {
-    this.carService.getCars().subscribe(resp => {
-      console.log(resp['cars']);
-      this.cars = resp['cars'];
-      return resp['cars'];
-    });
-  }
   // #region Cargar Datos
 
  async abrirModal () {
-  const loading = await this.loadCtrl.create({
-    spinner: 'crescent'
-  });
+
   this.carService.getCarsPlans().subscribe( async resp => {
     this.cars = resp['cars'];
     if ( this.cars.length ) {
       const modal = await this.modalCtrl.create({
         component: ModalSolicitarPage,
-        cssClass: 'my-custom-modal-css',
+        cssClass: '',
         componentProps: {
         nombre: this.cars
       }
       });
       await modal.present();
-      loading.dismiss();
-      return resp['cars'];
     } else {
       const modal = await this.modalCtrl.create({
         component: ModalAlertAgregarAutoPage,
@@ -146,8 +132,6 @@ export class HomePage implements OnInit {
       }
       });
       await modal.present();
-      loading.dismiss();
-      return resp['cars'];
     }
   });
   }
