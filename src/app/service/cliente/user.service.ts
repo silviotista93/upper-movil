@@ -60,7 +60,7 @@ export class UserService {
 
   // #region LOGIN DE FACEBOOK
   loginFacebook(usuario: Usuario) {
-    console.log('ESTAMOS EN LA FUNCIONDE LARAVEL', usuario);
+    console.log('ESTAMOS EN LA FUNCION DE LARAVEL', usuario);
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
         .subscribe(async resp => {

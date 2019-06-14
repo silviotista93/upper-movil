@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NavController, LoadingController, IonSlides } from '@ionic/angular';
+import { NavController, LoadingController, IonSlides, ActionSheetController } from '@ionic/angular';
 import { CarService } from '../../../service/cliente/car.service';
 import { Car, Usuario } from '../../../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
@@ -24,6 +24,7 @@ export class AutosPage implements OnInit {
     private navCtrl: NavController,
     private carService: CarService,
     private loadCtrl: LoadingController,
+    private actionSheetController: ActionSheetController,
     private userService: UserService) { }
 
   public user: Usuario = {};
@@ -38,9 +39,9 @@ export class AutosPage implements OnInit {
   async ionViewWillEnter() {
 
     this.cars = [];
-    await this.loadData()
+    await this.loadData();
     this.user = this.userService.getUsuario();
-    console.log('usuario ', this.user);
+    console.log('auto ', this.cars);
 
   }
 
@@ -73,4 +74,31 @@ export class AutosPage implements OnInit {
     });
   }
   // #endregion
+  async lanzarMenu() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Albums',
+      buttons: [{
+        text: 'Editar',
+        icon: 'create',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, {
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 }

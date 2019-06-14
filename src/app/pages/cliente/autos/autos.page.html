@@ -44,7 +44,7 @@
   </ion-slides>
 
 
-  <ion-card style="margin-top: 10px;" *ngFor="let car of cars ">
+  <ion-card color="light" style="margin-top: 10px;" *ngFor="let car of cars ">
     <ion-card-header style="padding-bottom: 0px;">
       <ion-grid>
         <ion-row>
@@ -52,12 +52,14 @@
               <ion-card-title>{{car.brand.name}}</ion-card-title>
               <ion-card-subtitle style="color: #3c80f7; padding-top: 3px">{{car.car_type.name}}</ion-card-subtitle>
          </ion-col>
-         <ion-col size="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
-            <ion-badge
-            style="background-color:#FFAC3B; color: #000000;float: right; font-size: 16px;">
-            {{ car.board }}
-          </ion-badge>
-         </ion-col>
+         <!-- <ion-col size="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
+            
+         </ion-col> -->
+         <div style="font-size: 25px !important;position: absolute;right: -2px;top: 8px;">
+            <ion-button fill="clear" (click)="lanzarMenu()">
+              <ion-icon slot="icon-only" name="more"></ion-icon>
+            </ion-button> 
+         </div>
         </ion-row>
       </ion-grid>
     </ion-card-header>
@@ -68,6 +70,23 @@
             <!-- <img class="img-autos" src="/assets/images/autos/4.jpg"> -->
             <img class="img-autos" src="{{ URL + car.picture}}">
           </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
+              <ion-item lines="none">
+                  <img class="" style="width: 40%" src="/assets/iconos/icon_placa.png">
+                <ion-label style="font-size: 80%;font-weight: 600">{{ car.board }}</ion-label>
+              </ion-item>
+              </ion-col>
+          <ion-col size="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
+              <ion-item lines="none">
+                  <img class="" style="width: 40%" src="/assets/iconos/icon_cilindraje.png">
+                <ion-label style="font-size: 80%;font-weight: 600">{{ car.cilindrajes.name }}</ion-label>
+              </ion-item>
+          </ion-col>
+          <!-- <ion-col size="4" size-lg="4" size-md="4" size-sm="4" size-xs="4">
+            <img class="" style="width: 40%; margin-left: 33%;" src="{{ URL + car.color.picture}}">
+          </ion-col> -->
         </ion-row>
       </ion-grid>
     </ion-card-content>

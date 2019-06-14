@@ -92,6 +92,7 @@ export class LoginPage implements OnInit {
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
+      console.log('login', this.userService.usuario);
       this.navCtrl.navigateRoot('/menu/home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
