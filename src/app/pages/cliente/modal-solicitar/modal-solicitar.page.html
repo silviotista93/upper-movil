@@ -38,7 +38,7 @@
             </ion-grid>
             <ion-card-content no-padding>
                 <img *ngIf="car.picture == null" class="img-autos" style="width: unset" src="/assets/images/autos//assets/iconos/cerrar_suscripcion.png">
-            <img *ngIf="car.picture !== null" class="img-autos" style="width: unset" src="{{ URL + car.picture}}">   
+            <img *ngIf="car.picture !== null" class="img-autos" style="    width: 100%;max-width: 400px;max-height: 272px;object-fit: cover;" src="{{ URL + car.picture}}">   
             </ion-card-content>
                     
         </ion-card>                    

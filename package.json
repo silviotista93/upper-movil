@@ -24,6 +24,7 @@
     "@ionic-native/camera": "^5.6.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/facebook": "^5.7.0",
+    "@ionic-native/file-transfer": "^5.7.0",
     "@ionic-native/geolocation": "^5.4.0",
     "@ionic-native/image-picker": "^5.7.0",
     "@ionic-native/splash-screen": "^5.0.0",

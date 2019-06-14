@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { Usuario } from '../../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
+import { UiServiceService } from '../ui-service.service';
 
 
 const URL = environment.url;
@@ -20,11 +21,13 @@ export class UserService {
 
   token: string = null;
   public usuario: Usuario = {};
+  roles: any;
 
   constructor(
     private http: HttpClient,
     private storage: Storage,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private uiService: UiServiceService) { }
 
 
   // #region LOGIN
@@ -35,7 +38,7 @@ export class UserService {
 
       this.http.post(`${URL}/api/auth/login`, data, { headers: headers })
         .subscribe(async resp => {
-          console.log(resp);
+          console.log('rodinson', resp);
           if (resp['access_token']) {
             this.token = resp['token_type'] + ' ' + resp['access_token'];
             await this.saveToken(this.token);
@@ -150,13 +153,17 @@ export class UserService {
 
       this.http.get(`${URL}/api/auth/user/`, { headers: headerToken })
         .subscribe(resp => {
+          this.roles = resp['user']['roles'];
+          console.log(this.roles);
           console.log('respuesta antes de validar token ');
-          if (resp['user']) {
+          if ( this.roles[0].id === 3 ) {
             console.log('respuesta de validar token ', resp);
             this.usuario = resp['user'];
             console.log('este es el usuario ', this.usuario);
             resolve(true);
           } else {
+            this.uiService.errorToast('No tienes pemisos para iniciar');
+            this.logout();
             this.navCtrl.navigateRoot('/login');
             resolve(false);
           }
