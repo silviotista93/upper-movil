@@ -192,15 +192,19 @@ export class AgregarAutoPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       //let base64Image = 'data:image/jpeg;base64,' + imageData;
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      console.log('img', img);
+
+      this.image = img;
       console.log('imagedata', imageData);
       this.carService.uploadPicture(imageData);
 
-      this.base64.encodeFile(imageData).then((base64File: string) => {
-        this.image = base64File;
-        // this.registerCar.picture = base64File;
-      }, (err) => {
-        console.log(err);
-      });
+      // this.base64.encodeFile(imageData).then((base64File: string) => {
+      //   this.image = base64File;
+      //   // this.registerCar.picture = base64File;
+      // }, (err) => {
+      //   console.log(err);
+      // });
 
     }, (err) => {
       // Handle error
