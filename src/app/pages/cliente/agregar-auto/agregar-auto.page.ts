@@ -74,11 +74,11 @@ export class AgregarAutoPage implements OnInit {
     private userService: UserService,
     private actSheetCtrl: ActionSheetController,
     private uiService: UiServiceService,
-    private base64: Base64,
     private camera: Camera) { }
 
   ngOnInit() {
     this.user = this.userService.getUsuario();
+    this.registerCar = {};
     this.loadData();
   }
 
@@ -124,6 +124,7 @@ export class AgregarAutoPage implements OnInit {
 
     console.log('data', this.registerCar);
     await this.carService.createCar(registerCar);
+
   }
   // #endregion
 

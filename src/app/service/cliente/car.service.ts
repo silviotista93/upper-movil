@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { Car, Brand } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../ui-service.service';
 import { Subject } from 'rxjs';
@@ -34,6 +34,7 @@ export class CarService {
     private userService: UserService,
     private uiService: UiServiceService,
     private navCtrl: NavController,
+    private loadCtrl: LoadingController,
     private fileTransfer: FileTransfer) { }
 
 
@@ -44,14 +45,14 @@ export class CarService {
     });
     return this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken });
   }
-   getCarsPlans() {
-     const headerToken = new HttpHeaders({
+  getCarsPlans() {
+    const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Authorization': this.userService.token,
-     });
-     return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
-   }
+    });
+    return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
+  }
 
   //  getPlanTypeWashes(id: string) {
   //   const data = { id };
@@ -130,27 +131,39 @@ export class CarService {
 
 
   // #region Crear Carro
-  createCar(car: Car) {
+  async createCar(car: Car) {
+
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+
+    loading.present();
 
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
     console.log('car service', this.userService.token);
 
+
     return new Promise(resolve => {
       this.http.post(`${this.URL}/api/car/create-car`, car, { headers: headerToken })
         .subscribe(async resp => {
+
           if (resp['car']) {
             this.uiService.successToast(resp['message']);
             this.streamPost(resp['car']);
+            
             this.navCtrl.navigateRoot('/menu/autos', { animated: true });
+            loading.dismiss();
             resolve(true);
           } else {
             this.uiService.successToast(resp['No se creo el carro']);
+            loading.dismiss();
             resolve(false);
           }
         },
           async err => {
+            loading.dismiss();
             console.log('esta es la respuesta error');
             console.log(err);
 
