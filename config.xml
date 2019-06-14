@@ -110,4 +110,7 @@
             Necesito acceso a la biblioteca de fotos para guardar fotos allí.   
         </string>
     </edit-config>
+    <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+        <string>You can take photos</string>
+    </config-file>
 </widget>
