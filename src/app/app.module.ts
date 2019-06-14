@@ -14,7 +14,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImageModalPageModule } from './pages/cliente/image-modal/image-modal.module';
-import { Facebook } from '@ionic-native/facebook/ngx';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { ComponentsModule } from './components/components.module';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
