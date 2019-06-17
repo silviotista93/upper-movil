@@ -28,7 +28,7 @@ export class AutosPage implements OnInit {
     private userService: UserService) { }
 
   public user: Usuario = {};
-
+  
   ngOnInit() {
     // this.doRefresh(this.evento);
     // this.loadData();

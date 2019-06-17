@@ -17,6 +17,9 @@ import { ModalSolicitarPageModule } from '../modal-solicitar/modal-solicitar.mod
     CommonModule,
     FormsModule,
     IonicModule,
+  ], 
+  exports: [
+    ModalConfirmarSolicitudPage
   ],
   declarations: [ModalConfirmarSolicitudPage]
 })
