@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, Platform } from '@ionic/angular';
 import { Car, Brand } from 'src/app/interfaces/interfaces';
 import { UiServiceService } from '../ui-service.service';
 import { Subject } from 'rxjs';
@@ -35,7 +35,18 @@ export class CarService {
     private uiService: UiServiceService,
     private navCtrl: NavController,
     private loadCtrl: LoadingController,
-    private fileTransfer: FileTransfer) { }
+    private fileTransfer: FileTransfer,
+    public platform: Platform) {
+
+    this.platform.ready().then(
+      (ready) => {
+        const transfer: FileTransferObject = this.fileTransfer.create();
+
+
+      }
+    );
+
+  }
 
 
   // #region OBTENER CARROS
@@ -129,7 +140,6 @@ export class CarService {
   }
   // #endregion
 
-
   // #region Crear Carro
   async createCar(car: Car) {
 
@@ -152,7 +162,7 @@ export class CarService {
           if (resp['car']) {
             this.uiService.successToast(resp['message']);
             this.streamPost(resp['car']);
-            
+
             this.navCtrl.navigateRoot('/menu/autos', { animated: true });
             loading.dismiss();
             resolve(true);
@@ -196,13 +206,20 @@ export class CarService {
     }
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
-      .then(data => {
-        this.image = data.response;
-        console.log('imgen2', this.image);
-      }).catch(err => {
-        console.log('error', err)
-      });
+    this.platform.ready().then(
+      (ready) => {
+        const transfer: FileTransferObject = this.fileTransfer.create();
+
+        fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
+          .then(data => {
+            this.image = data.response;
+            console.log('imgen2', this.image);
+          }).catch(err => {
+            console.log('error', err)
+          });
+
+      }
+    );
   }
   // #endregion
 

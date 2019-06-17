@@ -196,7 +196,7 @@ export class AgregarAutoPage implements OnInit {
       this.image = img;
       console.log('imagedata', imageData);
       await this.carService.uploadPicture(imageData);
-      imageData = "";
+      imageData.clear();
 
     }, (err) => {
       // Handle error
