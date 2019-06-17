@@ -14,7 +14,6 @@ import { Base64 } from '@ionic-native/base64/ngx';
 
 declare var window: any;
 
-
 @Component({
   selector: 'app-agregar-auto',
   templateUrl: './agregar-auto.page.html',
@@ -105,9 +104,9 @@ export class AgregarAutoPage implements OnInit {
   }
 
   selectedBrand(brand) {
-    this.avatarSel.emit(brand.id)
+    this.avatarSel.emit(brand.id);
     this.brandId = brand.id;
-    console.log("marca", brand.id)
+    console.log("marca", brand.id);
 
 
   }
@@ -160,7 +159,7 @@ export class AgregarAutoPage implements OnInit {
   // #endregion
 
   // #region Abrir Camera
-  openCamera() {
+  async openCamera() {
     const optionsCamera: CameraOptions = {
       quality: 60,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -169,12 +168,12 @@ export class AgregarAutoPage implements OnInit {
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.CAMERA,
     }
-    this.getPicture(optionsCamera);
+    await this.getPicture(optionsCamera);
   }
   // #endregion
 
   // #region Abrir Galeria
-  openGallery() {
+  async openGallery() {
     const optionsGallery: CameraOptions = {
       quality: 60,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -183,29 +182,21 @@ export class AgregarAutoPage implements OnInit {
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
-    this.getPicture(optionsGallery);
+    await this.getPicture(optionsGallery);
   }
   // #endregion
 
   // #region Obtener imagen
   getPicture(options: CameraOptions) {
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      //let base64Image = 'data:image/jpeg;base64,' + imageData;
+    this.camera.getPicture(options).then(async (imageData) => {
+
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       console.log('img', img);
 
       this.image = img;
       console.log('imagedata', imageData);
-      this.carService.uploadPicture(imageData);
-
-      // this.base64.encodeFile(imageData).then((base64File: string) => {
-      //   this.image = base64File;
-      //   // this.registerCar.picture = base64File;
-      // }, (err) => {
-      //   console.log(err);
-      // });
+      await this.carService.uploadPicture(imageData);
+      imageData = "";
 
     }, (err) => {
       // Handle error
