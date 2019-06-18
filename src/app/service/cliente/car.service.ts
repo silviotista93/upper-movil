@@ -15,7 +15,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 export class CarService {
 
-  image;
+  image: any = "";
   URL = environment.url;
   token: string = null;
 
@@ -36,17 +36,7 @@ export class CarService {
     private navCtrl: NavController,
     private loadCtrl: LoadingController,
     private fileTransfer: FileTransfer,
-    public platform: Platform) {
-
-    this.platform.ready().then(
-      (ready) => {
-        const transfer: FileTransferObject = this.fileTransfer.create();
-
-
-      }
-    );
-
-  }
+    public platform: Platform) { }
 
 
   // #region OBTENER CARROS
@@ -206,20 +196,13 @@ export class CarService {
     }
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    this.platform.ready().then(
-      (ready) => {
-        const transfer: FileTransferObject = this.fileTransfer.create();
-
-        fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
-          .then(data => {
-            this.image = data.response;
-            console.log('imgen2', this.image);
-          }).catch(err => {
-            console.log('error', err)
-          });
-
-      }
-    );
+    fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
+      .then(async (data) => {
+        this.image = await data.response;
+        console.log('imgen2', this.image);
+      }).catch(err => {
+        console.log('error', err)
+      });
   }
   // #endregion
 
