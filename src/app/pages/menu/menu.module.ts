@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MenuPage } from './menu.page';
 import { UserGuard } from 'src/app/guards/user.guard';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -74,6 +75,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [MenuPage]

@@ -5,6 +5,7 @@ import { NavController, MenuController } from '@ionic/angular';
 import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -12,6 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MenuPage implements OnInit {
 
+  image: string;
   usuario: Usuario = {};
   URL = environment.url;
   pages = [];
@@ -23,13 +25,15 @@ export class MenuPage implements OnInit {
      private menu: MenuController,
      private navCtrl: NavController) {
     this.router.events.subscribe((event: RouterEvent) => {
-      this.selectedPath = event.url;
+      // this.selectedPath = event.url;
     });
   }
 
   ngOnInit () {
     setTimeout(() => {
       this.usuario = this.userService.getUsuario();
+      this.image = this.usuario.avatar;
+      console.log('avatar', this.usuario.avatar);
     }, 500);
 
     this.pages = [

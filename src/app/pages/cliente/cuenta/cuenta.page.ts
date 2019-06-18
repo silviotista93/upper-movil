@@ -20,6 +20,7 @@ export class CuentaPage implements OnInit {
 
   URL = environment.url;
   public usuario: Usuario = {};
+  image: string;
 
   constructor(
     private userService: UserService,
@@ -34,6 +35,7 @@ export class CuentaPage implements OnInit {
     password: '',
     password_confirmation: '',
   };
+
 
   ngOnInit() {
     this.usuario = this.userService.getUsuario();
@@ -96,5 +98,76 @@ export class CuentaPage implements OnInit {
   }
   //#endregion
 
+  // #region Abrir Camera
+  async openCamera() {
+    const optionsCamera: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+    }
+    await this.getPicture(optionsCamera);
+  }
+  // #endregion
 
+  // #region Abrir Galeria
+  async openGallery() {
+    const optionsGallery: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    await this.getPicture(optionsGallery);
+  }
+  // #endregion
+
+  // #region Obtener imagen
+  getPicture(options: CameraOptions) {
+    this.camera.getPicture(options).then(async (imageData) => {
+
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      console.log('img', img);
+
+      this.image = img;
+      console.log('imagedata', imageData);
+
+    }, (err) => {
+      // Handle error
+    });
+  }
+  // #endregion
+
+  // #region action sheet
+  async presentActionSheet() {
+    const actionSheet = await this.actSheetCtrl.create({
+      header: 'Selecciona una opción',
+      buttons: [
+        {
+          text: 'Camara',
+          icon: 'camera',
+          handler: () => {
+            this.openCamera();
+            console.log('Camara clicked');
+          }
+        }, {
+          text: 'Galeria',
+          icon: 'images',
+          handler: () => {
+            this.openGallery();
+            console.log('Galeria clicked');
+          }
+        }]
+    });
+    await actionSheet.present();
+  }
+  // #endregion
 }

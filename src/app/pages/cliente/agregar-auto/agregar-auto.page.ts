@@ -68,8 +68,8 @@ export class AgregarAutoPage implements OnInit {
     private loadCtrl: LoadingController,
     private navCtrl: NavController,
     private userService: UserService,
-    private actSheetCtrl: ActionSheetController,
     private uiService: UiServiceService,
+    private actSheetCtrl: ActionSheetController,
     private camera: Camera) { }
 
   ngOnInit() {

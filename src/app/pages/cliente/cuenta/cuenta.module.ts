@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { CuentaPage } from './cuenta.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
+
 const routes: Routes = [
   {
     path: '',
