@@ -113,11 +113,12 @@ export class UserService {
   // #endregion
 
   // #region OBTENER USUARIO
-   getUsuario() {
+  async getUsuario() {
     if (!this.usuario) {
-       this.validaToken();
+      this.validaToken();
       console.log('id usuario ', this.usuario);
     }
+    this.validaToken();
     return { ...this.usuario };
   }
   // #endregion
@@ -156,7 +157,7 @@ export class UserService {
           this.roles = resp['user']['roles'];
           console.log(this.roles);
           console.log('respuesta antes de validar token ');
-          if ( this.roles[0].id === 3 ) {
+          if (this.roles[0].id === 3) {
             console.log('respuesta de validar token ', resp);
             this.usuario = resp['user'];
             console.log('este es el usuario ', this.usuario);

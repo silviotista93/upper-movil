@@ -38,11 +38,11 @@ export class ModalConfirmarSolicitudPage implements OnInit {
     private userService: UserService
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataPlanCar = this.nombre;
     console.log(this.dataPlanCar);
     this.typeWash = this.dataPlanCar[0].subscription[0].plans.wash_type;
-    this.usuario = this.userService.getUsuario();
+    this.usuario = await this.userService.getUsuario();
     this.idUser = this.usuario.id;
     console.log('tipos lavados', this.typeWash);
   }

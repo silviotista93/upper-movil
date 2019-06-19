@@ -37,8 +37,8 @@ export class HomePage implements OnInit {
   ngOnInit() {
 
     this.menu.enable(true , 'content');
-    setTimeout(() => {
-      this.usuario = this.userService.getUsuario();
+    setTimeout(async () => {
+      this.usuario = await this.userService.getUsuario();
       console.log('Este es el usuario malo', this.usuario);
       this.loadMap();
     }, 500);

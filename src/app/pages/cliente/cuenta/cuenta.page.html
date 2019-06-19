@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar  color="primary">
     <ion-buttons slot="start">
-      <ion-back-button text=""  defaultHref="/menu"></ion-back-button>
+      <ion-back-button text=""  defaultHref="/menu/home"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button>
@@ -19,10 +19,14 @@
     <ion-grid>
       <ion-row>
         <ion-col style="text-align: -webkit-center;" align-self-center>
-            <ion-avatar  style="width: 110px !important; height: 110px !important;">
-                <img *ngIf="usuario.social_acounts === null" src="{{ URL + usuario.avatar}}">
-                <img *ngIf="usuario.social_acounts " src="{{ usuario.avatar}}">
-                <ion-badge style="font-size: 25px;margin-top: -34px;margin-bottom: 15px;margin-left: 32px;margin-right: -34px;" color="dark"><ion-icon name="camera"></ion-icon></ion-badge>
+            <ion-avatar style="width: 110px !important; height: 110px !important;" >
+                <img *ngIf="usuario.social_acounts === null" src="{{URL + usuario.avatar}}">
+                <img *ngIf="usuario.social_acounts " [src]="usuario.avatar">
+                <ion-badge style="font-size: 25px;margin-top: -34px;margin-bottom: 15px;margin-left: 32px;margin-right: -34px;" 
+                           color="dark"
+                           (click)="presentActionSheet()"><ion-icon name="camera">
+
+                </ion-icon></ion-badge>
              </ion-avatar> 
           </ion-col>
       </ion-row>
