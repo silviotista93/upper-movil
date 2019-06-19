@@ -29,9 +29,9 @@ export class MenuPage implements OnInit {
     });
   }
 
-  ngOnInit () {
-    setTimeout(() => {
-      this.usuario = this.userService.getUsuario();
+   ngOnInit ()  {
+    setTimeout(async()  => {
+      this.usuario = await this.userService.getUsuario();
       this.image = this.usuario.avatar;
       console.log('avatar', this.usuario.avatar);
     }, 500);

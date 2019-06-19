@@ -19,8 +19,8 @@
     <ion-grid>
       <ion-row>
         <ion-col style="text-align: -webkit-center;" align-self-center>
-            <ion-avatar style="width: 110px !important; height: 110px !important;">
-                <img *ngIf="usuario.social_acounts === null" src="{{URL+usuario.avatar}}">
+            <ion-avatar style="width: 110px !important; height: 110px !important;" >
+                <img *ngIf="usuario.social_acounts === null" src="{{URL + usuario.avatar}}">
                 <img *ngIf="usuario.social_acounts " [src]="usuario.avatar">
                 <ion-badge style="font-size: 25px;margin-top: -34px;margin-bottom: 15px;margin-left: 32px;margin-right: -34px;" 
                            color="dark"

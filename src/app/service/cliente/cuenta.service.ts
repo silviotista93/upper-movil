@@ -4,6 +4,8 @@ import { HttpHeaders, HttpClient, HttpRequest } from '@angular/common/http';
 import { UserService } from './user.service';
 import { UiServiceService } from '../ui-service.service';
 import { Usuario } from '../../interfaces/interfaces';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { CuentaPage } from '../../pages/cliente/cuenta/cuenta.page';
 
 
 @Injectable({
@@ -11,6 +13,7 @@ import { Usuario } from '../../interfaces/interfaces';
 })
 export class CuentaService {
 
+  //#region Variable y headers
   URL = environment.url;
 
   headers = new HttpHeaders({
@@ -18,10 +21,14 @@ export class CuentaService {
     'X-Requested-With': 'XMLHttpRequest',
     'Authorization': this.userService.token,
   });
+  //#endregion
+
+  image: any = "";
 
   constructor(
     private userService: UserService,
     private http: HttpClient,
+    private fileTransfer: FileTransfer,
     private uiService: UiServiceService) { }
 
   // #region Actualizar contraseña
@@ -42,9 +49,7 @@ export class CuentaService {
             resolve(true);
 
           } else if (resp['error']) {
-
             this.uiService.errorToast(resp['error']);
-
             console.log(resp);
             resolve(false);
           }
@@ -67,7 +72,6 @@ export class CuentaService {
             }
             resolve(true);
           }
-
           resolve(false);
         });
     });
@@ -118,5 +122,29 @@ export class CuentaService {
   }
   // #endregion
 
-  
+  // #region Actulizar Foto
+  updateAvatar(img: string) {
+
+    const options: FileUploadOptions = {
+      fileKey: 'avatar',
+      headers: { 'Authorization': this.userService.token }
+    }
+
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+
+    return new Promise(resolve => {
+      fileTransfer.upload(img, `${this.URL}/api/profile/update-avatar`, options)
+        .then(async (data) => {
+          this.image = await data.response;
+          console.log('Data imagen', this.image);
+          this.uiService.successToast('¡Imagen actualizada!');
+          resolve(true);
+        }).catch(err => {
+          console.log('error', err)
+        });
+    })
+  }
+  // #endregion
+
+
 }

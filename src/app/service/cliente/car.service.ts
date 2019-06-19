@@ -186,7 +186,6 @@ export class CarService {
   }
   // #endregion
 
-
   // #region Subir Foto
   uploadPicture(img: string) {
 
@@ -205,6 +204,5 @@ export class CarService {
       });
   }
   // #endregion
-
 
 }

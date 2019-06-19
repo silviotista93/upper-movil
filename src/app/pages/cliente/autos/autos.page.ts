@@ -20,6 +20,8 @@ export class AutosPage implements OnInit {
   URL = environment.url;
   evento: Event;
 
+  idCar: any;
+
   constructor(
     private navCtrl: NavController,
     private carService: CarService,
@@ -28,7 +30,7 @@ export class AutosPage implements OnInit {
     private userService: UserService) { }
 
   public user: Usuario = {};
-  
+
   ngOnInit() {
     // this.doRefresh(this.evento);
     // this.loadData();
@@ -37,27 +39,18 @@ export class AutosPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-
     this.cars = [];
     await this.loadData();
-    this.user = this.userService.getUsuario();
+    this.user = await this.userService.getUsuario();
     console.log('auto ', this.cars);
-
   }
 
   pushAgregarAuto() {
     this.navCtrl.navigateForward('/menu/agregar-auto');
   }
 
-  // async doRefresh(event?) {
-
-  //   await this.loadData(event);
-  //   console.log('refresh')
-
-  // }
   // #region Cargar Datos
   async loadData() {
-
 
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -74,14 +67,15 @@ export class AutosPage implements OnInit {
     });
   }
   // #endregion
-  async lanzarMenu() {
+
+  async lanzarMenu(event) {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Albums',
       buttons: [{
         text: 'Editar',
         icon: 'create',
         handler: () => {
-          console.log('Share clicked');
+          console.log('Editar clicked');
+          console.log(event.srcElement.id)
         }
       }, {
         text: 'Eliminar',
@@ -89,6 +83,7 @@ export class AutosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
+          console.log(event.srcElement.id)
         }
       }, {
         text: 'Cancelar',

@@ -17,8 +17,8 @@ export class SubscripcionPage implements OnInit {
     private navCtrl: NavController
     ) { }
 
-  ngOnInit() {
-    this.usuario = this.userService.getUsuario();
+  async ngOnInit() {
+    this.usuario = await this.userService.getUsuario();
     console.log(this.usuario);
   }
 

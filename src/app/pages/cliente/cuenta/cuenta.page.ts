@@ -7,6 +7,7 @@ import { LoadingController, NavController, ActionSheetController } from '@ionic/
 import { UiServiceService } from '../../../service/ui-service.service';
 import { CuentaService } from '../../../service/cliente/cuenta.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ImageSanitizerPipe } from '../../../pipes/image-sanitizer.pipe';
 
 
 declare var window: any;
@@ -20,7 +21,7 @@ export class CuentaPage implements OnInit {
 
   URL = environment.url;
   public usuario: Usuario = {};
-  image: string;
+
 
   constructor(
     private userService: UserService,
@@ -36,9 +37,19 @@ export class CuentaPage implements OnInit {
     password_confirmation: '',
   };
 
+  image: string = this.usuario.avatar;
+  // image: string;
 
-  ngOnInit() {
-    this.usuario = this.userService.getUsuario();
+  async ngOnInit() {
+    // this.usuario = await this.userService.getUsuario();
+    // console.log('Este es el usuario cuenta', this.usuario);
+    // this.image = await this.usuario.avatar;
+  }
+
+  async ionViewWillEnter() {
+    this.usuario = await this.userService.getUsuario();
+    // this.image = await this.cuentaService.image;
+    this.image = this.usuario.avatar;
     console.log('Este es el usuario cuenta', this.usuario);
   }
 
@@ -136,9 +147,20 @@ export class CuentaPage implements OnInit {
 
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       console.log('img', img);
+      const loading = await this.loadCtrl.create({
+        spinner: 'circles',
+        translucent: true,
+      });
+      await loading.present();
 
       this.image = img;
       console.log('imagedata', imageData);
+      const val = await this.cuentaService.updateAvatar(imageData);
+      if (val) {
+        loading.dismiss();
+        this.ionViewWillEnter();
+      }
+      loading.dismiss();
 
     }, (err) => {
       // Handle error
@@ -156,6 +178,7 @@ export class CuentaPage implements OnInit {
           icon: 'camera',
           handler: () => {
             this.openCamera();
+            // this.ionViewWillEnter();
             console.log('Camara clicked');
           }
         }, {
@@ -163,6 +186,7 @@ export class CuentaPage implements OnInit {
           icon: 'images',
           handler: () => {
             this.openGallery();
+            // this.ionViewWillEnter();
             console.log('Galeria clicked');
           }
         }]
@@ -170,4 +194,8 @@ export class CuentaPage implements OnInit {
     await actionSheet.present();
   }
   // #endregion
+
+
+
+
 }

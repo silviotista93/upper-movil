@@ -72,8 +72,8 @@ export class AgregarAutoPage implements OnInit {
     private actSheetCtrl: ActionSheetController,
     private camera: Camera) { }
 
-  ngOnInit() {
-    this.user = this.userService.getUsuario();
+  async ngOnInit() {
+    this.user = await this.userService.getUsuario();
     this.registerCar = {};
     this.loadData();
   }
