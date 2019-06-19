@@ -58,7 +58,6 @@ export class AutosPage implements OnInit {
   // #region Cargar Datos
   async loadData() {
 
-
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });

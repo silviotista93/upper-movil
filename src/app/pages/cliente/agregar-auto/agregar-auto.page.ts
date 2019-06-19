@@ -164,6 +164,8 @@ export class AgregarAutoPage implements OnInit {
       quality: 60,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.CAMERA,

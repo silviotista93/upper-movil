@@ -62,11 +62,11 @@
                   <ion-card-content>
                       <ion-toolbar mode="md" color="light">
                           <ion-segment  #segments  mode="md" [(ngModel)]="page" color="light">
-                              <ion-segment-button value="0"  (click)="selectedTab(0)">
-                                  Segment 1
+                              <ion-segment-button mode="md" value="0"  (click)="selectedTab(0)">
+                                  <ion-label text-capitalize>Tarjeta</ion-label>
                               </ion-segment-button>
                               <ion-segment-button value="1"  (click)="selectedTab(1)">
-                                  Segment 2
+                                  <ion-label text-capitalize>Paypal</ion-label>
                               </ion-segment-button>
                           </ion-segment>
                         </ion-toolbar>
