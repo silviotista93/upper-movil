@@ -19,7 +19,7 @@
     <ion-grid fixed style="margin-top: -26px;">
       <ion-row>
         <ion-col>
-          <ion-card (click)="pushDetalleLavado()" *ngFor="let orders of order" color="light">
+          <ion-card (click)="pushDetalleLavado(orders.id)" *ngFor="let orders of order" color="light">
             <ion-card-header>
               <ion-card-subtitle style="color: #3c80f7">{{ orders.created_at }}</ion-card-subtitle>
               <ion-card-title>Mazda 3</ion-card-title>

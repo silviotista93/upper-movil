@@ -12,7 +12,7 @@ export class HistorialPage implements OnInit {
 
   public order: Order[] = [];
   public listOrder:Order[] = [];
-
+  idDetalle = 1;
   constructor(
     private navCtrl: NavController,
     private loadCtrl: LoadingController,
@@ -22,8 +22,8 @@ export class HistorialPage implements OnInit {
     this.loadData();
     console.log(this.order);
   }
-  pushDetalleLavado() {
-     this.navCtrl.navigateForward('/menu/detalle-lavado');
+  pushDetalleLavado(id) {
+     this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
   }
 
   async loadData() {

@@ -30,7 +30,8 @@ const routes: Routes = [
       { path: 'historial', loadChildren: '../cliente/historial/historial.module#HistorialPageModule', canLoad: [UserGuard] },
       { path: 'autos', loadChildren: '../cliente/autos/autos.module#AutosPageModule', canLoad: [UserGuard] },
       { path: 'cuenta', loadChildren: '../cliente/cuenta/cuenta.module#CuentaPageModule', canLoad: [UserGuard] },
-      { path: 'detalle-lavado', loadChildren: '../cliente/detalle-lavado/detalle-lavado.module#DetalleLavadoPageModule',
+      {
+        path: 'detalle-lavado/:id', loadChildren: '../cliente/detalle-lavado/detalle-lavado.module#DetalleLavadoPageModule',
         canLoad: [UserGuard]
       },
       { path: 'image-modal', loadChildren: '../cliente/image-modal/image-modal.module#ImageModalPageModule', canLoad: [UserGuard] },

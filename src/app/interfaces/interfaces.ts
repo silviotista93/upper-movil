@@ -83,10 +83,27 @@ export interface Order {
     status?: any;
     description?: string;
     subscription?: string;
+    subscription_cars_id?: string;
+    suscription?: string;
     washer_id?: string;
     user_id?: string;
     address?: string;
     typesWash?: any;
     created_at?: any;
+    car?: string;
+}
+
+export interface Car_suscription {
+    id?: string,
+    subscription_id?: string,
+    cars_id?: string,
+    created_at?: any,
+    updated_at?: any,
+    car?: any;
+}
+
+export interface opciones {
+    id?: string;
+    opcion: string;
 }
 // #endregion
