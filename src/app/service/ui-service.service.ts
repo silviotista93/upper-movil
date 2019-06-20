@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlertController, ToastController, ActionSheetController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { ComponentMenu } from '../interfaces/interfaces';
-
-
+import { CarService } from 'src/app/service/cliente/car.service';
 
 
 @Injectable({
@@ -36,7 +35,7 @@ export class UiServiceService {
     });
     toast.present();
   }
- 
+
   async errorToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -45,12 +44,13 @@ export class UiServiceService {
     });
     toast.present();
   }
-   // #endregion
+  // #endregion
 
   //#region Metodo que devuelve la url para llenar el menu
   getMenuOptions() {
     return this.http.get<ComponentMenu[]>('/assets/data/menu.json');
   }
   //#endregion
+
 
 }

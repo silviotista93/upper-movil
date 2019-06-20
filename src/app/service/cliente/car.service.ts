@@ -142,8 +142,6 @@ export class CarService {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
-    console.log('car service', this.userService.token);
-
 
     return new Promise(resolve => {
       this.http.post(`${this.URL}/api/car/create-car`, car, { headers: headerToken })
@@ -205,4 +203,35 @@ export class CarService {
   }
   // #endregion
 
+  async deleteCar(id: any) {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+
+    return new Promise(resolve => {
+      this.http.post(`${this.URL}/api/car/delete-car`, id, { headers: headerToken })
+        .subscribe(resp => {
+          //CORREGIR ELIMINAR
+          console.log('idddddddd', id);
+          this.uiService.successToast(resp['message']);
+          console.log('Carro eliminado', resp['cars']);
+          loading.dismiss();
+          resolve(true);
+        },
+          async err => {
+            loading.dismiss();
+            console.log(err);
+            console.log('NoOO eliminado el carro');
+            this.uiService.errorToast('El auto no se elimino');
+
+            resolve(false);
+          });
+    });
+
+  }
 }

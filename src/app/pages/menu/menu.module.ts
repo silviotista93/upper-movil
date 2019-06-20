@@ -25,18 +25,17 @@ const routes: Routes = [
         loadChildren: '../cliente/list/list.module#ListPageModule',
         canLoad: [UserGuard]
       },
-      // tslint:disable-next-line:max-line-length
+      
       { path: 'subscripcion', loadChildren: '../cliente/subscripcion/subscripcion.module#SubscripcionPageModule', canLoad: [UserGuard] },
       { path: 'historial', loadChildren: '../cliente/historial/historial.module#HistorialPageModule', canLoad: [UserGuard] },
       { path: 'autos', loadChildren: '../cliente/autos/autos.module#AutosPageModule', canLoad: [UserGuard] },
       { path: 'cuenta', loadChildren: '../cliente/cuenta/cuenta.module#CuentaPageModule', canLoad: [UserGuard] },
-      {
-        path: 'detalle-lavado', loadChildren: '../cliente/detalle-lavado/detalle-lavado.module#DetalleLavadoPageModule',
+      { path: 'detalle-lavado', loadChildren: '../cliente/detalle-lavado/detalle-lavado.module#DetalleLavadoPageModule',
         canLoad: [UserGuard]
       },
       { path: 'image-modal', loadChildren: '../cliente/image-modal/image-modal.module#ImageModalPageModule', canLoad: [UserGuard] },
       { path: 'contacto', loadChildren: '../cliente/contacto/contacto.module#ContactoPageModule', canLoad: [UserGuard] },
-      // tslint:disable-next-line:max-line-length
+      
       { path: 'agregar-auto', loadChildren: '../cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [UserGuard] },
       { path: 'modal-solicitar', loadChildren: '../cliente/modal-solicitar/modal-solicitar.module#ModalSolicitarPageModule'},
       {
@@ -58,15 +57,9 @@ const routes: Routes = [
       {
         path: 'paymet', loadChildren: '../cliente/paymet/paymet.module#PaymetPageModule'
       },
-
-
-
     ]
-
   },
   { path: '', redirectTo: '/menu/home' }
-
-
 
 ];
 

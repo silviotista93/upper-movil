@@ -22,10 +22,6 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-
-      // this.userService.loadToken();
-      // if (this.userService.loadToken !== null) {
-      // }
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
     });

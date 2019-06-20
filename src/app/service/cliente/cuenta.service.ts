@@ -136,6 +136,7 @@ export class CuentaService {
       fileTransfer.upload(img, `${this.URL}/api/profile/update-avatar`, options)
         .then(async (data) => {
           this.image = await data.response;
+          this.userService.usuario.avatar = this.image;
           console.log('Data imagen', this.image);
           this.uiService.successToast('¡Imagen actualizada!');
           resolve(true);
