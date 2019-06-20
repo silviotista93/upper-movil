@@ -124,7 +124,6 @@ export class CuentaService {
 
   // #region Actulizar Foto
   updateAvatar(img: string) {
-
     const options: FileUploadOptions = {
       fileKey: 'avatar',
       headers: { 'Authorization': this.userService.token }
