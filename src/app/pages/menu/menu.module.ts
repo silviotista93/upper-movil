@@ -25,7 +25,7 @@ const routes: Routes = [
         loadChildren: '../cliente/list/list.module#ListPageModule',
         canLoad: [UserGuard]
       },
-      // tslint:disable-next-line:max-line-length
+
       { path: 'subscripcion', loadChildren: '../cliente/subscripcion/subscripcion.module#SubscripcionPageModule', canLoad: [UserGuard] },
       { path: 'historial', loadChildren: '../cliente/historial/historial.module#HistorialPageModule', canLoad: [UserGuard] },
       { path: 'autos', loadChildren: '../cliente/autos/autos.module#AutosPageModule', canLoad: [UserGuard] },
@@ -36,12 +36,19 @@ const routes: Routes = [
       },
       { path: 'image-modal', loadChildren: '../cliente/image-modal/image-modal.module#ImageModalPageModule', canLoad: [UserGuard] },
       { path: 'contacto', loadChildren: '../cliente/contacto/contacto.module#ContactoPageModule', canLoad: [UserGuard] },
-      // tslint:disable-next-line:max-line-length
-      { path: 'agregar-auto', loadChildren: '../cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [UserGuard] },
-      { path: 'modal-solicitar', loadChildren: '../cliente/modal-solicitar/modal-solicitar.module#ModalSolicitarPageModule'},
+
+      {
+        path: 'agregar-auto', loadChildren: '../cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule',
+        canLoad: [UserGuard]
+      },
+      {
+        path: 'modal-solicitar',
+        loadChildren: '../cliente/modal-solicitar/modal-solicitar.module#ModalSolicitarPageModule'
+      },
       {
         path: 'modal-confirmar-solicitud',
-        loadChildren: '../cliente/modal-confirmar-solicitud/modal-confirmar-solicitud.module#ModalConfirmarSolicitudPageModule' },
+        loadChildren: '../cliente/modal-confirmar-solicitud/modal-confirmar-solicitud.module#ModalConfirmarSolicitudPageModule'
+      },
 
       {
         path: 'modal-alert-agregar-auto',
@@ -52,21 +59,20 @@ const routes: Routes = [
         loadChildren: '../cliente/list-subscripciones/list-subscripciones.module#ListSubscripcionesPageModule'
       },
       {
-         path: 'modal-info-plan',
-         loadChildren: '../cliente/modal-info-plan/modal-info-plan.module#ModalInfoPlanPageModule'
+        path: 'modal-info-plan',
+        loadChildren: '../cliente/modal-info-plan/modal-info-plan.module#ModalInfoPlanPageModule'
       },
       {
-        path: 'paymet', loadChildren: '../cliente/paymet/paymet.module#PaymetPageModule'
+        path: 'paymet',
+        loadChildren: '../cliente/paymet/paymet.module#PaymetPageModule'
       },
-
-
-
+      {
+        path: 'editar-auto/:id',
+        loadChildren: '../cliente/editar-auto/editar-auto.module#EditarAutoPageModule'
+      },
     ]
-
   },
   { path: '', redirectTo: '/menu/home' }
-
-
 
 ];
 

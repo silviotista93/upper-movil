@@ -23,7 +23,7 @@ export class HistorialPage implements OnInit {
     console.log(this.order);
   }
   pushDetalleLavado(id) {
-     this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
+    this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
   }
 
   async loadData() {

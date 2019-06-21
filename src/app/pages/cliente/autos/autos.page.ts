@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NavController, LoadingController, IonSlides, ActionSheetController } from '@ionic/angular';
+import { NavController, LoadingController, IonSlides, ActionSheetController, AlertController } from '@ionic/angular';
 import { CarService } from '../../../service/cliente/car.service';
 import { Car, Usuario } from '../../../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../../../service/cliente/user.service';
+import { UiServiceService } from '../../../service/ui-service.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -13,7 +16,6 @@ import { UserService } from '../../../service/cliente/user.service';
 })
 
 export class AutosPage implements OnInit {
-
 
   cars: Car[] = [];
 
@@ -27,6 +29,9 @@ export class AutosPage implements OnInit {
     private carService: CarService,
     private loadCtrl: LoadingController,
     private actionSheetController: ActionSheetController,
+    private alertCtrl: AlertController,
+    private uiService: UiServiceService,
+    private router: Router,
     private userService: UserService) { }
 
   public user: Usuario = {};
@@ -68,14 +73,21 @@ export class AutosPage implements OnInit {
   }
   // #endregion
 
+
   async lanzarMenu(event) {
+    const id = event.srcElement.id.toString();
+    this.carService.carId = id;
+    console.log('car id antes de actionsheet', id);
     const actionSheet = await this.actionSheetController.create({
+      mode: "ios",
       buttons: [{
         text: 'Editar',
         icon: 'create',
         handler: () => {
           console.log('Editar clicked');
-          console.log(event.srcElement.id)
+          // this.carService.getCar();
+          this.navCtrl.navigateForward(`/menu/editar-auto/${id}`);
+          // this.router.navigate(['/menu/editar-auto', { item: id }]);
         }
       }, {
         text: 'Eliminar',
@@ -83,7 +95,8 @@ export class AutosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
-          console.log(event.srcElement.id)
+          const message = "¿Desea eliminar el auto?"
+          this.presentConfirm(message, id);
         }
       }, {
         text: 'Cancelar',
@@ -96,4 +109,30 @@ export class AutosPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+  // #region Alerta confirmacion de eliminar
+  async  presentConfirm(message: string, id: string) {
+    const alert2 = await this.alertCtrl.create({
+      message,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('aceptar');
+            this.carService.deleteCar(id);
+            this.ionViewWillEnter();
+          }
+        }
+      ]
+    });
+    await alert2.present();
+  }
+  //#endregion
 }

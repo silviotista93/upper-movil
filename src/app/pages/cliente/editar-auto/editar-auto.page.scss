@@ -1,0 +1,18 @@
+.img-autos {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 164px;
+  object-fit: cover;
+}
+
+.pick-selected-item {
+  transition: opacity 0.5s linear;
+  opacity: 1 !important;
+}
+
+.pick-item {
+  width: 80px;
+  opacity: 0.3;
+}
