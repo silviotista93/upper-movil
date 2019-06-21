@@ -104,8 +104,6 @@ export class AgregarAutoPage implements OnInit {
     this.avatarSel.emit(brand.id);
     this.brandId = brand.id;
     console.log("marca", brand.id);
-
-
   }
   // #endregion
 
@@ -209,6 +207,7 @@ export class AgregarAutoPage implements OnInit {
   async presentActionSheet() {
     const actionSheet = await this.actSheetCtrl.create({
       header: 'Selecciona una opción',
+      mode: "ios",
       buttons: [
         {
           text: 'Camara',

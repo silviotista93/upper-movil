@@ -45,7 +45,6 @@ export class CuentaPage implements OnInit {
   async ionViewWillEnter() {
     this.usuario = await this.userService.getUsuario();
     this.image = this.usuario.avatar;
-    console.log('Este es el usuario cuenta', this.usuario);
   }
 
   logout() {
@@ -141,7 +140,6 @@ export class CuentaPage implements OnInit {
     this.camera.getPicture(options).then(async (imageData) => {
 
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      console.log('img', img);
       const loading = await this.loadCtrl.create({
         spinner: 'circles',
         translucent: true,
@@ -149,7 +147,6 @@ export class CuentaPage implements OnInit {
       await loading.present();
 
       this.image = img;
-      console.log('imagedata', imageData);
       const val = await this.cuentaService.updateAvatar(imageData);
       if (val) {
         loading.dismiss();

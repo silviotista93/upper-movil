@@ -30,9 +30,13 @@ const routes: Routes = [
   // tslint:disable-next-line:max-line-length
   // { path: 'agregar-auto', loadChildren: './pages/cliente/agregar-auto/agregar-auto.module#AgregarAutoPageModule', canLoad: [ UserGuard ] },
   // { path: 'menu', component: MenuComponent, canLoad: [ UserGuard ] },
-   { path: '', loadChildren: './pages/menu/menu.module#MenuPageModule', canLoad: [ UserGuard ] },
-  { path: 'edit-auto', loadChildren: './pages/cliente/edit-auto/edit-auto.module#EditAutoPageModule' },
-  
+  { path: '', loadChildren: './pages/menu/menu.module#MenuPageModule', canLoad: [UserGuard] },
+  // {
+  //   path: 'editar-auto',
+  //   loadChildren: './pages/cliente/editar-auto/editar-auto.module#EditarAutoPageModule'
+  // },
+
+
 ];
 
 @NgModule({

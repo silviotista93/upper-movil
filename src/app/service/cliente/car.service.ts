@@ -9,11 +9,14 @@ import { Subject } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class CarService {
+
+  carId: any;
 
   image: any = "";
   URL = environment.url;
@@ -106,28 +109,28 @@ export class CarService {
   // #endregion
 
   // #region valida token
-  validateToken() {
-    this.token = this.userService.token;
+  // validateToken() {
+  //   this.token = this.userService.token;
 
-    return new Promise(resolve => {
-      const headerToken = new HttpHeaders({
-        'Authorization': this.userService.token,
-      });
-      this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken })
-        .subscribe(resp => {
-          if (resp['cars']) {
-            console.log('Car valida token ', resp);
-            this.car = resp['cars'];
-            console.log('estos son los carros ', this.car);
-            resolve(true);
-          } else {
-            // this.navCtrl.navigateRoot('/login');
-            console.log('else de la promesa');
-            resolve(false);
-          }
-        });
-    });
-  }
+  //   return new Promise(resolve => {
+  //     const headerToken = new HttpHeaders({
+  //       'Authorization': this.userService.token,
+  //     });
+  //     this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken })
+  //       .subscribe(resp => {
+  //         if (resp['cars']) {
+  //           console.log('Car valida token ', resp);
+  //           this.car = resp['cars'];
+  //           console.log('estos son los carros ', this.car);
+  //           resolve(true);
+  //         } else {
+  //           // this.navCtrl.navigateRoot('/login');
+  //           console.log('else de la promesa');
+  //           resolve(false);
+  //         }
+  //       });
+  //   });
+  // }
   // #endregion
 
   // #region Crear Carro
@@ -203,6 +206,7 @@ export class CarService {
   }
   // #endregion
 
+  // #region BORRAR AUTO
   async deleteCar(id: any) {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -232,6 +236,30 @@ export class CarService {
             resolve(false);
           });
     });
-
   }
+  // #endregion
+
+  // #region Obtener un solo carro
+  getCar(id: any) {
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+    return this.http.get(`${this.URL}/api/car/car/${id}`, { headers: headerToken });
+  }
+  //#endregion
+
+  updateCar(car) {
+
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+    return new Promise(resolve => {
+
+      this.http.post(`${this.URL}/api/car/update-car`, car, { headers: headerToken })
+        .subscribe(resp => {
+
+        });
+    });
+  }
+
 }
