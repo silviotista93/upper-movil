@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController } from '@ionic/angular';
 import { OrderService } from '../../../service/cliente/order.service';
-import { Order } from '../../../interfaces/interfaces';
+import { Order } from '../../../interfaces/order_interface';
 
 @Component({
   selector: 'app-historial',
@@ -11,7 +11,7 @@ import { Order } from '../../../interfaces/interfaces';
 export class HistorialPage implements OnInit {
 
   public order: Order[] = [];
-  public listOrder:Order[] = [];
+
   idDetalle = 1;
   constructor(
     private navCtrl: NavController,

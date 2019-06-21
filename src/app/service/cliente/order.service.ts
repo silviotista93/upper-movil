@@ -117,12 +117,21 @@ export class OrderService {
       }
 
       getDetailOrden(id: any) {
-        
           const headerToken = new HttpHeaders({
             'Authorization': this.userService.token,
             'Content-Type': 'application/json',
           });
-          return this.http.get(`${this.URL}/api/order/detail-orden/${id}`, { headers: headerToken });
+
+          return new Promise((resolve, reject) => {
+            this.http.get(`${this.URL}/api/order/detail-orden/${id}`, { headers: headerToken })
+            .subscribe(resp => {
+              resolve(resp['detail-order'])
+              console.log(resp);
+            }, err => {
+
+            });
+          });
+          
       }
       
 

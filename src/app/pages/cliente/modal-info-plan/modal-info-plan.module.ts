@@ -7,19 +7,20 @@ import { IonicModule } from '@ionic/angular';
 
 import { ModalInfoPlanPage } from './modal-info-plan.page';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: ModalInfoPlanPage
-  }
-];
+// const routes: Routes = [
+//   {
+//     path: '',
+//     component: ModalInfoPlanPage
+//   }
+// ];
 
 @NgModule({
+  
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    // RouterModule.forChild(routes)
   ],
   declarations: [ModalInfoPlanPage]
 })

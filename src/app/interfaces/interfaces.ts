@@ -36,6 +36,7 @@ export interface Car {
     color_id?: string;
     user_id?: string;
     seleccionado?: boolean;
+    pivot?: Pivot3;
 }
 export interface Brand {
     id?: string;
@@ -73,6 +74,7 @@ export interface Plan_type_Wash {
     type_wash_id?: string;
     plan_id?: string;
     quantity?: string;
+    pivot?: Pivot2;
 
 }
 export interface Order {
@@ -95,10 +97,10 @@ export interface Order {
 
 export interface Car_suscription {
     id?: string,
-    subscription_id?: string,
-    cars_id?: string,
-    created_at?: any,
-    updated_at?: any,
+    subscription_id?: string;
+    cars_id?: string;
+    created_at?: any;
+    updated_at?: any;
     car?: any;
 }
 
@@ -106,4 +108,86 @@ export interface opciones {
     id?: string;
     opcion: string;
 }
+
+export interface Plan {
+  id: number;
+  name: string;
+  description: string;
+  picture: string;
+  time: string;
+  price: number;
+  seleccionado?: boolean;
+  created_at: string;
+  updated_at: string;
+  wash_type: Washtype[];
+}
+
+export interface Washtype {
+  id: number;
+  type: string;
+  price: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  pivot: Pivot;
+}
+
+export interface Pivot {
+  plan_id: number;
+  type_wash_id: number;
+  quantity: number;
+}
 // #endregion
+
+
+export interface Suscripciones {
+  id: number;
+  subscription_id: number;
+  cars_id: number;
+  created_at?: any;
+  updated_at?: any;
+  car: Car;
+  suscriptions: Suscription;
+}
+
+export interface Suscription {
+  id: number;
+  plan_id: number;
+  date_start: string;
+  date_end: string;
+  created_at: string;
+  updated_at: string;
+  plans: Plan;
+  car?: Car[];
+}
+
+
+export interface Detailorder {
+  id: number;
+  latitude: number;
+  longitude: number;
+  status: number;
+  sign?: any;
+  description?: any;
+  subscription_cars_id: number;
+  user_id: number;
+  washer_id?: any;
+  address: string;
+  created_at: string;
+  updated_at: string;
+  suscription: Suscription;
+  plan_type_wash: Plan_type_Wash[];
+}
+
+
+export interface Pivot2 {
+  order_id: number;
+  plan_type_washes_id: number;
+}
+
+
+export interface Pivot3 {
+  subscription_id: number;
+  cars_id: number;
+}
+

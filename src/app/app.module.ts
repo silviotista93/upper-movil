@@ -28,7 +28,7 @@ import { PipesModule } from './pipes/pipes.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-   // ImageModalPageModule,
+    // ImageModalPageModule,
     AppRoutingModule,
     PipesModule,
     HttpClientModule,

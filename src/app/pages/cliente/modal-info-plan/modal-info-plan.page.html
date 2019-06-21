@@ -1,9 +1,22 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar>
-    <ion-title>modal-info-plan</ion-title>
+      <ion-buttons slot="start">
+          <ion-label style="margin-left: 15%; font-weight: 500;" (click) ="cerrar_modal()">
+            Cancelar
+          </ion-label>
+        </ion-buttons>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col *ngFor="let wash_type of plans.wash_type" size="12">
+        <h1>{{ wash_type.type }}</h1>
+        <h5>{{ wash_type.pivot.quantity }}</h5>
+        <p>{{ wash_type.description}}</p>
+        <h4>{{ wash_type.price}}</h4>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

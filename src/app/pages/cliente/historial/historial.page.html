@@ -22,7 +22,7 @@
           <ion-card (click)="pushDetalleLavado(orders.id)" *ngFor="let orders of order" color="light">
             <ion-card-header>
               <ion-card-subtitle style="color: #3c80f7">{{ orders.created_at }}</ion-card-subtitle>
-              <ion-card-title>Mazda 3</ion-card-title>
+              <ion-card-title>{{ orders.suscription.car[0].brand.name }}</ion-card-title>
             </ion-card-header>
             <ion-item lines="none" style="margin-left: 2%">
                 <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">

@@ -20,6 +20,16 @@
     }
   }
 
+  .info-plan-modal {
+    .modal-wrapper {
+        width: 83%;
+        left: calc(50% - (600px/2));
+        height: 80%;
+        border-radius: 15px;
+        top: calc(50% - (500px/2));
+    }
+  }
+
   .modal-alert-css {
     .modal-wrapper {
         width: 83%;

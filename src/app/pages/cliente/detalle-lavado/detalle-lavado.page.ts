@@ -3,7 +3,7 @@ import { ModalController, IonSegment, IonSlides, LoadingController } from '@ioni
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../../service/cliente/order.service';
-import { Order, Car_suscription, Car } from '../../../interfaces/interfaces';
+import { Order, Car_suscription, Car, Detailorder } from '../../../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import { async } from '@angular/core/testing';
 
@@ -36,6 +36,7 @@ export class DetalleLavadoPage implements OnInit {
   public orden: Order = {};
   public car_suscription: Car_suscription = {};
   public car: Car = {};
+  public detailOrden: Detailorder = null;
 
   sliderOpts = {
     zoom: false,
@@ -49,11 +50,12 @@ export class DetalleLavadoPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private loadCtrl: LoadingController,
-    ) { }
+    ) { 
+      
+    }
 
 
   ngOnInit() {
-    this.segment.value = this.opciones["0"];
     this.idDetalleLavado = this.activatedRoute.snapshot.paramMap.get('id');
     // this.orderService.getDetailOrden(this.idDetalleLavado);
   
@@ -75,13 +77,23 @@ export class DetalleLavadoPage implements OnInit {
           spinner: 'crescent'
         });
         loading.present();
-        this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(resp => {
-        this.orden = resp['detail-order']; 
-        this.orderService.getCarSuscriptionOrden(this.orden.subscription_cars_id);
-        this.car = this.orderService.car;
-        console.log('car_susc de detalle lavado', this.car);
+        this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).then((data: any) => {
+          this.detailOrden = data;
+          setTimeout(() => {
+            this.selectedTab( this.opciones[0].id);
+          }, 200);
+        });
         loading.dismiss();
-     });
+    //     
+    //     this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(resp => {
+    //     this.orden = resp['detail-order']; 
+    //     this.orderService.getCarSuscriptionOrden(this.orden.subscription_cars_id);
+    //     this.car = this.orderService.car;
+    //     console.log('car_susc de detalle lavado', this.car);
+    //     
+        
+    //  });
+        
       }
   // Initialize slide
  async ionViewDidEnter() {
@@ -97,18 +109,24 @@ export class DetalleLavadoPage implements OnInit {
 
    }
  
-  openPreview(img) {
-    this.modalController.create ({
+ async openPreview(img) {
+    const modal = await this.modalController.create ({
       component: ImageModalPage,
       componentProps: {
         img: img
       }
-    }).then(modal => modal.present());
+    })
+   await modal.present();
   }
 
   slideChanged() {
+    /*
+    console.log('ddddd', this.segments.nativeElement);
+   console.log(this.segments.nativeElement.childElementCount);
+
     const currentIndex = this.slider.getActiveIndex();
     const slides_count = this.segments.nativeElement.childElementCount;
+    
     this.page = currentIndex.toString();
     if (this.page >= slides_count) {
       this.page = (slides_count - 1).toString();
@@ -116,6 +134,7 @@ export class DetalleLavadoPage implements OnInit {
 
     console.log('slides_count', slides_count);
     console.log('this.page', this.page);
+    */
     this.centerScroll();
   }
   // Center current scroll

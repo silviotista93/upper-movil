@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavParams } from '@ionic/angular';
 
 import { DetalleLavadoPage } from './detalle-lavado.page';
+import { ImageModalPageModule } from '../image-modal/image-modal.module';
+import { ImageModalPage } from '../image-modal/image-modal.page';
 
 const routes: Routes = [
   {
@@ -15,12 +17,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    // ImageModalPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    // ImageModalPageModule,
     RouterModule.forChild(routes)
   ],
+  // providers: [NavParams],
   declarations: [DetalleLavadoPage]
 })
 export class DetalleLavadoPageModule {}
