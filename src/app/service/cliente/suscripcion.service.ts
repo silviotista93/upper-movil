@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { environment } from '../../../environments/environment';
-import { Plan } from '../../interfaces/interfaces';
+import { Plan, CreateSuscription } from '../../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class SuscripcionService {
 
   URL = environment.url;
   public plan: Plan = null;
+  createPlan: CreateSuscription = null;
   constructor(
     private http:HttpClient,
     private userService: UserService,
@@ -60,5 +61,41 @@ export class SuscripcionService {
            reject(err);
          });
        });
+  }
+
+  firstPlan(id: any) {
+    const headerToken = new HttpHeaders({
+    'Content-Type': 'application/json',
+      'Authorization': this.userService.token,
+    });
+    return new Promise((resolve, reject) => {
+     this.http.get(`${this.URL}/api/payment/plan-suscription/${id}`, { headers: headerToken })
+        .subscribe(async resp => {
+          resolve(resp);
+          console.log(resp['plan'])
+        }, err => {
+          reject(err);
+        });
+      });
+   }
+   // #region REGISTRO DE USUARIO
+  registroSuscripcion(createPlan: CreateSuscription) {
+    const headerToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+        'Authorization': this.userService.token,
+      });
+    return new Promise(resolve => {
+      this.http.post(`${this.URL}/api/suscripciones/agregar-suscripcion`, createPlan, { headers: headerToken })
+        .subscribe(async resp => {
+          if (!resp['ERROR']) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, err => {
+
+          resolve(false);
+        });
+    });
   }
 }

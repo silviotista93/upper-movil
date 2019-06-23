@@ -9,14 +9,30 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col *ngFor="let wash_type of plans.wash_type" size="12">
-        <h1>{{ wash_type.type }}</h1>
-        <h5>{{ wash_type.pivot.quantity }}</h5>
-        <p>{{ wash_type.description}}</p>
-        <h4>{{ wash_type.price}}</h4>
+ <ion-grid fixed>
+   <ion-row>
+     <ion-col size="12">
+       <h2 style="text-align: center;font-weight: 700;">{{ plans.name }}</h2>
+     </ion-col>
+     <ion-col size="12" style="margin-top: -10%">
+        <h4 style="text-align: center;font-weight: 800; color: #FE7B37">${{ plans.price }}</h4>
+        <p style="    text-align: center;color: #999999;font-size: 11px;margin-top: -1%;">Precio incluye iva y lavadas disponibles a este plán</p>
       </ion-col>
-    </ion-row>
-  </ion-grid>
+   </ion-row>
+ </ion-grid>
+ <ion-grid fixed>
+   <ion-row>
+     <ion-col size="12">
+        <ion-list *ngFor="let wash_type of plans.wash_type">
+              <ion-item lines="none">
+                  <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
+                <ion-label style="font-weight: 600">{{ wash_type.type }}  <ion-badge style="margin-left: 5%;" color="primary">{{ wash_type.pivot.quantity }} Lavadas</ion-badge></ion-label>
+              </ion-item>
+              <ion-item>
+                <p style="text-align: justify; margin-top: 0px;">{{ wash_type.description }}</p>
+              </ion-item>
+        </ion-list>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
 </ion-content>

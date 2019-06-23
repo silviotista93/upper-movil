@@ -9,7 +9,7 @@
         </ion-button>
       </ion-buttons>
       <ion-title>
-        Tus Subscripciones
+        Tus Supscripciones
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -17,7 +17,8 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col size="4" style="padding: 5px 5px 0px 0px">
-            <ion-item color="secondary" lines="none" (click)="abrirListSubscripciones()">
+            <ion-item color="secondary" lines="none" (click)="abrirModalPayment()">
+            <!-- <ion-item color="secondary" lines="none" (click)="abrirListSubscripciones()"> -->
                 <img slot="start" style="width: 60%; margin: 15%" src = "/assets/iconos/button_mas.png">
             </ion-item>
           </ion-col>
@@ -26,7 +27,7 @@
               <ion-label style="font-size: 21px; font-weight: 700;">{{ usuario.names }} {{ usuario.last_name }}</ion-label>
             </ion-item>
             <ion-item color="secondary" lines="none" style="margin-top: -12px">
-              <p style="font-size: 79%; font-weight: 600; margin: 0px">Agrega una nueva subscripción</p>
+              <p style="font-size: 79%; font-weight: 600; margin: 0px">Agrega una nueva supscripción</p>
             </ion-item>
           </ion-col>
         </ion-row>
