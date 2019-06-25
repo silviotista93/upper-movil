@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Usuario, Car, Suscription, Suscripciones } from '../../../interfaces/interfaces';
 import { UserService } from '../../../service/cliente/user.service';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { SuscripcionService } from '../../../service/cliente/suscripcion.service';
 import { ModalPaymentPage } from '../modal-payment/modal-payment.page';
 
@@ -21,13 +21,19 @@ export class SubscripcionPage implements OnInit {
     private navCtrl: NavController,
     private serviSuscrip: SuscripcionService,
     public modalCtrl: ModalController,
+    public loadCtrl: LoadingController
     ) { }
 
   async ngOnInit() {
      this.usuario = await this.userService.getUsuario();
+      const loading = await this.loadCtrl.create({
+        spinner: 'crescent'
+      })
+      loading.present();
      this.serviSuscrip.getSuscriptionsClient().then((data: any) => {
       this.suscripciones = data;
       console.log('listado', this.suscripciones);
+      loading.dismiss();
     });
   }
 
