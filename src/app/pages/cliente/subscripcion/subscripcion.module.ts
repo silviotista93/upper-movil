@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SubscripcionPage } from './subscripcion.page';
+import { ModalPaymentPage } from '../modal-payment/modal-payment.page';
+import { ModalPaymentPageModule } from '../modal-payment/modal-payment.module';
 
 const routes: Routes = [
   {
@@ -15,10 +17,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    ModalPaymentPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ModalPaymentPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SubscripcionPage]

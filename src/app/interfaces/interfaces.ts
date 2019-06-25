@@ -27,7 +27,7 @@ export interface RolesUsers {
 //#region interfaces de Carros
 export interface Car {
   subscription?: any;
-    id?: string;
+    id?: number;
     board?: string;
     picture?: string;
     car_type_id?: string;
@@ -189,5 +189,10 @@ export interface Pivot2 {
 export interface Pivot3 {
   subscription_id: number;
   cars_id: number;
+}
+
+export interface CreateSuscription {
+  car_id: number;
+  plan_id: number;
 }
 

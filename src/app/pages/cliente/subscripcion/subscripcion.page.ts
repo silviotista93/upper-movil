@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Usuario, Car, Suscription, Suscripciones } from '../../../interfaces/interfaces';
 import { UserService } from '../../../service/cliente/user.service';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 import { SuscripcionService } from '../../../service/cliente/suscripcion.service';
+import { ModalPaymentPage } from '../modal-payment/modal-payment.page';
 
 @Component({
   selector: 'app-subscripcion',
@@ -19,6 +20,7 @@ export class SubscripcionPage implements OnInit {
     private userService: UserService,
     private navCtrl: NavController,
     private serviSuscrip: SuscripcionService,
+    public modalCtrl: ModalController,
     ) { }
 
   async ngOnInit() {
@@ -33,4 +35,16 @@ export class SubscripcionPage implements OnInit {
     this.navCtrl.navigateForward('/menu/list-subscripciones');
   }
 
+ 
+  async abrirModalPayment () {
+    // this.plansDataSelec.push(plan);
+      const modal = await this.modalCtrl.create({
+        component: ModalPaymentPage,
+        cssClass: 'payment-plan-modal',
+        componentProps: {
+        data: ''
+      }
+      });
+      await modal.present();
+  };
 }
