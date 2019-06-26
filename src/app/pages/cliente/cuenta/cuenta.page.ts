@@ -141,7 +141,7 @@ export class CuentaPage implements OnInit {
 
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       const loading = await this.loadCtrl.create({
-        spinner: 'circles',
+        spinner: 'crescent',
         translucent: true,
       });
       await loading.present();

@@ -79,7 +79,6 @@ export class AutosPage implements OnInit {
     this.carService.carId = id;
     console.log('car id antes de actionsheet', id);
     const actionSheet = await this.actionSheetController.create({
-      mode: "ios",
       buttons: [{
         text: 'Editar',
         icon: 'create',
@@ -111,7 +110,7 @@ export class AutosPage implements OnInit {
   }
 
   // #region Alerta confirmacion de eliminar
-  async  presentConfirm(message: string, id: string) {
+  async  presentConfirm(message: string, id) {
     const alert2 = await this.alertCtrl.create({
       message,
       buttons: [
@@ -124,10 +123,12 @@ export class AutosPage implements OnInit {
         },
         {
           text: 'Aceptar',
-          handler: () => {
+          handler: async () => {
             console.log('aceptar');
-            this.carService.deleteCar(id);
-            this.ionViewWillEnter();
+            const val = await this.carService.deleteCar(id);
+            if (val) {
+              this.ionViewWillEnter();
+            }
           }
         }
       ]
