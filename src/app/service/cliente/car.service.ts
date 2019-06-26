@@ -67,20 +67,20 @@ export class CarService {
   }
   firstCar(id: any) {
     const headerToken = new HttpHeaders({
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': this.userService.token,
     });
     console.log(id);
     return new Promise((resolve, reject) => {
-     this.http.get(`${this.URL}/api/payment/car-suscription/${id}`, { headers: headerToken })
+      this.http.get(`${this.URL}/api/payment/car-suscription/${id}`, { headers: headerToken })
         .subscribe(async resp => {
           resolve(resp);
           console.log(resp['car'])
         }, err => {
           reject(err);
         });
-      });
-   }
+    });
+  }
   //  getPlanTypeWashes(id: string) {
   //   const data = { id };
   //   const headerToken = new HttpHeaders({
@@ -129,31 +129,6 @@ export class CarService {
     });
     return this.http.get(`${this.URL}/api/car/cilindraje`, { headers: headerToken })
   }
-  // #endregion
-
-  // #region valida token
-  // validateToken() {
-  //   this.token = this.userService.token;
-
-  //   return new Promise(resolve => {
-  //     const headerToken = new HttpHeaders({
-  //       'Authorization': this.userService.token,
-  //     });
-  //     this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken })
-  //       .subscribe(resp => {
-  //         if (resp['cars']) {
-  //           console.log('Car valida token ', resp);
-  //           this.car = resp['cars'];
-  //           console.log('estos son los carros ', this.car);
-  //           resolve(true);
-  //         } else {
-  //           // this.navCtrl.navigateRoot('/login');
-  //           console.log('else de la promesa');
-  //           resolve(false);
-  //         }
-  //       });
-  //   });
-  // }
   // #endregion
 
   // #region Crear Carro
@@ -230,7 +205,7 @@ export class CarService {
   // #endregion
 
   // #region BORRAR AUTO
-  async deleteCar(id: any) {
+  async deleteCar(id) {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
@@ -253,6 +228,8 @@ export class CarService {
           async err => {
             loading.dismiss();
             console.log(err);
+            console.log('idddddddd', id);
+
             console.log('NoOO eliminado el carro');
             this.uiService.errorToast('El auto no se elimino');
 
@@ -271,18 +248,68 @@ export class CarService {
   }
   //#endregion
 
-  updateCar(car) {
+  // #region ACTUALIZAR AUTO
+  async updateCar(car) {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
 
+    loading.present();
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
     return new Promise(resolve => {
 
-      this.http.post(`${this.URL}/api/car/update-car`, car, { headers: headerToken })
+      this.http.put(`${this.URL}/api/car/update-car`, car, { headers: headerToken })
         .subscribe(resp => {
 
+          console.log(resp);
+          loading.dismiss();
+          this.uiService.successToast(resp['message']);
+          this.navCtrl.navigateRoot('/menu/autos', { animated: true });
+          resolve(true);
+        }, err => {
+          console.log(err);
+          loading.dismiss();
+          if (err['error']["errors"]) {
+            const errores = err['error']["errors"];
+            let msgError = "";
+
+            Object.keys(errores).map(error => {
+              const detalle = errores[error][0];
+              msgError += `${detalle}\n`;
+            });
+            if (msgError !== "") {
+              this.uiService.errorToast(msgError);
+            }
+            resolve(true);
+          }
+          resolve(false);
         });
     });
   }
+  //#endregion
 
+  // #region ACTUALIZAR FOTO AUTO
+  updatePicture(img: string, id) {
+    const options: FileUploadOptions = {
+      fileKey: 'picture',
+      headers: { 'Authorization': this.userService.token },
+      params: { 'id': id }
+    }
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+
+    return new Promise(resolve => {
+      fileTransfer.upload(img, `${this.URL}/api/car/update-picture`, options)
+        .then(async (data) => {
+          this.image = await data.response;
+          console.log('imagen actualizada', this.image);
+          resolve(true);
+        }).catch(err => {
+          console.log('error', err)
+          resolve(false);
+        });
+    });
+  }
+  // #endregion
 }

@@ -4,10 +4,9 @@
 
 export const environment = {
   production: false,
-  // url: 'https://upper.website'
+  url: 'https://upper.website'
   // url: 'http://localhost:8000'
-  // url: 'http://192.168.43.199:8000'
-   url: 'https://upper.bmotion'
+    // url: 'https://upper.dev'
 };
 
 /*
