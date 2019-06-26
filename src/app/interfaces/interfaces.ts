@@ -91,6 +91,7 @@ export interface Order {
     user_id?: string;
     address?: string;
     typesWash?: any;
+    pivot?: any;
     created_at?: any;
     car?: string;
 }
@@ -155,6 +156,7 @@ export interface Suscription {
   plan_id: number;
   date_start: string;
   date_end: string;
+  state: any;
   created_at: string;
   updated_at: string;
   plans: Plan;

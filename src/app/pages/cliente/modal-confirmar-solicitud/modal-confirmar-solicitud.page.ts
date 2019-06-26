@@ -44,6 +44,7 @@ export class ModalConfirmarSolicitudPage implements OnInit {
     this.typeWash = this.dataPlanCar[0].subscription[0].plans.wash_type;
     this.usuario = await this.userService.getUsuario();
     this.idUser = this.usuario.id;
+    console.log('suscripcion', this.dataPlanCar[0].subscription);
     console.log('tipos lavados', this.typeWash);
   }
 
@@ -106,6 +107,7 @@ export class ModalConfirmarSolicitudPage implements OnInit {
         subscription: this.dataPlanCar[0].subscription[0].id,
         address: 'Rincon de Yambitara 2 Etapa',
         typesWash: this.id,
+        pivot: this.dataTypeWash.pivot,
         user_id: this.idUser,
       };
       console.log(this.order);

@@ -7,6 +7,8 @@ import { SuscripcionService } from '../../../service/cliente/suscripcion.service
 import { ModalInfoPlanPage } from '../modal-info-plan/modal-info-plan.page';
 import { CarService } from '../../../service/cliente/car.service';
 import { UiServiceService } from '../../../service/ui-service.service';
+import { async } from '@angular/core/testing';
+import { ModalAlertPlanAutoPage } from '../modal-alert-plan-auto/modal-alert-plan-auto.page';
 
 @Component({
   selector: 'app-modal-payment',
@@ -33,6 +35,7 @@ export class ModalPaymentPage implements OnInit {
   car_id: any;
   constructor(
     public modalCtrl: ModalController,
+    public modalCtrlAlert: ModalController,
     public statusBar: StatusBar,
     private navCtrl: NavController,
     public carService: CarService,
@@ -71,7 +74,7 @@ export class ModalPaymentPage implements OnInit {
 
     loading.present();
 
-    this.carService.getCars().subscribe(resp => {
+    this.carService.getCarsPayment().subscribe(resp => {
       this.cars.push(...resp['cars']);
       loading.dismiss();
       // event.target.complete();
@@ -96,11 +99,25 @@ export class ModalPaymentPage implements OnInit {
       await modal.present();
   };
 
-  mostrarAutos(plan: Plan) {
+  async mostrarAutos(plan: Plan) {
     this.slide.lockSwipes(false);
-    this.slide.slideTo(1);
-    this.plan_id = plan.id;
-    this.slide.lockSwipes(true);
+    if (this.cars.length > 0 ){
+      this.slide.slideTo(1);
+      this.plan_id = plan.id;
+      this.slide.lockSwipes(true);
+    }else{
+      this.cerrar_modal();
+      const modal = await this.modalCtrlAlert.create({
+        component: ModalAlertPlanAutoPage,
+        cssClass: 'modal-alert-css',
+        componentProps: {
+        nombre: ''
+      },
+      backdropDismiss: false
+      });
+      await modal.present();
+    }
+    
   }
 
   async mostrarMetodosPago(car: Car) {

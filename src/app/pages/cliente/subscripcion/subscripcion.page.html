@@ -47,10 +47,14 @@
                 </ion-item>
                 <div style="background-color: #97979759;height: 1px;margin-right: 8px;margin-left: 4%;margin-top: 2%;"></div>
                 <ion-card-content style="padding: 7px;">
-                  <ion-item lines="none">
+                  <ion-item lines="none" *ngIf="suscri.suscriptions.state == 1">
                       <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
                       <ion-label>Este plan se encuentra activo</ion-label>
                   </ion-item>
+                  <ion-item lines="none" *ngIf="suscri.suscriptions.state == 2">
+                    <img slot="start" src="/assets/iconos/icon_inactivo.png" style="max-width: 8%; margin-right: 10px;">
+                    <ion-label>Este plan se encuentra inactivo</ion-label>
+                </ion-item>
                 </ion-card-content>
               </ion-card>
             </ion-col>

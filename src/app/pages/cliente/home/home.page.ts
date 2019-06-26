@@ -129,7 +129,8 @@ export class HomePage implements OnInit {
         cssClass: 'modal-alert-css',
         componentProps: {
         nombre: this.cars
-      }
+      },
+      backdropDismiss: false
       });
       await modal.present();
     }

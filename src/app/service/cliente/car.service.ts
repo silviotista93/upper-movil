@@ -50,6 +50,13 @@ export class CarService {
     });
     return this.http.get(`${this.URL}/api/car/cars`, { headers: headerToken });
   }
+  getCarsPayment() {
+    const headerToken = new HttpHeaders({
+      'Authorization': this.userService.token,
+    });
+    return this.http.get(`${this.URL}/api/payment/get-cars-plans`, { headers: headerToken });
+  }
+
   getCarsPlans() {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',

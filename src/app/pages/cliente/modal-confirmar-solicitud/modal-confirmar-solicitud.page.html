@@ -58,7 +58,7 @@
                     </ion-card-header>
                 
                         <ion-item (click)="info_type_wash( type_wash )" *ngFor="let type_wash of typeWash">
-                            <ion-label>{{ type_wash.type }}</ion-label>
+                            <ion-label>{{ type_wash.type }} <ion-badge color="primary">{{ type_wash.pivot.quantity }}</ion-badge></ion-label>
                             <!-- <ion-button fill="outline" slot="end">Ver</ion-button> -->
                             <ion-checkbox  color="primary"></ion-checkbox>
                             <!-- <img *ngIf="!type_wash.seleccionado" slot="end" src="/assets/iconos/check_false.png" style="max-width: 12%;">
@@ -74,7 +74,7 @@
       <ion-row>
           <ion-col size="12">
                 <ion-button (click)="registrarOrden()" color="success" expand="block">
-                        Solicitar
+                        Confirmar
                 </ion-button>
           </ion-col>
       </ion-row>
