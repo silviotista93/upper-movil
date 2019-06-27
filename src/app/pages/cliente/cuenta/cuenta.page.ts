@@ -53,10 +53,6 @@ export class CuentaPage implements OnInit {
 
   //#region ACTUALIZAR CONTRASEÑA
   async updatePassword(fPassword: NgForm) {
-
-    this.usuario = await this.userService.getUsuario();
-    // console.log(this.usuario.id);
-
     // CREACION DEL LOADING
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -72,11 +68,17 @@ export class CuentaPage implements OnInit {
       this.dataPassword.password, this.dataPassword.password_confirmation, this.usuario.id
     );
     if (validated) {
+      this.dataPassword = {
+        password: '',
+        password_confirmation: ''
+      };
       loading.dismiss();
-      // this.uiService.successToast('Constraseña Actualizada');
     } else {
+      this.dataPassword = {
+        password: '',
+        password_confirmation: ''
+      };
       loading.dismiss();
-      // this.uiService.errorToast('Error');
     }
   }
   // #endregion
@@ -95,10 +97,9 @@ export class CuentaPage implements OnInit {
     const validated = await this.cuentaService.updateProfile2(this.usuario);
     if (validated) {
       loading.dismiss();
-      // this.uiService.successToast('Perfil Actualizado Actualizado');
+      await this.ionViewWillEnter();
     } else {
       loading.dismiss();
-      // this.uiService.errorToast('Error');
     }
   }
   //#endregion
@@ -142,7 +143,6 @@ export class CuentaPage implements OnInit {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       const loading = await this.loadCtrl.create({
         spinner: 'crescent',
-        translucent: true,
       });
       await loading.present();
 

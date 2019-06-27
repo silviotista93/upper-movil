@@ -107,7 +107,7 @@ export class ModalConfirmarSolicitudPage implements OnInit {
         subscription: this.dataPlanCar[0].subscription[0].id,
         address: 'Rincon de Yambitara 2 Etapa',
         typesWash: this.id,
-        pivot: this.dataTypeWash.pivot,
+        // spivot: this.dataTypeWash.pivot,
         user_id: this.idUser,
       };
       console.log(this.order);

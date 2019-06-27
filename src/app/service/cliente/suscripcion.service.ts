@@ -13,31 +13,30 @@ export class SuscripcionService {
   public plan: Plan = null;
   createPlan: CreateSuscription = null;
   constructor(
-    private http:HttpClient,
-    private userService: UserService,
+    private http: HttpClient,
+    private userService: UserService) {}
 
-  ) { }
-    // #region OBTENER PLANES
+  // #region OBTENER PLANES
   getPlans() {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
     return this.http.get(`${this.URL}/api/plans/plans-all`, { headers: headerToken });
   }
-  firstPlans(id: any){
+  firstPlans(id: any) {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
     return this.http.get(`${this.URL}/api/plans/plans-first/${id}`, { headers: headerToken });
   }
 
-   firstPlans2(id: any) {
+  firstPlans2(id: any) {
     const headerToken = new HttpHeaders({
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': this.userService.token,
     });
     return new Promise((resolve, reject) => {
-     this.http.get(`${this.URL}/api/plans/plans-first/${id}`, { headers: headerToken })
+      this.http.get(`${this.URL}/api/plans/plans-first/${id}`, { headers: headerToken })
         .subscribe(async resp => {
           this.plan = resp['plan'];
           resolve(this.plan);
@@ -45,9 +44,9 @@ export class SuscripcionService {
         }, err => {
           reject(err);
         });
-      });
-   }
-   getSuscriptionsClient() {
+    });
+  }
+  getSuscriptionsClient() {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -55,35 +54,35 @@ export class SuscripcionService {
     });
     return new Promise((resolve, reject) => {
       this.http.get(`${this.URL}/api/suscripciones/suscripciones`, { headers: headerToken })
-         .subscribe(async resp => {
+        .subscribe(async resp => {
           resolve(resp['suscripciones']);
-         }, err => {
-           reject(err);
-         });
-       });
+        }, err => {
+          reject(err);
+        });
+    });
   }
 
   firstPlan(id: any) {
     const headerToken = new HttpHeaders({
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': this.userService.token,
     });
     return new Promise((resolve, reject) => {
-     this.http.get(`${this.URL}/api/payment/plan-suscription/${id}`, { headers: headerToken })
+      this.http.get(`${this.URL}/api/payment/plan-suscription/${id}`, { headers: headerToken })
         .subscribe(async resp => {
           resolve(resp);
           console.log(resp['plan'])
         }, err => {
           reject(err);
         });
-      });
-   }
-   // #region REGISTRO DE USUARIO
+    });
+  }
+  // #region REGISTRO DE USUARIO
   registroSuscripcion(createPlan: CreateSuscription) {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
-        'Authorization': this.userService.token,
-      });
+      'Authorization': this.userService.token,
+    });
     return new Promise(resolve => {
       this.http.post(`${this.URL}/api/suscripciones/agregar-suscripcion`, createPlan, { headers: headerToken })
         .subscribe(async resp => {

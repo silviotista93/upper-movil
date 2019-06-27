@@ -15,103 +15,107 @@
 </ion-header>
 
 <ion-content color="secondary">
-  <!-- <form (ngSubmit)="createCar( fCar )" #fCar="ngForm"> -->
-    <ion-toolbar color="secondary">
-      <ion-grid style="margin-top: 5px">
-        <ion-row>
-          <ion-col size="12">
-            <ion-card style="margin-bottom: 5px !important; margin-top: 5px !important;" 
-                      *ngIf="image.length === 0">
-              <!-- <ion-card> -->
-              <img class="avatar" src="../assets/banner_add_auto.png | imageSanitizer">
-              <!-- <img class="avatar" src=" {{ image }}| imageSanitizer" (click)="getPhoto()"> -->
-            </ion-card>
-            <ion-card *ngIf="image.length > 0">
-              <img class="avatar" [src]="image | imageSanitizer" (click)="presentActionSheet()">
-              <ion-input [(ngModel)]="registerCar.picture" name="picture" type="hidden" id="input"></ion-input>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
-    <ion-grid>
+  <ion-toolbar color="secondary">
+    <ion-grid style="margin-top: 5px">
+      <!-- ASIGNAR LA IMAGEN DEL AUTO -->
       <ion-row>
-        <ion-col>
-          <ion-list list="none">
-            <ion-list-header>Marca</ion-list-header>
-
-            <ion-item lines="none">
-              <ion-label>Seleciona Marca</ion-label>
-              <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="registerCar.brand_id" name="brand_id">
-                <ion-select-option *ngFor="let brand of brands" value="{{brand.id}}" (click)="selectedBrand(brand)"
-                  [(ngModel)]="brandId === brand.id">{{brand.name}}
-                </ion-select-option>
-              </ion-select>
-
-            </ion-item>
-
-          </ion-list>
-          <ion-list>
-            <ion-list-header>Placa</ion-list-header>
-            <ion-item>
-              <ion-label position="floating">Ingrese placa de su auto</ion-label>
-              <ion-input [(ngModel)]="registerCar.board" name="board" type="text" id="input"></ion-input>
-            </ion-item>
-          </ion-list>
-          <ion-list>
-            <ion-list-header>Tipo</ion-list-header>
-            <ion-item lines="none">
-              <ion-slides [options]="slidesCar">
-                <ion-slide *ngFor="let types of carTypes">
-                  <ion-img class="pick-item" src="{{ URL + types.picture}}" (click)="selectedCar(types)"
-                    [class.pick-selected-item]="types.picture === carSel">
-                  </ion-img>
-                  <ion-input [(ngModel)]="registerCar.car_type_id" name="car_type_id" type="hidden" id="input">
-                  </ion-input>
-                </ion-slide>
-              </ion-slides>
-            </ion-item>
-          </ion-list>
-          <ion-list>
-            <ion-list-header>Cilindraje</ion-list-header>
-            <ion-item lines="none">
-              <ion-slides [options]="slidesCar">
-                <ion-slide *ngFor="let cilin of cilindrajes">
-                  <ion-img [(ngModel)]="registerCar.cilindraje_id" class="pick-item" src="{{ URL + cilin.picture}}"
-                    (click)="selectedCilindraje(cilin)" [class.pick-selected-item]="cilin.picture === cilindrajeSel">
-                  </ion-img>
-                  <ion-input [(ngModel)]="registerCar.cilindraje_id" name="cilindraje_id" type="hidden" id="input">
-                  </ion-input>
-                </ion-slide>
-              </ion-slides>
-
-            </ion-item>
-          </ion-list>
-          <ion-list>
-            <ion-list-header>Color</ion-list-header>
-            <ion-item lines="none">
-              <ion-slides [options]="slidesColor">
-                <ion-slide *ngFor="let color of colors">
-                  <ion-img class="pick-item img-color" src="{{ URL + color.picture }}" (click)="selectedColor(color)"
-                    [class.pick-selected-item]="color.picture === colorSel">
-                  </ion-img>
-                  <ion-input [(ngModel)]="registerCar.color_id" name="color_id" type="hidden" id="input"></ion-input>
-                </ion-slide>
-              </ion-slides>
-            </ion-item>
-          </ion-list>
+        <ion-col size="12">
+          <ion-card style="margin-bottom: 5px !important; margin-top: 5px !important;" *ngIf="image.length === 0">
+            <img class="avatar" src="../assets/banner_add_auto.png | imageSanitizer">
+          </ion-card>
+          <ion-card *ngIf="image.length > 0">
+            <img class="avatar" [src]="image | imageSanitizer" (click)="presentActionSheet()">
+            <ion-input [(ngModel)]="registerCar.picture" name="picture" type="hidden" id="input"></ion-input>
+          </ion-card>
         </ion-col>
       </ion-row>
+
     </ion-grid>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <!-- <ion-button expand="block" color="primary" type="submit"> -->
-            <ion-button expand="block"  color="primary" (click)="saveCar(registerCar)" >
-            Agregar Auto
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <!-- CREAR MARCA -->
+        <ion-list list="none">
+          <ion-list-header>Marca</ion-list-header>
+          <ion-item lines="none">
+            <ion-label>Seleciona Marca</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="registerCar.brand_id" name="brand_id">
+              <ion-select-option *ngFor="let brand of brands" value="{{brand.id}}" (click)="selectedBrand(brand)"
+                [(ngModel)]="brandId === brand.id">{{brand.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <!-- CREAR LA PLACA -->
+        <ion-list>
+          <ion-list-header>Placa</ion-list-header>
+          <ion-item>
+            <ion-label position="floating">Ingrese placa de su auto</ion-label>
+            <ion-input [(ngModel)]="registerCar.board" name="board" type="text" id="input"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <!-- CREAR EL TIPO -->
+        <ion-list>
+          <ion-list-header>Tipo</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesCar">
+              <ion-slide *ngFor="let types of carTypes">
+                <ion-img class="pick-item" src="{{ URL + types.picture}}" (click)="selectedCar(types)"
+                  [class.pick-selected-item]="types.picture === carSel">
+                </ion-img>
+                <ion-input [(ngModel)]="registerCar.car_type_id" name="car_type_id" type="hidden" id="input">
+                </ion-input>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+
+        <!-- CREAR CILINDRAJE -->
+        <ion-list>
+          <ion-list-header>Cilindraje</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesCar">
+              <ion-slide *ngFor="let cilin of cilindrajes">
+                <ion-img [(ngModel)]="registerCar.cilindraje_id" class="pick-item" src="{{ URL + cilin.picture}}"
+                  (click)="selectedCilindraje(cilin)" [class.pick-selected-item]="cilin.picture === cilindrajeSel">
+                </ion-img>
+                <ion-input [(ngModel)]="registerCar.cilindraje_id" name="cilindraje_id" type="hidden" id="input">
+                </ion-input>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+
+        <!-- CREAR COLOR -->
+        <ion-list>
+          <ion-list-header>Color</ion-list-header>
+          <ion-item lines="none">
+            <ion-slides [options]="slidesColor">
+              <ion-slide *ngFor="let color of colors">
+                <ion-img class="pick-item img-color" src="{{ URL + color.picture }}" (click)="selectedColor(color)"
+                  [class.pick-selected-item]="color.picture === colorSel">
+                </ion-img>
+                <ion-input [(ngModel)]="registerCar.color_id" name="color_id" type="hidden" id="input"></ion-input>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="primary" (click)="saveCar(registerCar)">
+          Agregar Auto
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <!-- </form> -->
 </ion-content>

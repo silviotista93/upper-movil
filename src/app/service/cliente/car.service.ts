@@ -29,10 +29,6 @@ export class CarService {
   newCar = new EventEmitter<Car>();
   newPost: Subject<Car> = new Subject<Car>();
 
-  streamPost(car: Car) {
-    this.newPost.next(car);
-  }
-
   constructor(
     private http: HttpClient,
     private userService: UserService,
@@ -70,7 +66,6 @@ export class CarService {
       'Content-Type': 'application/json',
       'Authorization': this.userService.token,
     });
-    console.log(id);
     return new Promise((resolve, reject) => {
       this.http.get(`${this.URL}/api/payment/car-suscription/${id}`, { headers: headerToken })
         .subscribe(async resp => {
@@ -137,9 +132,7 @@ export class CarService {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-
     loading.present();
-
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
@@ -150,8 +143,6 @@ export class CarService {
 
           if (resp['car']) {
             this.uiService.successToast(resp['message']);
-            this.streamPost(resp['car']);
-
             this.navCtrl.navigateRoot('/menu/autos', { animated: true });
             loading.dismiss();
             resolve(true);
@@ -197,7 +188,6 @@ export class CarService {
     fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
       .then(async (data) => {
         this.image = await data.response;
-        console.log('imgen2', this.image);
       }).catch(err => {
         console.log('error', err)
       });
@@ -219,7 +209,6 @@ export class CarService {
       this.http.post(`${this.URL}/api/car/delete-car`, id, { headers: headerToken })
         .subscribe(resp => {
           //CORREGIR ELIMINAR
-          console.log('idddddddd', id);
           this.uiService.successToast(resp['message']);
           console.log('Carro eliminado', resp['cars']);
           loading.dismiss();
@@ -228,8 +217,6 @@ export class CarService {
           async err => {
             loading.dismiss();
             console.log(err);
-            console.log('idddddddd', id);
-
             console.log('NoOO eliminado el carro');
             this.uiService.errorToast('El auto no se elimino');
 
@@ -262,8 +249,7 @@ export class CarService {
 
       this.http.put(`${this.URL}/api/car/update-car`, car, { headers: headerToken })
         .subscribe(resp => {
-
-          console.log(resp);
+          // console.log(resp);
           loading.dismiss();
           this.uiService.successToast(resp['message']);
           this.navCtrl.navigateRoot('/menu/autos', { animated: true });
@@ -274,7 +260,6 @@ export class CarService {
           if (err['error']["errors"]) {
             const errores = err['error']["errors"];
             let msgError = "";
-
             Object.keys(errores).map(error => {
               const detalle = errores[error][0];
               msgError += `${detalle}\n`;

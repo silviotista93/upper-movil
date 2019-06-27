@@ -9,6 +9,7 @@ import { CarService } from '../../../service/cliente/car.service';
 import { UiServiceService } from '../../../service/ui-service.service';
 import { async } from '@angular/core/testing';
 import { ModalAlertPlanAutoPage } from '../modal-alert-plan-auto/modal-alert-plan-auto.page';
+import { SubscripcionPage } from '../subscripcion/subscripcion.page';
 
 @Component({
   selector: 'app-modal-payment',
@@ -81,43 +82,43 @@ export class ModalPaymentPage implements OnInit {
       console.log('Cars', this.cars);
     });
   }
-  
-  cerrar_modal() { 
+
+  cerrar_modal() {
     this.modalCtrl.dismiss();
     this.statusBar.show();
   }
 
-  async abrirModalDetallePlan (plan: Plan) {
+  async abrirModalDetallePlan(plan: Plan) {
     // this.plansDataSelec.push(plan);
-      const modal = await this.modalCtrl.create({
-        component: ModalInfoPlanPage,
-        cssClass: 'info-plan-modal',
-        componentProps: {
+    const modal = await this.modalCtrl.create({
+      component: ModalInfoPlanPage,
+      cssClass: 'info-plan-modal',
+      componentProps: {
         nombre: plan.id
       }
-      });
-      await modal.present();
+    });
+    await modal.present();
   };
 
   async mostrarAutos(plan: Plan) {
     this.slide.lockSwipes(false);
-    if (this.cars.length > 0 ){
+    if (this.cars.length > 0) {
       this.slide.slideTo(1);
       this.plan_id = plan.id;
       this.slide.lockSwipes(true);
-    }else{
+    } else {
       this.cerrar_modal();
       const modal = await this.modalCtrlAlert.create({
         component: ModalAlertPlanAutoPage,
         cssClass: 'modal-alert-css',
         componentProps: {
-        nombre: ''
-      },
-      backdropDismiss: false
+          nombre: ''
+        },
+        backdropDismiss: false
       });
       await modal.present();
     }
-    
+
   }
 
   async mostrarMetodosPago(car: Car) {
@@ -137,38 +138,38 @@ export class ModalPaymentPage implements OnInit {
       this.firstCars = data;
       console.log('auto seleccionado', this.firstCars);
     });
-    this.plansService.firstPlan(this.plan_id).then((data: any) =>{
+    this.plansService.firstPlan(this.plan_id).then((data: any) => {
       this.firstPlan = data;
       console.log('plan seleccionado', this.firstPlan);
     })
     loading.dismiss();
-    
+
     this.slide.lockSwipes(true);
   }
 
   async agregarSuscripcion() {
-  
-      const loading = await this.loadCtrl.create({
-        spinner: 'crescent'
-      });
-      loading.present();
-      this.createPlan = {
-        plan_id: this.plan_id,
-        car_id: this.car_id
-      }
-      console.log(this.createPlan);
-      const validated = await this.plansService.registroSuscripcion(this.createPlan);
-  
-      if (validated) {
-        loading.dismiss();
-  
-        this.uiService.successToast('Suscripcion creada exitosamente');
-        this.cerrar_modal();
-      } else {
-        loading.dismiss();
-        this.cerrar_modal();
-        this.uiService.errorToast('Error, verifica tus datos');
-      }
+
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+    this.createPlan = {
+      plan_id: this.plan_id,
+      car_id: this.car_id
+    }
+    console.log(this.createPlan);
+    const validated = await this.plansService.registroSuscripcion(this.createPlan);
+
+    if (validated) {
+      loading.dismiss();
+
+      this.uiService.successToast('Suscripcion creada exitosamente');
+      this.cerrar_modal();
+    } else {
+      loading.dismiss();
+      this.cerrar_modal();
+      this.uiService.errorToast('Error, verifica tus datos');
+    }
 
   }
 }

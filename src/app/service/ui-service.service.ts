@@ -25,6 +25,15 @@ export class UiServiceService {
     await alert.present();
   }
   // #endregion
+  // #region ALERTA INFORMATIVA
+  async alertInfo2(message: string) {
+    const alert = await this.alertCtrl.create({
+      message
+    });
+
+    await alert.present();
+  }
+  // #endregion
 
   // #region Toast de Error y Succes
   async successToast(message: string) {

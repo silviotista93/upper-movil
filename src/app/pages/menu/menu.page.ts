@@ -29,7 +29,7 @@ export class MenuPage implements OnInit {
     setTimeout(async () => {
       this.usuario = await this.userService.getUsuario();
       this.image = this.usuario.avatar;
-      console.log('avatar', this.usuario.avatar);
+      // console.log('avatar', this.usuario.avatar);
     }, 500);
     this.pages = [
       { title: 'Solicitar Servicio', url: '/menu/home', icon: 'home' },

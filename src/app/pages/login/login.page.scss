@@ -19,7 +19,7 @@ img {
 }
 
 ion-content {
-  --overflow: hidden;
+  --overflow: auto;
 }
 
 ion-input {
@@ -67,7 +67,7 @@ ion-input {
   --background: #ffffff !important;
   font-weight: 400;
   font-size: 14px;
-  margin: 0px 2px 0px 2px;
+  margin: 0px 1px 0px 2px;
 }
 
 .image-slide {

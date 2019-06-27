@@ -5,7 +5,6 @@ import { Car, Brand, Color, Car_type, Cilindraje } from 'src/app/interfaces/inte
 import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingController, ActionSheetController } from '@ionic/angular';
-import { DomSanitizer } from '@angular/platform-browser';
 
 declare var window: any;
 
@@ -50,7 +49,6 @@ export class EditarAutoPage implements OnInit {
   public brandId: string;
   image: string ;
   image2: string = "../assets/banner_add_auto.png";
-
   //#endregion
 
   id: any = this.route.snapshot.paramMap.get('id');
@@ -60,7 +58,6 @@ export class EditarAutoPage implements OnInit {
     private loadCtrl: LoadingController,
     private camera: Camera,
     private actSheetCtrl: ActionSheetController,
-    private domSanitizer: DomSanitizer,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -76,6 +73,7 @@ export class EditarAutoPage implements OnInit {
     this.carService.getCar(this.id).subscribe(resp => {
       this.car = resp['car'];
       this.image = this.car.picture;
+      this.image2 = "";
     });
   }
   // #endregion
@@ -94,7 +92,6 @@ export class EditarAutoPage implements OnInit {
       for (const brand of this.brands) {
         if (brand.id === this.car.brand_id) {
           this.brandSel = brand.name;
-          // console.log('branddddd', this.brandSel);
           break;
         }
       }
@@ -102,7 +99,6 @@ export class EditarAutoPage implements OnInit {
     this.carService.getColor().subscribe(resp => {
       this.colors.push(...resp['colors']);
       loading.dismiss();
-      // console.log('colors', this.colors);
       for (const color of this.colors) {
         if (color.id === this.car.color_id) {
           this.colorSel = color.picture;
@@ -113,7 +109,6 @@ export class EditarAutoPage implements OnInit {
     this.carService.getCarType().subscribe(resp => {
       this.carTypes.push(...resp['carTypes']);
       loading.dismiss();
-      // console.log('types', this.carTypes);
       for (const type of this.carTypes) {
         if (type.id === this.car.car_type_id) {
           this.carSel = type.picture;
@@ -125,7 +120,6 @@ export class EditarAutoPage implements OnInit {
     this.carService.getCilindraje().subscribe(resp => {
       this.cilindrajes.push(...resp['cilindrajes']);
       loading.dismiss();
-      // console.log('cilindrajes', this.cilindrajes);
       for (const cilin of this.cilindrajes) {
         if (cilin.id === this.car.cilindraje_id) {
           this.cilindrajeSel = cilin.picture;
@@ -142,7 +136,6 @@ export class EditarAutoPage implements OnInit {
   selectedBrand(brand) {
     this.avatarSel.emit(brand.id);
     this.brandId = brand.id;
-    // console.log("marca", brand.id);
   }
 
   selectedCar(carTypes) {
@@ -150,7 +143,6 @@ export class EditarAutoPage implements OnInit {
     this.avatarSel.emit(carTypes.picture);
     this.carId = carTypes.id.toString();
     this.car.car_type_id = this.carId
-    // console.log(this.carId);
   }
 
   selectedCilindraje(cilindrajes) {
@@ -158,7 +150,6 @@ export class EditarAutoPage implements OnInit {
     this.avatarSel.emit(cilindrajes.picture);
     this.cilindrajeId = cilindrajes.id.toString();
     this.car.cilindraje_id = this.cilindrajeId;
-    // console.log(this.cilindrajeId);
   }
 
   selectedColor(colors) {
@@ -166,7 +157,6 @@ export class EditarAutoPage implements OnInit {
     this.avatarSel.emit(colors.picture);
     this.colorId = colors.id.toString();
     this.car.color_id = this.colorId;
-    // console.log(this.colorId);
   }
   // #endregion
 
@@ -181,7 +171,6 @@ export class EditarAutoPage implements OnInit {
       this.car = {};
       this.ionViewWillEnter();
     }
-
   }
   // #endregion
 

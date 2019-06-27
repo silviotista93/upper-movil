@@ -35,22 +35,9 @@ export class AgregarAutoPage implements OnInit {
   colors: Color[] = [];
   carTypes: Car_type[] = [];
   cilindrajes: Cilindraje[] = [];
-  user: Usuario = {};
-
   tempImages: string[] = [];
-  image: string = "../assets/banner_add_auto.png";
 
-  public carSel: string;
-  public colorSel: string;
-  public cilindrajeSel: string;
-
-  public brandId: string;
-
-  public carId: string;
-  public cilindrajeId: string;
-  public colorId: string;
-  board: string;
-
+  user: Usuario = {};
   registerCar: Car = {
     board: '',
     picture: '',
@@ -60,6 +47,20 @@ export class AgregarAutoPage implements OnInit {
     color_id: '',
     user_id: ''
   };
+
+  // #region Strings variables
+  image: string = "../assets/banner_add_auto.png";
+  imageToUpload: string;
+
+  carSel: string;
+  colorSel: string;
+  cilindrajeSel: string;
+  brandId: string;
+  carId: string;
+  cilindrajeId: string;
+  colorId: string;
+  board: string;
+  // #endregion
 
   URL = environment.url;
 
@@ -110,6 +111,7 @@ export class AgregarAutoPage implements OnInit {
   // #region Guardar carro
   async saveCar(registerCar) {
 
+    // Descomentar esta linea para el funcionamiento de image
     registerCar.picture = this.carService.image;
     registerCar.car_type_id = this.carId;
     registerCar.color_id = this.colorId;
@@ -117,11 +119,20 @@ export class AgregarAutoPage implements OnInit {
     registerCar.user_id = this.user.id.toString();
 
     console.log('data', this.registerCar);
-    await this.carService.createCar(registerCar);
-    this.carService.image = "";
 
+    await this.carService.uploadPicture(this.imageToUpload);
+    // CAMBIOSS REALIZADOS 
+    const val = await this.carService.createCar(registerCar);
+    if (val) {
+      this.carService.image = "";
+      this.registerCar = {};
+    } else {
+      this.carService.image = "";
+      this.registerCar = {};
+    }
   }
   // #endregion
+
 
   // #region Cargar Marcas, Colores y Tipos 
   async loadData() {
@@ -189,14 +200,12 @@ export class AgregarAutoPage implements OnInit {
   // #region Obtener imagen
   getPicture(options: CameraOptions) {
     this.camera.getPicture(options).then(async (imageData) => {
+      this.imageToUpload = imageData;
 
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      console.log('img', img);
-
       this.image = img;
-      console.log('imagedata', imageData);
-      await this.carService.uploadPicture(imageData);
 
+      // await this.carService.uploadPicture(imageData);
     }, (err) => {
       // Handle error
     });

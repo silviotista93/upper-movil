@@ -35,6 +35,7 @@ export class LoginPage implements OnInit {
     private menu: MenuController,
     private uiService: UiServiceService,
     private loadCtrl: LoadingController) { }
+    
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
@@ -92,14 +93,11 @@ export class LoginPage implements OnInit {
     if (validated) {
       //  NAVEGA A LA PAGINA PRINCIPAL
       loading.dismiss();
-      console.log('login', this.userService.usuario);
       this.navCtrl.navigateRoot('/menu/home', { animated: true });
     } else {
       //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
       loading.dismiss();
       console.log('no hay acceso');
-
-      // this.uiService.alertInfo('Usuario y contraseña incorrectas.');
       this.uiService.errorToast('Usuario y contraseña incorrectas');
     }
   }
