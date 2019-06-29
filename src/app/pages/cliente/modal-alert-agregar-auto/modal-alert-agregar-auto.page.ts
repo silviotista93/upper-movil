@@ -16,4 +16,8 @@ export class ModalAlertAgregarAutoPage implements OnInit {
     this.navCtrl.navigateForward('/menu/agregar-auto');
     this.modalCtrl.dismiss();
   }
+  cerrar_modal(){ 
+    this.modalCtrl.dismiss();
+  }
 }
+
