@@ -111,25 +111,25 @@ export class AgregarAutoPage implements OnInit {
   // #region Guardar carro
   async saveCar(registerCar) {
 
-    // Descomentar esta linea para el funcionamiento de image
-    registerCar.picture = this.carService.image;
-    registerCar.car_type_id = this.carId;
-    registerCar.color_id = this.colorId;
-    registerCar.cilindraje_id = this.cilindrajeId;
-    registerCar.user_id = this.user.id.toString();
+    const validate = await this.carService.uploadPicture(this.imageToUpload);
+    if (validate) { 
 
-    console.log('data', this.registerCar);
-
-    await this.carService.uploadPicture(this.imageToUpload);
-    // CAMBIOSS REALIZADOS 
-    const val = await this.carService.createCar(registerCar);
-    if (val) {
-      this.carService.image = "";
-      this.registerCar = {};
-    } else {
-      this.carService.image = "";
-      this.registerCar = {};
+      registerCar.picture = this.carService.image;
+      registerCar.car_type_id = this.carId;
+      registerCar.color_id = this.colorId;
+      registerCar.cilindraje_id = this.cilindrajeId;
+      registerCar.user_id = this.user.id.toString();
+  
+      const val = await this.carService.createCar(registerCar);
+      if (val) {
+        this.carService.image = "";
+        this.registerCar = {};
+      } else {
+        this.carService.image = "";
+        this.registerCar = {};
+      }
     }
+    
   }
   // #endregion
 
@@ -197,7 +197,7 @@ export class AgregarAutoPage implements OnInit {
   }
   // #endregion
 
-  // #region Obtener imagen
+  // #region Obtener imagen 
   getPicture(options: CameraOptions) {
     this.camera.getPicture(options).then(async (imageData) => {
       this.imageToUpload = imageData;
@@ -205,7 +205,6 @@ export class AgregarAutoPage implements OnInit {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       this.image = img;
 
-      // await this.carService.uploadPicture(imageData);
     }, (err) => {
       // Handle error
     });

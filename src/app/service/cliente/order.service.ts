@@ -65,9 +65,9 @@ export class OrderService {
 
   createOrder(order: Order) {
     const headerToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
       'Authorization': this.userService.token,
+      'Content-Type': 'application/json',
+      // 'X-Requested-With': 'XMLHttpRequest',
     });
     return new Promise(resolve => {
       this.http.post(`${this.URL}/api/order/create-order`, order, { headers: headerToken })
@@ -79,7 +79,7 @@ export class OrderService {
             resolve(false);
           }
         }, err => {
-
+          console.log('err', err);
           resolve(false);
         });
     });
@@ -107,7 +107,6 @@ export class OrderService {
          });
          return await this.http.get(`${this.URL}/api/order/detail-car-suscription/${id}`, { headers: headerToken })
              .subscribe(async resp => {
-
                this.car_suscription2 = resp['car_suscription'];
                console.log('car sus desde el servicio', this.car_suscription2)
                this.car = this.car_suscription2['car'];

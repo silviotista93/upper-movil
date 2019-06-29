@@ -20,7 +20,7 @@ declare var window: any;
 export class CuentaPage implements OnInit {
 
   URL = environment.url;
-  public usuario: Usuario = {};
+  private usuario: Usuario = {};
 
 
   constructor(
@@ -37,14 +37,18 @@ export class CuentaPage implements OnInit {
     password_confirmation: '',
   };
 
-  image: string = this.usuario.avatar;
-
-  async ngOnInit() {
+  image: string;
+  name: string ;
+  lastname: string;
+  
+  ngOnInit() {
   }
 
   async ionViewWillEnter() {
     this.usuario = await this.userService.getUsuario();
     this.image = this.usuario.avatar;
+    this.name = this.usuario.names;
+    this.lastname  = this.usuario.last_name;
   }
 
   logout() {
@@ -85,6 +89,8 @@ export class CuentaPage implements OnInit {
 
   //#region ACTUALIZAR PERFIL
   async updateProfile(fProfile: NgForm) {
+    this.usuario.names = this.name;
+    this.usuario.last_name = this.lastname;
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });

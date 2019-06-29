@@ -114,11 +114,10 @@ export class UserService {
   async getUsuario() {
     if (!this.usuario) {
       this.validaToken();
-      console.log('id usuario ', this.usuario);
     }
     this.validaToken();
     return { ...this.usuario };
-  }
+  } 
   // #endregion
 
   // #region GUARDAR TOKEN

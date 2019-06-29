@@ -19,11 +19,11 @@ export class DetalleLavadoPage implements OnInit {
   @ViewChild('segments') segments;
   page: any;
   id: 0;
-  
+
   image: string = this.orderService.image;
   idDetalleLavado = null;
 
-  opciones = [ {
+  opciones = [{
     id: '0',
     opcion: 'Detalle'
   },
@@ -50,16 +50,16 @@ export class DetalleLavadoPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private loadCtrl: LoadingController,
-    ) { 
-      
-    }
+  ) {
+
+  }
 
 
   ngOnInit() {
     this.idDetalleLavado = this.activatedRoute.snapshot.paramMap.get('id');
     // this.orderService.getDetailOrden(this.idDetalleLavado);
-  
-          
+
+
     //   this.orden = this.orderService.order2;
     //   this.orderService.getCarSuscriptionOrden(this.orden.subscription_cars_id);
     //   this.car_suscription = this.orderService.car_suscription2;
@@ -71,19 +71,21 @@ export class DetalleLavadoPage implements OnInit {
     //   console.log('carrossss', this.image);   
     this.loadData();
   }
-     async loadData() {
 
-        const loading = await this.loadCtrl.create({
-          spinner: 'crescent'
-        });
-        loading.present();
-        this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).then((data: any) => {
-          this.detailOrden = data;
-          setTimeout(() => {
-            this.selectedTab( this.opciones[0].id);
-          }, 200);
-        });
-        loading.dismiss();
+  async loadData() {
+
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+    this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).then((data: any) => {
+      this.detailOrden = data;
+      console.log('detailorden', this.detailOrden);
+      setTimeout(() => {
+        this.selectedTab(this.opciones[0].id);
+      }, 200);
+    });
+    loading.dismiss();
     //     
     //     this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(resp => {
     //     this.orden = resp['detail-order']; 
@@ -91,32 +93,32 @@ export class DetalleLavadoPage implements OnInit {
     //     this.car = this.orderService.car;
     //     console.log('car_susc de detalle lavado', this.car);
     //     
-        
+
     //  });
-        
-      }
+
+  }
   // Initialize slide
- async ionViewDidEnter() {
+  async ionViewDidEnter() {
     this.slideChanged();
     await this.loadData();
-   }
- 
-   // On segment click
-   selectedTab(index) {
-     this.slider.slideTo(index);
-     this.segment.value = index;
-     console.log('selectedTab', index);
+  }
 
-   }
- 
- async openPreview(img) {
-    const modal = await this.modalController.create ({
+  // On segment click
+  selectedTab(index) {
+    this.slider.slideTo(index);
+    this.segment.value = index;
+    console.log('selectedTab', index);
+
+  }
+
+  async openPreview(img) {
+    const modal = await this.modalController.create({
       component: ImageModalPage,
       componentProps: {
         img: img
       }
     })
-   await modal.present();
+    await modal.present();
   }
 
   slideChanged() {
@@ -145,7 +147,7 @@ export class DetalleLavadoPage implements OnInit {
 
     const sizeLeft = this.sizeLeft();
     const sizeCurrent = this.segments.nativeElement.children[this.page].clientWidth;
-    let result = sizeLeft - (window.innerWidth / 2) + (sizeCurrent / 2) ;
+    let result = sizeLeft - (window.innerWidth / 2) + (sizeCurrent / 2);
 
     result = (result > 0) ? result : 0;
     this.smoothScrollTo(result);
@@ -180,5 +182,5 @@ export class DetalleLavadoPage implements OnInit {
       this.segments.nativeElement.scrollLeft = newX;
     }, 1000 / 60); // 60 fps
   }
-  
+
 }

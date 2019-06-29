@@ -50,13 +50,13 @@
               <form (ngSubmit)="updateProfile( fProfile )" #fProfile="ngForm">
                       <ion-item>
                           <ion-label position="stacked">Nombre</ion-label>
-                          <ion-input *ngIf="usuario.social_acounts === null" name="name" [(ngModel)]="usuario.names"></ion-input>
-                          <ion-input *ngIf="usuario.social_acounts !== null" name="name"  [(ngModel)]="usuario.names"></ion-input>
+                          <ion-input *ngIf="usuario.social_acounts === null" name="name" [(ngModel)]="name"></ion-input>
+                          <ion-input *ngIf="usuario.social_acounts !== null" name="name"  [(ngModel)]="name"></ion-input>
                       </ion-item>
                       <ion-item>
                         <ion-label position="stacked">Apellidos</ion-label>
-                        <ion-input *ngIf="usuario.social_acounts === null" name="last_name"  [(ngModel)]="usuario.last_name"></ion-input>
-                        <ion-input *ngIf="usuario.social_acounts !== null" name="last_name" [(ngModel)]="usuario.last_name"></ion-input>
+                        <ion-input *ngIf="usuario.social_acounts === null" name="last_name"  [(ngModel)]="lastname"></ion-input>
+                        <ion-input *ngIf="usuario.social_acounts !== null" name="last_name" [(ngModel)]="lastname"></ion-input>
                     </ion-item>
                       <ion-item>
                           <ion-label position="stacked">Email</ion-label>

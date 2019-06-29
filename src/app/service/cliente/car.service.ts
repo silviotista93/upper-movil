@@ -133,6 +133,7 @@ export class CarService {
       spinner: 'crescent'
     });
     loading.present();
+
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
     });
@@ -185,12 +186,17 @@ export class CarService {
     }
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
-      .then(async (data) => {
-        this.image = await data.response;
-      }).catch(err => {
-        console.log('error', err)
-      });
+    return new Promise(resolve => {
+      fileTransfer.upload(img, `${this.URL}/api/car/upload-picture`, options)
+        .then(async (data) => {
+          this.image = await data.response;
+          console.log('image', this.image);
+          resolve(true);
+        }).catch(err => {
+          console.log('error', err)
+          resolve(false);
+        });
+    })
   }
   // #endregion
 
