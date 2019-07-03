@@ -22,12 +22,12 @@
       </ion-col>
       <ion-col size="6">
         <ion-item lines="none" color="secondary" style="margin-top: 8%;">
-          <img *ngIf="detailOrden.status == 1" slot="start" src="/assets/estado_orden/img_pedido.png"
-            style="max-width: 20%;">
-          <img *ngIf="detailOrden.status == 2" slot="start" src="/assets/estado_orden/img_realizado.png"
-            style="max-width: 20%;">
-          <img *ngIf="detailOrden.status == 3" slot="start" src="/assets/estado_orden/img_cancelado.png"
-            style="max-width: 20%;">
+          <ion-img *ngIf="detailOrden.status == 1" slot="start" src="/assets/estado_orden/img_pedido.png"
+            style="max-width: 20%;"></ion-img>
+          <ion-img *ngIf="detailOrden.status == 2" slot="start" src="/assets/estado_orden/img_realizado.png"
+            style="max-width: 20%;"></ion-img>
+          <ion-img *ngIf="detailOrden.status == 3" slot="start" src="/assets/estado_orden/img_cancelado.png"
+            style="max-width: 20%;"></ion-img>
           <p *ngIf="detailOrden.status == 1" slot="start">Pedido</p>
           <p *ngIf="detailOrden.status == 2" slot="start">Realizado</p>
           <p *ngIf="detailOrden.status == 3" slot="start">Cancelado</p>
@@ -40,7 +40,8 @@
       <ion-col size="12">
         <ion-card style="margin: 0px;">
           <ion-card-content style="padding: 5px;">
-            <img class="img-auto" style="width: 100%" src="{{ URL+detailOrden.suscription.car[0].picture }}" alt="">
+            <ion-img class="img-auto" style="width: 100%" src="{{ URL+detailOrden.suscription.car[0].picture }}" alt="">
+            </ion-img>
           </ion-card-content>
           <ion-card-header style="padding-top: 5px;">
             <ion-card-title>Lavado Exterior</ion-card-title>
@@ -114,7 +115,7 @@
             <h1 style="font-weight: 700">Antés</h1>
             <ion-slides [options]="sliderOpts">
               <ion-slide *ngFor="let img of [ 1, 2, 5 ]">
-                <img src="/assets/images/autos/{{ img }}.jpg" tappable (click)="openPreview(img)">
+                <ion-img src="/assets/images/autos/{{ img }}.jpg" tappable (click)="openPreview(img)"></ion-img>
               </ion-slide>
             </ion-slides>
           </ion-col>
@@ -122,7 +123,7 @@
             <h1 style="font-weight: 700">Después</h1>
             <ion-slides [options]="sliderOpts">
               <ion-slide *ngFor="let img of [ 1, 2, 5 ]">
-                <img src="/assets/images/autos/{{ img }}.jpg" tappable (click)="openPreview(img)">
+                <ion-img src="/assets/images/autos/{{ img }}.jpg" tappable (click)="openPreview(img)"></ion-img>
               </ion-slide>
             </ion-slides>
           </ion-col>

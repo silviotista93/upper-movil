@@ -111,23 +111,38 @@ export class AgregarAutoPage implements OnInit {
   // #region Guardar carro
   async saveCar(registerCar) {
 
-    const validate = await this.carService.uploadPicture(this.imageToUpload);
-    if (validate) { 
+    // const validate = await this.carService.uploadPicture(this.imageToUpload);
+    // if (validate) { 
 
-      registerCar.picture = this.carService.image;
-      registerCar.car_type_id = this.carId;
-      registerCar.color_id = this.colorId;
-      registerCar.cilindraje_id = this.cilindrajeId;
-      registerCar.user_id = this.user.id.toString();
+    //   registerCar.picture = this.carService.image;
+    //   registerCar.car_type_id = this.carId;
+    //   registerCar.color_id = this.colorId;
+    //   registerCar.cilindraje_id = this.cilindrajeId;
+    //   registerCar.user_id = this.user.id.toString();
   
-      const val = await this.carService.createCar(registerCar);
-      if (val) {
-        this.carService.image = "";
-        this.registerCar = {};
-      } else {
-        this.carService.image = "";
-        this.registerCar = {};
-      }
+    //   const val = await this.carService.createCar(registerCar);
+    //   if (val) {
+    //     this.carService.image = "";
+    //     this.registerCar = {};
+    //   } else {
+    //     this.carService.image = "";
+    //     this.registerCar = {};
+    //   }
+    // }
+
+    registerCar.picture = this.carService.image;
+    registerCar.car_type_id = this.carId;
+    registerCar.color_id = this.colorId;
+    registerCar.cilindraje_id = this.cilindrajeId;
+    registerCar.user_id = this.user.id.toString();
+
+    const val = await this.carService.createCar(registerCar);
+    if (val) {
+      this.carService.image = "";
+      this.registerCar = {};
+    } else {
+      this.carService.image = "";
+      this.registerCar = {};
     }
     
   }
