@@ -21,6 +21,11 @@ export class LoginPage implements OnInit {
     email: '',
     password: ''
   };
+
+  forgotPassword = {
+    email: ''
+  };
+  
   registerUser: Usuario = {
     email: '',
     names: '',
@@ -129,6 +134,32 @@ export class LoginPage implements OnInit {
   }
   //#endregion
 
+  //#region LOGICA DEL FORMULARIO DE REGISTRO
+  async restaPassword(fForPassword: NgForm) {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+
+    if (fForPassword.invalid) {
+      loading.dismiss();
+      this.uiService.errorToast('El campo email es obligatorio');
+      return;
+    }
+    const validated = await this.userService.forgotPassword(this.forgotPassword);
+    console.log(this.forgotPassword);
+    if (validated) {
+      loading.dismiss();
+      this.loginUser.email = this.forgotPassword.email;
+      this.uiService.successToast('Hemos enviado a tu correo constraseña de acceso');
+      this.mostrarLogin();
+    } else {
+      loading.dismiss();
+      this.uiService.errorToast('Correo electrónico no existe');
+    }
+  }
+  //#endregion
+
 
   // EVENTO DE BOTON REGISTRAR
   mostrarRegistro() {
@@ -140,6 +171,13 @@ export class LoginPage implements OnInit {
   mostrarLogin() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
+    this.slides.lockSwipes(true);
+  }
+
+  // EVENTO DE BOTON LOGIN
+  mostrarRecuperarPassword() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(2);
     this.slides.lockSwipes(true);
   }
 

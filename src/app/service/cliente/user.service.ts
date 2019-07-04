@@ -110,6 +110,24 @@ export class UserService {
   }
   // #endregion
 
+  // #region RESTABLECER CONTRASEÑA
+  forgotPassword(email: any) {
+    return new Promise(resolve => {
+      this.http.post(`${URL}/api/auth/forgot-password`, email, { headers: headers })
+        .subscribe(async resp => {
+          if (!resp['ERROR']) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }, err => {
+
+          resolve(false);
+        });
+    });
+  }
+  // #endregion
+
   // #region OBTENER USUARIO
   async getUsuario() {
     if (!this.usuario) {
@@ -157,7 +175,7 @@ export class UserService {
               this.usuario = resp['user'];
               resolve(true);
             } else {
-              this.uiService.alertInfo2('Tu usuario se encuentra inactivo');
+              this.uiService.alertInfo2('Usuario se encuentra inactivo');
               resolve(false);
             }
           } else {
