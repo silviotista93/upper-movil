@@ -155,7 +155,6 @@ export class LoginPage implements OnInit {
       this.mostrarLogin();
     } else {
       loading.dismiss();
-      this.uiService.errorToast('Correo electrónico no existe');
     }
   }
   //#endregion

@@ -115,9 +115,10 @@ export class UserService {
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/forgot-password`, email, { headers: headers })
         .subscribe(async resp => {
-          if (!resp['ERROR']) {
+          if (resp['success']) {
             resolve(true);
           } else {
+            this.uiService.errorToast('Correo electrónico no existe');
             resolve(false);
           }
         }, err => {
