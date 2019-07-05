@@ -62,10 +62,11 @@ export class UserService {
     console.log('ESTAMOS EN LA FUNCION DE LARAVEL', usuario);
     return new Promise(resolve => {
       this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
-        .subscribe(async resp => {
+        .subscribe( resp => {
+          console.log('respuesta', JSON.stringify(resp));
           if (resp['access_token']) {
             this.token = resp['token_type'] + ' ' + resp['access_token'];
-            await this.saveToken(this.token);
+            this.saveToken(this.token);
             resolve(true);
           } else {
             this.token = null;
@@ -73,6 +74,7 @@ export class UserService {
             resolve(false);
           }
         }, err => {
+          console.log('err', JSON.stringify(err));
           this.token = null;
           this.storage.clear();
           resolve(false);
