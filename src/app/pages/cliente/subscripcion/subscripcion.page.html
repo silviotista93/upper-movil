@@ -1,64 +1,77 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button text=""  defaultHref="/menu/home"></ion-back-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button>
-          <img slot="start" src = "/assets/iconos/notificacion.png">
-        </ion-button>
-      </ion-buttons>
-      <ion-title>
-        Tus Suscripciones
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/menu/home"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <img slot="start" src="/assets/iconos/notificacion.png">
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Tus Suscripciones
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content color="secondary">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col size="4" style="padding: 5px 5px 0px 0px">
-            <ion-item color="secondary" lines="none" (click)="abrirModalPayment()">
-            <!-- <ion-item color="secondary" lines="none" (click)="abrirListSubscripciones()"> -->
-                <img slot="start" style="width: 60%; margin: 15%" src = "/assets/iconos/button_mas.png">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4" style="padding: 5px 5px 0px 0px">
+        <ion-item color="secondary" lines="none" (click)="abrirModalPayment()">
+          <!-- <ion-item color="secondary" lines="none" (click)="abrirListSubscripciones()"> -->
+          <img slot="start" style="width: 60%; margin: 15%" src="/assets/iconos/button_mas.png">
+        </ion-item>
+      </ion-col>
+      <ion-col size="8" style="margin-left: -32px; margin-top: 10px;">
+        <ion-item color="secondary" lines="none">
+          <ion-label style="font-size: 21px; font-weight: 700;">{{ usuario.names }} {{ usuario.last_name }}</ion-label>
+        </ion-item>
+        <ion-item color="secondary" lines="none" style="margin-top: -12px">
+          <p style="font-size: 79%; font-weight: 600; margin: 0px">Agrega una nueva suscripción</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-slides class="swiper-no-swiping" #slideHistoty mode="ios" *ngIf="suscripciones.length <= 0">
+    <ion-slide>
+      <ion-label>No hay carros registrados</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid fixed style="margin-top: -26px;">
+    <ion-row *ngFor="let suscri of suscripciones">
+      <ion-col>
+        <ion-card color="light">
+          <ion-card-header>
+
+            <ion-card-title>{{ suscri.suscriptions.plans.name }}</ion-card-title>
+            <ion-card-subtitle style="color: #3c80f7; padding-top: 3px">{{ suscri.suscriptions.date_end }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-item lines="none" style="margin-left: 2%">
+
+            <ion-card-title slot="start" style="color: #FE7B37; font-size: 25px; font-weight: 900; margin-right: 2px;">
+              ${{ suscri.suscriptions.plans.price }}</ion-card-title>
+            <ion-label style="color: #FE7B37">/2 Meses</ion-label>
+          </ion-item>
+          <div style="background-color: #97979759;height: 1px;margin-right: 8px;margin-left: 4%;margin-top: 2%;"></div>
+          <ion-card-content style="padding: 7px;">
+            <ion-item lines="none" *ngIf="suscri.suscriptions.state == 1">
+              <ion-img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
+              </ion-img>
+              <ion-label>Este plan se encuentra activo</ion-label>
             </ion-item>
-          </ion-col>
-          <ion-col size="8" style="margin-left: -32px; margin-top: 10px;">
-            <ion-item color="secondary" lines="none">
-              <ion-label style="font-size: 21px; font-weight: 700;">{{ usuario.names }} {{ usuario.last_name }}</ion-label>
+            <ion-item lines="none" *ngIf="suscri.suscriptions.state == 2">
+              <ion-img slot="start" src="/assets/iconos/icon_inactivo.png" style="max-width: 8%; margin-right: 10px;">
+              </ion-img>
+              <ion-label>Este plan se encuentra inactivo</ion-label>
             </ion-item>
-            <ion-item color="secondary" lines="none" style="margin-top: -12px">
-              <p style="font-size: 79%; font-weight: 600; margin: 0px">Agrega una nueva suscripción</p>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid fixed style="margin-top: -26px;">
-          <ion-row *ngFor="let suscri of suscripciones">
-            <ion-col>
-              <ion-card color="light">
-                <ion-card-header>
-                
-                  <ion-card-title>{{ suscri.suscriptions.plans.name }}</ion-card-title>
-                  <ion-card-subtitle style="color: #3c80f7; padding-top: 3px">{{ suscri.suscriptions.date_end }}</ion-card-subtitle>
-                </ion-card-header>
-                <ion-item lines="none" style="margin-left: 2%">
-        
-                    <ion-card-title slot="start" style="color: #FE7B37; font-size: 25px; font-weight: 900; margin-right: 2px;">${{ suscri.suscriptions.plans.price }}</ion-card-title><ion-label style="color: #FE7B37">/2 Meses</ion-label>
-                </ion-item>
-                <div style="background-color: #97979759;height: 1px;margin-right: 8px;margin-left: 4%;margin-top: 2%;"></div>
-                <ion-card-content style="padding: 7px;">
-                  <ion-item lines="none" *ngIf="suscri.suscriptions.state == 1">
-                      <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
-                      <ion-label>Este plan se encuentra activo</ion-label>
-                  </ion-item>
-                  <ion-item lines="none" *ngIf="suscri.suscriptions.state == 2">
-                    <img slot="start" src="/assets/iconos/icon_inactivo.png" style="max-width: 8%; margin-right: 10px;">
-                    <ion-label>Este plan se encuentra inactivo</ion-label>
-                </ion-item>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-        
-          </ion-row>
-        </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>

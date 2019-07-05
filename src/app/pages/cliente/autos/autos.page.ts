@@ -31,7 +31,6 @@ export class AutosPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private alertCtrl: AlertController,
     private uiService: UiServiceService,
-    private router: Router,
     private userService: UserService) { }
 
   public user: Usuario = {};
@@ -73,7 +72,7 @@ export class AutosPage implements OnInit {
   }
   // #endregion
 
-
+  // #region Action sheet
   async lanzarMenu(event) {
     const id = event.srcElement.id.toString();
     this.carService.carId = id;
@@ -108,6 +107,7 @@ export class AutosPage implements OnInit {
     });
     await actionSheet.present();
   }
+  // #endregion
 
   // #region Alerta confirmacion de eliminar
   async  presentConfirm(message: string, id) {

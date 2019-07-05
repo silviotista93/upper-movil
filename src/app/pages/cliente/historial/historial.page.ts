@@ -19,9 +19,15 @@ export class HistorialPage implements OnInit {
     private orderService: OrderService) { }
 
   ngOnInit() {
+    // this.loadData();
+    // console.log(this.order);
+  }
+  
+  ionViewWillEnter() {
     this.loadData();
     console.log(this.order);
   }
+
   pushDetalleLavado(id) {
     this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
   }
