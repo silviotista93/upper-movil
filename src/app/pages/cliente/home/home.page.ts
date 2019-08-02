@@ -7,7 +7,7 @@ import { UserService } from 'src/app/service/cliente/user.service';
 import { ModalSolicitarPage } from '../modal-solicitar/modal-solicitar.page';
 import { CarService } from '../../../service/cliente/car.service';
 import { ModalAlertAgregarAutoPage } from '../modal-alert-agregar-auto/modal-alert-agregar-auto.page';
-import { GoogleMap, Geocoder, GoogleMaps, Marker, MyLocation, GeocoderRequest, LatLng, GeocoderResult } from '@ionic-native/google-maps/ngx';
+import { GoogleMap, Geocoder, GoogleMaps, Marker, MyLocation, GeocoderRequest, LatLng, GeocoderResult, GoogleMapsAnimation } from '@ionic-native/google-maps/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 
 declare var google;
@@ -18,12 +18,15 @@ declare var google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+
   mapRef = null;
   private usuario: Usuario = {};
   cars: Car[] = [];
 
   map: GoogleMap;
   address: string;
+  locat: string;
+  city: string;
 
   geoencoderOptions: NativeGeocoderOptions = {
     useLocale: true,
@@ -40,19 +43,17 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private carService: CarService,
     private geocoder: Geocoder,
-    private platform: Platform,
+    private nativeGeocoder: NativeGeocoder
   ) {
 
   }
 
-  async ngOnInit() {
-
+  ngOnInit() {
     this.menu.enable(true, 'content');
-    // await this.platform.ready();
     setTimeout(async () => {
       this.usuario = await this.userService.getUsuario();
       console.log('Este es el usuario malo', this.usuario);
-      this.loadMap();
+      await this.loadMap();
     }, 500);
   }
   openFirst() {
@@ -154,7 +155,7 @@ export class HomePage implements OnInit {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-    loading.present();
+    // loading.present();
     this.map = GoogleMaps.create('map_canvas');
     await this.goToMyLocation();
     loading.dismiss();
@@ -167,44 +168,41 @@ export class HomePage implements OnInit {
     // Get the location of you
     this.map.getMyLocation().then(async (location: MyLocation) => {
       console.log(JSON.stringify(location, null, 2));
-
-      // Move the map camera to the location with animation
-      this.map.animateCamera({
-        target: location.latLng,
-        zoom: 15,
-        duration: 5000
-      });
-      // Pone marcardor de ubicacion
-      const marker: Marker = this.map.addMarkerSync({
-        title: '',
-        icon: 'red',
-        animation: 'DROP',
-        position: location.latLng
-      });
-
       const lat = location.latLng.lat;
       const lng = location.latLng.lng;
-      await this.doGeocode(marker, lat, lng);
-
-
+      this.addMarker(lat, lng);
       console.log('lat, lng', lat, lng);
     })
       .catch(err => {
-        // this.showToast(err.error_message);
         console.log('error', err);
       });
   }
   // #endregion
 
-  // async showToast(message: string) {
-  //   const toast = await this.toastCtrl.create({
-  //     message,
-  //     duration: 2000,
-  //     position: 'middle'
-  //   });
-  //   toast.present();
-  // }
+  // #region AGREGAR MARCADOR
+  async addMarker(lat, lng) {
+    this.map.clear();
+    // Move the map camera to the location with animation
+    const targ = { lat, lng };
+    this.map.animateCamera({
+      target: targ,
+      zoom: 19,
+      duration: 3000
+    });
+    // Pone marcardor de ubicacion
+    const marker: Marker = this.map.addMarkerSync({
+      position: { lat, lng },
+      // map: this.map,
+      icon: 'red',
+      animation: GoogleMapsAnimation.BOUNCE,
+      title: 'Ubicación Actual'
+    });
 
+    await this.doGeocode(marker, lat, lng);
+  }
+  //#endregion
+
+  // #region Obtener direccion
   doGeocode(marker, lat, lng) {
     const request: GeocoderRequest = {
       position: new LatLng(lat, lng),
@@ -218,8 +216,37 @@ export class HomePage implements OnInit {
           results[0].locality
         ].join("");
         console.log("data_: ", address);
+        this.city = results[0].locality;
         marker.setTitle(address);
         marker.showInfoWindow();
       });
+  }
+  // #endregion
+
+  // #region BUSCAR POR DIRECCION
+  forwardGeocode(keyword: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.nativeGeocoder.forwardGeocode(keyword)
+        .then((result: GeocoderResult[]) => {
+          const lat = result[0].latitude;
+          const lng = result[0].longitude;
+          console.log('datasad', result);
+          console.log('direccicones', lat, lng);
+
+          this.addMarker(lat, lng);
+          resolve();
+        })
+        .catch((error: any) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+  // #endregion
+
+  onClick() {
+    console.log(this.locat);
+    const locat2 = this.locat + ' ' + this.city;
+    this.forwardGeocode(locat2);
   }
 }

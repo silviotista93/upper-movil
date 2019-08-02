@@ -1,10 +1,10 @@
 <ion-header no-border>
   <ion-toolbar mode="ios" color="primary">
     <ion-buttons slot="start">
-       <!-- <ion-button (click)="toggleMenu()">
+      <!-- <ion-button (click)="toggleMenu()">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button> -->
-       <ion-menu-button></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
 
     </ion-buttons>
     <ion-buttons slot="end">
@@ -20,9 +20,20 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="ubicacionActual()" color="light"><img style="width: 40%" src="/assets/iconos/location.png">
+    <ion-fab-button (click)="goToMyLocation()" color="light">
+      <img style="width: 40%" src="/assets/iconos/location.png">
     </ion-fab-button>
   </ion-fab>
+
+  <ion-list>
+    <ion-item margin-bottom>
+      <ion-input type="text" placeholder="Escribe tu dirección" [(ngModel)]="locat"></ion-input>
+      <ion-button (click)="onClick()" center>
+        Buscar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
   <div id="map_canvas"></div>
 </ion-content>
 
