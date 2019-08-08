@@ -1,0 +1,23 @@
+import * as tslib_1 from "tslib";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { ModalAlertPlanAutoPage } from './modal-alert-plan-auto.page';
+var ModalAlertPlanAutoPageModule = /** @class */ (function () {
+    function ModalAlertPlanAutoPageModule() {
+    }
+    ModalAlertPlanAutoPageModule = tslib_1.__decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                IonicModule,
+            ],
+            declarations: [ModalAlertPlanAutoPage]
+        })
+    ], ModalAlertPlanAutoPageModule);
+    return ModalAlertPlanAutoPageModule;
+}());
+export { ModalAlertPlanAutoPageModule };
+//# sourceMappingURL=modal-alert-plan-auto.module.js.map

@@ -3,39 +3,14 @@ import { Component } from '@angular/core';
 import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserService } from './service/cliente/user.service';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(platform, splashScreen, statusBar, navCtrl) {
+    function AppComponent(platform, splashScreen, statusBar, navCtrl, userService) {
         this.platform = platform;
         this.splashScreen = splashScreen;
         this.statusBar = statusBar;
         this.navCtrl = navCtrl;
-        this.appPages = [
-            {
-                title: 'Solicitar Servicio',
-                url: '/home',
-                icon: 'home'
-            },
-            {
-                title: 'Subscripciones',
-                url: '/subscripcion',
-                icon: 'subscripcion'
-            },
-            {
-                title: 'Historial',
-                url: '/historial',
-                icon: 'historial'
-            },
-            {
-                title: 'Mis Autos',
-                url: '/autos',
-                icon: 'autos'
-            },
-            {
-                title: 'Contacto',
-                url: '/contacto',
-                icon: 'contacto'
-            },
-        ];
+        this.userService = userService;
         this.initializeApp();
     }
     AppComponent.prototype.initializeApp = function () {
@@ -45,9 +20,6 @@ var AppComponent = /** @class */ (function () {
             _this.splashScreen.hide();
         });
     };
-    AppComponent.prototype.pushPerfil = function () {
-        this.navCtrl.navigateForward('/cuenta');
-    };
     AppComponent = tslib_1.__decorate([
         Component({
             selector: 'app-root',
@@ -56,7 +28,8 @@ var AppComponent = /** @class */ (function () {
         tslib_1.__metadata("design:paramtypes", [Platform,
             SplashScreen,
             StatusBar,
-            NavController])
+            NavController,
+            UserService])
     ], AppComponent);
     return AppComponent;
 }());

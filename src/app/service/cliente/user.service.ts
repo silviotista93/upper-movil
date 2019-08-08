@@ -64,6 +64,9 @@ export class UserService {
       this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
         .subscribe( resp => {
           console.log('respuesta', JSON.stringify(resp));
+          console.log('respuesta', resp);
+          console.log('respuesta', resp['access_token']);
+
           if (resp['access_token']) {
             this.token = resp['token_type'] + ' ' + resp['access_token'];
             this.saveToken(this.token);

@@ -5,6 +5,7 @@ import { UserService } from '../../service/cliente/user.service';
 import { UiServiceService } from '../../service/ui-service.service';
 import { Usuario } from '../../interfaces/interfaces';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -16,6 +17,9 @@ export class LoginPage implements OnInit {
 
   @ViewChild('slidePrincipal') slides: IonSlides;
 
+  user: any = {};
+  userData: any = {};
+
   usuario: Usuario;
   loginUser = {
     email: '',
@@ -25,7 +29,7 @@ export class LoginPage implements OnInit {
   forgotPassword = {
     email: ''
   };
-  
+
   registerUser: Usuario = {
     email: '',
     names: '',
@@ -39,12 +43,62 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private menu: MenuController,
     private uiService: UiServiceService,
+    private httpClient: HttpClient,
     private loadCtrl: LoadingController) { }
-    
+
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.menu.enable(false);
   }
+
+
+  loginFb() {
+    this.facebook.login(['public_profile', 'email'])
+      .then((res: FacebookLoginResponse) => {
+        if (res.status === 'connected') {
+          // console.log(res);
+          // this.user.image = 'https://graph.facebook.com/' + res.authResponse.userID + '/picture?type=square';
+          this.getData(res.authResponse.accessToken);
+        } else {
+          alert('login failed');
+        }
+        console.log('Logged into Facebook!', res);
+      })
+      .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  async getData(accessToken: string) {
+
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+
+    const url = 'https://graph.facebook.com/me?fields=id,name,first_name,last_name,picture.width(720).height(720).as(picture_large),email&access_token=' + accessToken;
+    this.httpClient.get(url).subscribe(data => {
+      this.userData = JSON.stringify(data);
+      console.log('Datos', data);
+      this.usuario = {
+        id: data['id'],
+        email: data['email'],
+        avatar: data['picture_large']['data']['url'],
+        names: data['first_name'],
+        last_name: data['last_name']
+      };
+
+      console.log(' user', this.usuario);
+      const validated = this.userService.loginFacebook(this.usuario);
+      console.log('AQUI ESTAMOS MAURICIO');
+      if (validated) {
+        //   NAVEGA A LA PAGINA PRINCIPAL
+        loading.dismiss();
+        this.navCtrl.navigateRoot('/menu/home', { animated: true });
+        // window.location.reload();
+      } else {
+        //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+      }
+    });
+  }
+
 
   //#region LOGIN CON FACEBOOK
   async loginWithFB() {
@@ -52,29 +106,30 @@ export class LoginPage implements OnInit {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-    
+
     this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
       this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
-      .then(profile => {
-        // Datos del Usuario
-        this.usuario = {
-          id: profile['id'],
-          email: profile['email'],
-          avatar: profile['picture_large']['data']['url'],
-          names: profile['name']
+        .then(profile => {
+          // Datos del Usuario
+          this.usuario = {
+            id: profile['id'],
+            email: profile['email'],
+            avatar: profile['picture_large']['data']['url'],
+            names: profile['name'],
+            last_name: profile['last_name']
           };
           console.log(this.usuario);
           const validated = this.userService.loginFacebook(this.usuario);
           console.log('AQUI ESTAMOS MAURICIO');
-           if (validated) {
-          //   NAVEGA A LA PAGINA PRINCIPAL
+          if (validated) {
+            //   NAVEGA A LA PAGINA PRINCIPAL
             loading.dismiss();
-             this.navCtrl.navigateRoot('/menu/home', { animated: true });
-             window.location.reload();
-           } else {
+            this.navCtrl.navigateRoot('/menu/home', { animated: true });
+            window.location.reload();
+          } else {
             //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
-            }
-      });
+          }
+        });
     });
   }
   //#endregion
@@ -161,6 +216,7 @@ export class LoginPage implements OnInit {
   //#endregion
 
 
+  // #region Evento de botones
   // EVENTO DE BOTON REGISTRAR
   mostrarRegistro() {
     this.slides.lockSwipes(false);
@@ -180,5 +236,6 @@ export class LoginPage implements OnInit {
     this.slides.slideTo(2);
     this.slides.lockSwipes(true);
   }
+  // #endregion
 
 }

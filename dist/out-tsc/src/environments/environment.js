@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 export var environment = {
     production: false,
-    //  url: 'https://upper.website'
-    // url: 'https://upper.dev'
-    url: 'http://localhost:8000'
+    url: 'https://upper.website'
+    // url: 'http://localhost:8000'
+    // url: 'https://upper.bmotion'
 };
 /*
  * For easier debugging in development mode, you can import the following file
