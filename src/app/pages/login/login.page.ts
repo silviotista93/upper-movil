@@ -6,6 +6,7 @@ import { UiServiceService } from '../../service/ui-service.service';
 import { Usuario } from '../../interfaces/interfaces';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { HttpClient } from '@angular/common/http';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class LoginPage implements OnInit {
     private menu: MenuController,
     private uiService: UiServiceService,
     private httpClient: HttpClient,
+    private google: GooglePlus,
     private loadCtrl: LoadingController) { }
 
   ngOnInit() {
@@ -52,15 +54,14 @@ export class LoginPage implements OnInit {
   }
 
 
+  //#region LOGIN FACEBOOK FULL
   loginFb() {
     this.facebook.login(['public_profile', 'email'])
       .then((res: FacebookLoginResponse) => {
         if (res.status === 'connected') {
-          // console.log(res);
-          // this.user.image = 'https://graph.facebook.com/' + res.authResponse.userID + '/picture?type=square';
           this.getData(res.authResponse.accessToken);
         } else {
-          alert('login failed');
+          alert('Error al iniciar sesión');
         }
         console.log('Logged into Facebook!', res);
       })
@@ -68,70 +69,102 @@ export class LoginPage implements OnInit {
   }
 
   async getData(accessToken: string) {
-
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
 
     const url = 'https://graph.facebook.com/me?fields=id,name,first_name,last_name,picture.width(720).height(720).as(picture_large),email&access_token=' + accessToken;
     this.httpClient.get(url).subscribe(data => {
-      this.userData = JSON.stringify(data);
-      console.log('Datos', data);
       this.usuario = {
         id: data['id'],
         email: data['email'],
         avatar: data['picture_large']['data']['url'],
         names: data['first_name'],
-        last_name: data['last_name']
+        last_name: data['last_name'],
+        account: 'facebook'
       };
-
       console.log(' user', this.usuario);
-      const validated = this.userService.loginFacebook(this.usuario);
-      console.log('AQUI ESTAMOS MAURICIO');
+      const validated = this.userService.loginWithAccount(this.usuario);
       if (validated) {
         //   NAVEGA A LA PAGINA PRINCIPAL
         loading.dismiss();
-        this.navCtrl.navigateRoot('/menu/home', { animated: true });
-        // window.location.reload();
+        // this.navCtrl.navigateRoot('/menu/home', { animated: true });
       } else {
         //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+        loading.dismiss();
       }
     });
   }
+  // #endregion
 
-
-  //#region LOGIN CON FACEBOOK
-  async loginWithFB() {
-    // CREACION DEL LOADING
+  //#region LOGIN GOOGLE
+  async loginGoo() {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
 
-    this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
-      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
-        .then(profile => {
-          // Datos del Usuario
-          this.usuario = {
-            id: profile['id'],
-            email: profile['email'],
-            avatar: profile['picture_large']['data']['url'],
-            names: profile['name'],
-            last_name: profile['last_name']
-          };
-          console.log(this.usuario);
-          const validated = this.userService.loginFacebook(this.usuario);
-          console.log('AQUI ESTAMOS MAURICIO');
-          if (validated) {
-            //   NAVEGA A LA PAGINA PRINCIPAL
-            loading.dismiss();
-            this.navCtrl.navigateRoot('/menu/home', { animated: true });
-            window.location.reload();
-          } else {
-            //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
-          }
-        });
-    });
+    this.google.login({})
+      .then(data => {
+        console.log(data);
+
+        this.usuario = {
+          id: data['userId'],
+          email: data['email'],
+          avatar: data['imageUrl'],
+          names: data['givenName'],
+          last_name: data['familyName'],
+          account: 'google'
+        };
+        const validated = this.userService.loginWithAccount(this.usuario);
+        if (validated) {
+          //   NAVEGA A LA PAGINA PRINCIPAL
+          loading.dismiss();
+          // this.navCtrl.navigateRoot('/menu/home', { animated: true });
+        } else {
+          //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+          loading.dismiss();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
+  // #endregion
+
+  //#region LOGIN CON FACEBOOK
+  // async loginWithFB() {
+  // CREACION DEL LOADING
+  //   const loading = await this.loadCtrl.create({
+  //     spinner: 'crescent'
+  //   });
+
+
+
+  //   this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
+  //     this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', ['public_profile', 'email'])
+  //       .then(profile => {
+  //         // Datos del Usuario
+  //         this.usuario = {
+  //           id: profile['id'],
+  //           email: profile['email'],
+  //           avatar: profile['picture_large']['data']['url'],
+  //           names: profile['name'],
+  //           last_name: profile['last_name']
+  //         };
+  //         console.log(this.usuario);
+  //         const validated = this.userService.loginFacebook(this.usuario);
+  //         console.log('AQUI ESTAMOS MAURICIO');
+  //         if (validated) {
+  //           //   NAVEGA A LA PAGINA PRINCIPAL
+  //           loading.dismiss();
+  //           this.navCtrl.navigateRoot('/menu/home', { animated: true });
+  //           window.location.reload();
+  //         } else {
+  //           //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+  //         }
+  //       });
+  //   });
+  // }
   //#endregion
 
   //#region LOGICA DE FORMULARIO LOGIN
@@ -190,7 +223,7 @@ export class LoginPage implements OnInit {
   }
   //#endregion
 
-  //#region LOGICA DEL FORMULARIO DE REGISTRO
+  //#region LOGICA PARA RECUPERAR CONTRASEÑA
   async restaPassword(fForPassword: NgForm) {
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
@@ -215,8 +248,7 @@ export class LoginPage implements OnInit {
   }
   //#endregion
 
-
-  // #region Evento de botones
+  //#region EVENTO DE LOS BOTONES
   // EVENTO DE BOTON REGISTRAR
   mostrarRegistro() {
     this.slides.lockSwipes(false);

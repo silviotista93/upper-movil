@@ -33,7 +33,6 @@ export class HistorialPage implements OnInit {
   }
 
   async loadData() {
-
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
@@ -44,5 +43,7 @@ export class HistorialPage implements OnInit {
       this.order.reverse();
       loading.dismiss();
     });
+    loading.dismiss();
   }
+
 }

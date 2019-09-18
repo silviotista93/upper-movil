@@ -22,9 +22,9 @@
     </ion-row>
   </ion-grid>
   <ion-grid fixed>
-    <ion-row>
+    <ion-row *ngIf="washType">
       <ion-col size="12">
-        <ion-list *ngFor="let wash_type of plans.wash_type">
+        <ion-list *ngFor="let wash_type of washType">
           <ion-item lines="none">
             <ion-img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
             </ion-img>

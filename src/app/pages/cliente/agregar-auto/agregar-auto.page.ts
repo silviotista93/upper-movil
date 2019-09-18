@@ -114,6 +114,7 @@ export class AgregarAutoPage implements OnInit {
     // ESTE CODIGO PARA CUANDO CORRA EN LA MOVIL
 
     const validate = await this.carService.uploadPicture(this.imageToUpload);
+    
     if (validate) { 
 
       registerCar.picture = this.carService.image;
@@ -121,7 +122,9 @@ export class AgregarAutoPage implements OnInit {
       registerCar.color_id = this.colorId;
       registerCar.cilindraje_id = this.cilindrajeId;
       registerCar.user_id = this.user.id.toString();
-  
+
+      console.log('Datos que se envian', this.registerCar)
+
       const val = await this.carService.createCar(registerCar);
       if (val) {
         this.carService.image = "";
@@ -143,11 +146,19 @@ export class AgregarAutoPage implements OnInit {
     // if (val) {
     //   this.carService.image = "";
     //   this.registerCar = {};
+    //   this.carSel = "";
+    //   this.cilindrajeSel = "";
+    //   this.colorSel = "" ;
+    //   // this.avatarSel.emit(brand.id);
+
     // } else {
     //   this.carService.image = "";
     //   this.registerCar = {};
+    //   this.carSel = "";
+    //   this.cilindrajeSel = "";
+    //   this.colorSel = "" ;
     // }
-    
+
   }
   // #endregion
 

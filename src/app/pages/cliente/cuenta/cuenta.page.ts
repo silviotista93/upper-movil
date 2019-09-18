@@ -49,6 +49,7 @@ export class CuentaPage implements OnInit {
     this.image = this.usuario.avatar;
     this.name = this.usuario.names;
     this.lastname  = this.usuario.last_name;
+    console.log('Este es un mensaje',environment.address)
   }
 
   logout() {

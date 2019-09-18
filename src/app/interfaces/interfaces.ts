@@ -10,6 +10,7 @@ export interface Usuario {
     phone_2?: string;
     social_acounts?: string;
     roles?: string;
+    account?: string;
 }
 
 export interface ComponentMenu {
@@ -111,40 +112,40 @@ export interface opciones {
 }
 
 export interface Plan {
-  id: number;
-  name: string;
-  description: string;
-  picture: string;
-  time: string;
-  price: number;
+  id?: number;
+  name?: string;
+  description?: string;
+  picture?: string;
+  time?: string;
+  price?: number;
   seleccionado?: boolean;
-  created_at: string;
-  updated_at: string;
-  wash_type: Washtype[];
+  created_at?: string;
+  updated_at?: string;
+  wash_type?: Washtype[];
 }
 
 export interface Washtype {
-  id: number;
-  type: string;
-  price: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  pivot: Pivot;
+  id?: number;
+  type?: string;
+  price?: string;
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
+  pivot?: Pivot;
 }
 
 export interface Pivot {
-  plan_id: number;
-  type_wash_id: number;
-  quantity: number;
+  plan_id?: number;
+  type_wash_id?: number;
+  quantity?: number;
 }
 // #endregion
 
 
 export interface Suscripciones {
-  id: number;
-  subscription_id: number;
-  cars_id: number;
+  id?: number;
+  subscription_id?: number;
+  cars_id?: number;
   created_at?: any;
   updated_at?: any;
   car: Car;
@@ -152,23 +153,23 @@ export interface Suscripciones {
 }
 
 export interface Suscription {
-  id: number;
-  plan_id: number;
-  date_start: string;
-  date_end: string;
-  state: any;
-  created_at: string;
-  updated_at: string;
-  plans: Plan;
+  id?: number;
+  plan_id?: number;
+  date_start?: string;
+  date_end?: string;
+  state?: any;
+  created_at?: string;
+  updated_at?: string;
+  plans?: Plan;
   car?: Car[];
 }
 
 
 export interface Detailorder {
-  id: number;
-  latitude: number;
-  longitude: number;
-  status: number;
+  id?: number;
+  latitude?: number;
+  longitude?: number;
+  status?: number;
   sign?: any;
   description?: any;
   subscription_cars_id: number;
@@ -194,7 +195,9 @@ export interface Pivot3 {
 }
 
 export interface CreateSuscription {
-  car_id: number;
-  plan_id: number;
+  car_id?: any;
+  plan_id?: any;
+  type_wash_id?: any;
+  quantity?: any;
 }
 

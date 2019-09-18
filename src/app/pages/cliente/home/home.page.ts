@@ -9,6 +9,7 @@ import { CarService } from '../../../service/cliente/car.service';
 import { ModalAlertAgregarAutoPage } from '../modal-alert-agregar-auto/modal-alert-agregar-auto.page';
 import { GoogleMap, Geocoder, GoogleMaps, Marker, MyLocation, GeocoderRequest, LatLng, GeocoderResult, GoogleMapsAnimation } from '@ionic-native/google-maps/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { environment } from 'src/environments/environment';
 
 declare var google;
 
@@ -19,14 +20,15 @@ declare var google;
 })
 export class HomePage implements OnInit {
 
-  mapRef = null;
   private usuario: Usuario = {};
   cars: Car[] = [];
 
   map: GoogleMap;
-  address: string;
-  locat: string;
-  city: string;
+  public address: string;
+  public lat;
+  public lng;
+  public locat: string;
+  public city: string;
 
   geoencoderOptions: NativeGeocoderOptions = {
     useLocale: true,
@@ -168,10 +170,14 @@ export class HomePage implements OnInit {
     // Get the location of you
     this.map.getMyLocation().then(async (location: MyLocation) => {
       console.log(JSON.stringify(location, null, 2));
-      const lat = location.latLng.lat;
-      const lng = location.latLng.lng;
-      this.addMarker(lat, lng);
-      console.log('lat, lng', lat, lng);
+      // this.lat = location.latLng.lat;
+      // this.lng = location.latLng.lng;
+      // this.addMarker(this.lat, this.lng);
+      // console.log('lat, lng', this.lat, this.lng);
+      environment.lat = location.latLng.lat;
+      environment.lng = location.latLng.lng;
+      this.addMarker(environment.lat,  environment.lng);
+      console.log('lat, lng', environment.lat, environment.lng);
     })
       .catch(err => {
         console.log('error', err);
@@ -211,13 +217,14 @@ export class HomePage implements OnInit {
       .then((results: GeocoderResult[]) => {
         console.log('localy', results[0]);
 
-        const address = [
+         this.address = [
           (results[0].thoroughfare || "") + " " + (results[0].subThoroughfare || ", "),
           results[0].locality
-        ].join("");
-        console.log("data_: ", address);
+        ].join(", ");
+        environment.address = this.address;
+        console.log("data_: ", environment.address);
         this.city = results[0].locality;
-        marker.setTitle(address);
+        marker.setTitle(this.address);
         marker.showInfoWindow();
       });
   }
@@ -228,12 +235,15 @@ export class HomePage implements OnInit {
     return new Promise((resolve, reject) => {
       this.nativeGeocoder.forwardGeocode(keyword)
         .then((result: GeocoderResult[]) => {
-          const lat = result[0].latitude;
-          const lng = result[0].longitude;
+          // this.lat = result[0].latitude;
+          // this.lng = result[0].longitude;
+          environment.lat = result[0].latitude;
+          environment.lng = result[0].longitude;
           console.log('datasad', result);
-          console.log('direccicones', lat, lng);
+          console.log('direccicones',  environment.lat,  environment.lng);
 
-          this.addMarker(lat, lng);
+          // this.addMarker(this.lat, this.lng);
+          this.addMarker( environment.lat,  environment.lng);
           resolve();
         })
         .catch((error: any) => {
@@ -248,5 +258,6 @@ export class HomePage implements OnInit {
     console.log(this.locat);
     const locat2 = this.locat + ' ' + this.city;
     this.forwardGeocode(locat2);
+    // environment.address = 'hola bebe';
   }
 }

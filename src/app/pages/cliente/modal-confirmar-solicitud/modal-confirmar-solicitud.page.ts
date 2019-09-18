@@ -5,6 +5,7 @@ import { OrderService } from '../../../service/cliente/order.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UiServiceService } from '../../../service/ui-service.service';
 import { UserService } from '../../../service/cliente/user.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-modal-confirmar-solicitud',
@@ -46,6 +47,7 @@ export class ModalConfirmarSolicitudPage implements OnInit {
     this.idUser = this.usuario.id;
     console.log('suscripcion', this.dataPlanCar[0].subscription);
     console.log('tipos lavados', this.typeWash);
+    console.log('holA BEBE ' , environment.address, environment.lat, environment.lng);
   }
 
   cerrar_modal() {
@@ -97,15 +99,15 @@ export class ModalConfirmarSolicitudPage implements OnInit {
     });
      loading.present();
     this.geolocation.getCurrentPosition().then((resp) => {
-      const myLatLng = {
-        lat: resp.coords.latitude,
-        lng: resp.coords.longitude
-      };
+      // const myLatLng = {
+      //   lat: resp.coords.latitude,
+      //   lng: resp.coords.longitude
+      // };
       this.order = {
-        latitude: myLatLng.lat,
-        longitude: myLatLng.lng,
+        latitude: environment.lat,
+        longitude: environment.lng,
         subscription: this.dataPlanCar[0].subscription[0].id,
-        address: 'Rincon de Yambitara 2 Etapa',
+        address: environment.address,
         typesWash: this.id,
         // spivot: this.dataTypeWash.pivot,
         user_id: this.idUser,
@@ -120,9 +122,17 @@ export class ModalConfirmarSolicitudPage implements OnInit {
             this.uiService.successToast('Tu solicitud ha sido creada');
            } else {
             //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+            loading.dismiss();
+            this.cerrar_modal();
+            this.navCtrl.navigateForward('/menu/home');
+            this.uiService.errorToast('No se pudo completar tu solicitud');
             }
     }).catch((error) => {
       console.log('Error getting location', error);
+      loading.dismiss();
+      this.cerrar_modal();
+      this.navCtrl.navigateForward('/menu/home');
+      this.uiService.errorToast('No se pudo completar tu solicitud');
     });
     const rta = this.geolocation.getCurrentPosition();
   }

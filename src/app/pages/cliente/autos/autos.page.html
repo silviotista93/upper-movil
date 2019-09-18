@@ -21,7 +21,9 @@
         <ion-col size="5" size-lg="5" size-md="5" size-sm="5" size-xs="5">
 
           <ion-avatar style="width: 90px !important; height: 90px !important;">
-            <img src="{{ URL + user.avatar }}">
+            <!-- <img src="{{ URL + user.avatar }}"> -->
+            <img *ngIf="user.social_acounts === null" src="{{URL + user.avatar}}">
+            <img *ngIf="user.social_acounts " [src]="user.avatar">
           </ion-avatar>
         </ion-col>
         <ion-col style="margin-top: 16px; margin-bottom: 16px; align-items: center;justify-content: center" size="7"

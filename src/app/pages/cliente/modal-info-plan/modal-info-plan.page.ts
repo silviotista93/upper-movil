@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { SuscripcionService } from '../../../service/cliente/suscripcion.service';
 import { Plan } from '../../../interfaces/interfaces';
+import { Washtype } from '../../../interfaces/order_interface';
 
 @Component({
   selector: 'app-modal-info-plan',
@@ -9,20 +10,49 @@ import { Plan } from '../../../interfaces/interfaces';
   styleUrls: ['./modal-info-plan.page.scss'],
 })
 export class ModalInfoPlanPage implements OnInit {
+
   @Input() nombre;
-  public plans: Plan = null;
+
+  public plans: Plan = {
+    name: ''
+  };
+  washType: Washtype;
+
   constructor(
     public modalCtrl: ModalController,
     public loadCtrl: LoadingController,
-    public planService: SuscripcionService,
-    ) { }
+    public planService: SuscripcionService) { }
 
   ngOnInit() {
-    // this.loadData();
+    // console.log('nombre que recibe ', this.nombre);
+    // console.log('nombre que recibe ');
+
+    // this.planService.firstPlans2(this.nombre).then((plans: any) => {
+    //   this.plans = plans;
+    //   console.log('vista', this.plans);
+    // }).catch();
+
+  }
+
+  ionViewWillEnter() {
+    this.loadData();
+  }
+
+  async loadData() {
+    const loading = await this.loadCtrl.create({
+      spinner: 'crescent'
+    });
+    loading.present();
+
     this.planService.firstPlans2(this.nombre).then((plans: any) => {
       this.plans = plans;
+      this.washType = plans['wash_type']
       console.log('vista', this.plans);
-    }).catch();
+      console.log('vista', this.washType);
+      loading.dismiss();
+    }).catch(e => {
+      loading.dismiss();
+    });
 
   }
 
@@ -42,7 +72,8 @@ export class ModalInfoPlanPage implements OnInit {
   //   });
   // }
 
-  cerrar_modal() { 
+  cerrar_modal() {
     this.modalCtrl.dismiss();
+    console.log('hola')
   }
 }

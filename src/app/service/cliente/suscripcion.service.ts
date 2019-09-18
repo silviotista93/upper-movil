@@ -16,7 +16,7 @@ export class SuscripcionService {
     private http: HttpClient,
     private userService: UserService) {}
 
-  // #region OBTENER PLANES
+  //#region OBTENER PLANES
   getPlans() {
     const headerToken = new HttpHeaders({
       'Authorization': this.userService.token,
@@ -77,7 +77,8 @@ export class SuscripcionService {
         });
     });
   }
-  // #region REGISTRO DE USUARIO
+
+  //#region REGISTRO DE USUARIO
   registroSuscripcion(createPlan: CreateSuscription) {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -88,13 +89,16 @@ export class SuscripcionService {
         .subscribe(async resp => {
           if (!resp['ERROR']) {
             resolve(true);
+            console.log('resp ', resp);
           } else {
             resolve(false);
           }
         }, err => {
 
+          console.log('error ', err);
           resolve(false);
         });
     });
   }
+  // #endregion
 }

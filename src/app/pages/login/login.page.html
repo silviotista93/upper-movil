@@ -25,7 +25,7 @@
               </ion-button>
             </ion-col>
             <ion-col size="6">
-              <ion-button float-left color="light" class="button-icon">
+              <ion-button (click)="loginGoo()" float-left color="light" class="button-icon">
                 <ion-img class="size-icons" src="/assets/images/icons/google.png"></ion-img>
               </ion-button>
             </ion-col>
@@ -92,7 +92,7 @@
 
     <!-- #region formulario de registro -->
     <ion-slide>
-      <ion-content overflow-scroll="true" >
+      <ion-content overflow-scroll="true">
         <form (ngSubmit)="registro( fRegistro )" #fRegistro="ngForm">
           <ion-grid fixed>
 
@@ -195,7 +195,7 @@
 
     <!-- #region formulario de olvido contraseña -->
     <ion-slide>
-      <ion-content overflow-scroll="true" >
+      <ion-content overflow-scroll="true">
         <form (ngSubmit)="restaPassword( fForPassword )" #fForPassword="ngForm">
           <ion-grid fixed>
 

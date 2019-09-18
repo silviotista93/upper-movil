@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, NavController, LoadingController, IonSlide, IonSlides } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { environment } from '../../../../environments/environment';
-import { Plan, CreateSuscription, Car } from '../../../interfaces/interfaces';
+import { Plan, CreateSuscription, Car, Washtype } from '../../../interfaces/interfaces';
 import { SuscripcionService } from '../../../service/cliente/suscripcion.service';
 import { ModalInfoPlanPage } from '../modal-info-plan/modal-info-plan.page';
 import { CarService } from '../../../service/cliente/car.service';
@@ -28,12 +28,19 @@ export class ModalPaymentPage implements OnInit {
 
   URL = environment.url;
   public plans: Plan[] = [];
-  public firstPlan: Plan = null;
+  public planSelected: Plan = {
+    name: '',
+    description: ''
+  };
+
   public cars: Car[] = [];
   public firstCars: Car = {};
-  createPlan: CreateSuscription = null;
+  public arrayTypeWash: Washtype[] = [];
+
+  createPlan: CreateSuscription = {};
   plan_id: any;
   car_id: any;
+
   constructor(
     public modalCtrl: ModalController,
     public modalCtrlAlert: ModalController,
@@ -88,9 +95,11 @@ export class ModalPaymentPage implements OnInit {
     this.statusBar.show();
   }
 
+  //#region IR AL DETALLE DEL PLAN
   async abrirModalDetallePlan(plan: Plan) {
     // this.plansDataSelec.push(plan);
     const modal = await this.modalCtrl.create({
+
       component: ModalInfoPlanPage,
       cssClass: 'info-plan-modal',
       componentProps: {
@@ -99,7 +108,9 @@ export class ModalPaymentPage implements OnInit {
     });
     await modal.present();
   };
+  //#endregion
 
+  //#region MOSTRAR AUTOS
   async mostrarAutos(plan: Plan) {
     this.slide.lockSwipes(false);
     if (this.cars.length > 0) {
@@ -118,31 +129,45 @@ export class ModalPaymentPage implements OnInit {
       });
       await modal.present();
     }
-
   }
+  //#endregion
 
+
+  //#region 
   async mostrarMetodosPago(car: Car) {
-    this.slide.lockSwipes(false);
-    this.slide.slideTo(2);
-    this.car_id = car.id;
-    this.createPlan = {
-      plan_id: this.plan_id,
-      car_id: this.car_id
-    }
+    console.log('estamos en metodos de pago');
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
 
     loading.present();
+
+    this.slide.lockSwipes(false);
+    this.slide.slideTo(2);
+    this.car_id = car.id;
+    this.createPlan = {
+      plan_id: this.plan_id,
+      car_id: this.car_id,
+      type_wash_id: 0,
+      quantity: 2
+    }
+    
+    
     this.carService.firstCar(this.car_id).then((data: any) => {
-      this.firstCars = data;
+      this.firstCars = data['car'];
       console.log('auto seleccionado', this.firstCars);
     });
+
     this.plansService.firstPlan(this.plan_id).then((data: any) => {
-      this.firstPlan = data;
-      console.log('plan seleccionado', this.firstPlan);
+
+      loading.present();
+
+      this.planSelected = data['plan'];
+      this.arrayTypeWash = data['plan']['wash_type'];
+      console.log('plan seleccionado name', this.planSelected);
+      console.log('plan seleccionado tipo wash', this.arrayTypeWash);
+      loading.dismiss();
     })
-    loading.dismiss();
 
     this.slide.lockSwipes(true);
   }
@@ -157,12 +182,11 @@ export class ModalPaymentPage implements OnInit {
       plan_id: this.plan_id,
       car_id: this.car_id
     }
-    console.log(this.createPlan);
+    console.log('datos creados', this.createPlan);
     const validated = await this.plansService.registroSuscripcion(this.createPlan);
 
     if (validated) {
       loading.dismiss();
-
       this.uiService.successToast('Suscripcion creada exitosamente');
       this.cerrar_modal();
     } else {

@@ -50,6 +50,7 @@ export class UserService {
         }, err => {
           this.token = null;
           this.storage.clear();
+          console.log(err);
           resolve(false);
         });
     });
@@ -58,24 +59,22 @@ export class UserService {
   //#endregion
 
   // #region LOGIN DE FACEBOOK
-  loginFacebook(usuario: Usuario) {
+  loginWithAccount(usuario: Usuario) {
     console.log('ESTAMOS EN LA FUNCION DE LARAVEL', usuario);
     return new Promise(resolve => {
-      this.http.post(`${URL}/api/auth/login-facebook`, usuario, { headers: headers })
-        .subscribe( resp => {
-          console.log('respuesta', JSON.stringify(resp));
-          console.log('respuesta', resp);
-          console.log('respuesta', resp['access_token']);
-
-          if (resp['access_token']) {
-            this.token = resp['token_type'] + ' ' + resp['access_token'];
-            this.saveToken(this.token);
-            resolve(true);
-          } else {
-            this.token = null;
-            this.storage.clear();
-            resolve(false);
-          }
+      this.http.post(`${URL}/api/auth/login-account`, usuario, { headers: headers })
+        .subscribe(async resp => {
+          this.token = resp['token_type'] + ' ' + resp['access_token'];
+          await this.saveToken(this.token);
+          console.log('respuesta', this.token);
+          this.navCtrl.navigateRoot('/menu/home', { animated: true });
+          resolve(true);
+          // if (resp['access_token']) {
+          // } else {
+          //   this.token = null;
+          //   this.storage.clear();
+          //   resolve(false);
+          // }
         }, err => {
           console.log('err', JSON.stringify(err));
           this.token = null;
@@ -92,6 +91,7 @@ export class UserService {
     this.usuario = null;
     this.storage.clear();
     console.log('limpio el storage');
+
     this.navCtrl.navigateRoot('login', { animated: true });
   }
   // #endregion
@@ -141,7 +141,7 @@ export class UserService {
     }
     this.validaToken();
     return { ...this.usuario };
-  } 
+  }
   // #endregion
 
   // #region GUARDAR TOKEN

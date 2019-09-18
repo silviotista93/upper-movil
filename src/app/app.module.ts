@@ -20,6 +20,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { PipesModule } from './pipes/pipes.module';
 import { GoogleMaps, Geocoder } from '@ionic-native/google-maps/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 
 
@@ -43,6 +44,7 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
     SplashScreen,
     Camera,
     Facebook,
+    GooglePlus,
     Geolocation,
     FileTransfer,
     Base64,
