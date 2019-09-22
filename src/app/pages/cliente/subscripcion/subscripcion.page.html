@@ -43,7 +43,7 @@
   <ion-grid fixed style="margin-top: -26px;">
     <ion-row *ngFor="let suscri of suscripciones">
       <ion-col>
-        <ion-card color="light">
+        <ion-card color="light" (click)="goDetail(suscri)">
           <ion-card-header>
 
             <ion-card-title>{{ suscri.suscriptions.plans.name }}</ion-card-title>

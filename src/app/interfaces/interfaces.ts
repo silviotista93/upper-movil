@@ -97,13 +97,23 @@ export interface Order {
     car?: string;
 }
 
-export interface Car_suscription {
+export interface CarSuscription {
     id?: string,
     subscription_id?: string;
     cars_id?: string;
     created_at?: any;
     updated_at?: any;
     car?: any;
+}
+
+export interface CarSuscription2 {
+  id?: any,
+  subscription_id?: any;
+  cars_id?: any;
+  created_at?: any;
+  updated_at?: any;
+  type_wash_id?: any;
+  quantity?: any;
 }
 
 export interface opciones {

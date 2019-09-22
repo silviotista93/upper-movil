@@ -3,7 +3,7 @@ import { ModalController, IonSegment, IonSlides, LoadingController } from '@ioni
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../../service/cliente/order.service';
-import { Order, Car_suscription, Car, Detailorder } from '../../../interfaces/interfaces';
+import { Order, Car, Detailorder, CarSuscription } from '../../../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import { async } from '@angular/core/testing';
 
@@ -34,7 +34,7 @@ export class DetalleLavadoPage implements OnInit {
   ];
   URL = environment.url;
   public orden: Order = {};
-  public car_suscription: Car_suscription = {};
+  public car_suscription: CarSuscription = {};
   public car: Car = {};
   public detailOrden: Detailorder = null;
 

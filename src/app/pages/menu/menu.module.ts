@@ -70,6 +70,11 @@ const routes: Routes = [
         path: 'editar-auto/:id',
         loadChildren: '../cliente/editar-auto/editar-auto.module#EditarAutoPageModule'
       },
+      {
+        path: 'detail-suscription',
+        loadChildren: './pages/cliente/detail-suscription/detail-suscription.module#DetailSuscriptionPageModule'
+      },
+
     ]
   },
   { path: '', redirectTo: '/menu/home' }

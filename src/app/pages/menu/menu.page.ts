@@ -23,7 +23,7 @@ export class MenuPage implements OnInit {
     private router: Router,
     private userService: UserService,
     private menu: MenuController,
-    private navCtrl: NavController) {}
+    private navCtrl: NavController) { }
 
   ngOnInit() {
     setTimeout(async () => {
@@ -37,6 +37,8 @@ export class MenuPage implements OnInit {
       { title: 'Historial', url: '/menu/historial', icon: 'historial' },
       { title: 'Mis Autos', url: '/menu/autos', icon: 'autos' },
       { title: 'Contacto', url: '/menu/contacto', icon: 'contacto' },
+      // { title: '', url: '/menu/detail-suscription' },
+
     ];
   }
 

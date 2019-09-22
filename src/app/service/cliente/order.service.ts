@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
-import { Order, Car_suscription, Car } from '../../interfaces/interfaces';
+import { Order, Car, CarSuscription } from '../../interfaces/interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UiServiceService } from '../ui-service.service';
 import { UserService } from './user.service';
@@ -21,7 +21,7 @@ export class OrderService {
 
   public order: Order = {};
   public order2: Order = {};
-  public car_suscription2: Car_suscription = {};
+  public car_suscription2: CarSuscription = {};
   public car: Car = {};
 
   constructor(
