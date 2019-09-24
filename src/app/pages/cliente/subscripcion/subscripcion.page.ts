@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Usuario, Car, Suscripciones, CarSuscription2, Plan } from '../../../interfaces/interfaces';
+import { Usuario, Car, Suscripciones, Plan, CarDetailSuscription, CarSuscription } from '../../../interfaces/interfaces';
 import { UserService } from '../../../service/cliente/user.service';
 import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { SuscripcionService } from '../../../service/cliente/suscripcion.service';
@@ -16,9 +16,10 @@ export class SubscripcionPage implements OnInit {
 
   usuario: Usuario = {};
   public car: Car[] = [];
-  public suscripciones: Suscripciones[] = [];
-  public carSuscription: CarSuscription2;
-  public plan: Plan[] = [];
+  // public suscripciones: Suscripciones[] = [];
+  public carSuscriptions: CarSuscription[] = [];
+  public carDetailSus: CarDetailSuscription[] = [];
+  public plans: Plan[] = [];
   id: any;
 
   constructor(
@@ -45,34 +46,37 @@ export class SubscripcionPage implements OnInit {
 
   async ionViewWillEnter() {
     this.usuario = await this.userService.getUsuario();
+    // this.carSuscriptions = await this.serviSuscrip.getSuscriptions();
+    // this.carSuscriptions.push(await this.serviSuscrip.getSuscriptionsClient());
+    // this.carSuscriptions.push(...this.serviSuscrip.getSuscriptions());
+    // console.log('ionview jeje', this.carSuscriptions);
     this.loadSusCriptions();
   }
 
   async loadSusCriptions() {
+    this.carSuscriptions = []
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     })
     loading.present();
     this.serviSuscrip.getSuscriptionsClient().then((data: any) => {
-      this.suscripciones = data;
-      console.log('listado', this.suscripciones);
-      this.suscripciones.reverse();
-      
-      this.suscripciones.forEach(element => {
+      this.carSuscriptions = data;
+      console.log('listado', this.carSuscriptions);
+      this.carSuscriptions.reverse();
+      this.carSuscriptions.forEach(element => {
         this.id++;
-        // this.id = element['suscriptions']['plans']['id'];
-        const id = element['suscriptions']['plans']['id'];
-        if (id) {
-
-          this.plan.push(element['suscriptions']['plans']);
-          // if (this.plan[this.id]['id']) {
-
-          // }
-        }
-        console.log('element', this.id);
-        
+        // this.id = element['plans']['name'];
+        this.plans.push(element['plans']);
+        this.carDetailSus.push(element['car_detail']);
+        // const id = element['suscripciones']['plans']['id'];
+        // if (this.id) {
+        //   this.plan.push(element['plans']);
+        //   // if (this.plan[this.id]['id']) {
+        //   // }
+        // }
       });
-      console.log('element', this.plan);
+      // console.log('element', this.plans);
+      console.log('element', this.carDetailSus);
       loading.dismiss();
     });
   }
@@ -84,7 +88,7 @@ export class SubscripcionPage implements OnInit {
 
   goDetail(carSuscription) {
     console.log('hola bebe', carSuscription);
-    this.router.navigate(['/menu/detail-suscription', { name: 'name' }]);
+    this.router.navigate(['/menu/detail-suscription', { name: JSON.stringify(this.carDetailSus) }]);
   }
 
   //#region ABRIR MODAL PARA PAGO

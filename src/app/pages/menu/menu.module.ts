@@ -72,7 +72,7 @@ const routes: Routes = [
       },
       {
         path: 'detail-suscription',
-        loadChildren: './pages/cliente/detail-suscription/detail-suscription.module#DetailSuscriptionPageModule'
+        loadChildren: '../cliente/detail-suscription/detail-suscription.module#DetailSuscriptionPageModule'
       },
 
     ]

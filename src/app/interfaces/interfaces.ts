@@ -1,124 +1,123 @@
 export interface Usuario {
-    id?: string;
-    names?: string;
-    last_name?: string;
-    email?: string;
-    password?: string;
-    slug?: string;
-    avatar?: string;
-    phone_1?: string;
-    phone_2?: string;
-    social_acounts?: string;
-    roles?: string;
-    account?: string;
+  id?: string;
+  names?: string;
+  last_name?: string;
+  email?: string;
+  password?: string;
+  slug?: string;
+  avatar?: string;
+  phone_1?: string;
+  phone_2?: string;
+  social_acounts?: string;
+  roles?: string;
+  account?: string;
 }
 
 export interface ComponentMenu {
-    title: string;
-    url: string;
-    icon: string;
+  title: string;
+  url: string;
+  icon: string;
 }
 
 export interface RolesUsers {
-    id?: string;
-    roles_id?: string;
-    users_id?: string;
+  id?: string;
+  roles_id?: string;
+  users_id?: string;
 }
 
 //#region interfaces de Carros
 export interface Car {
   subscription?: any;
-    id?: number;
-    board?: string;
-    picture?: string;
-    car_type_id?: string;
-    cilindraje_id?: string;
-    brand_id?: string;
-    color_id?: string;
-    user_id?: string;
-    seleccionado?: boolean;
-    pivot?: Pivot3;
+  id?: number;
+  board?: string;
+  picture?: string;
+  car_type_id?: string;
+  cilindraje_id?: string;
+  brand_id?: string;
+  color_id?: string;
+  user_id?: string;
+  seleccionado?: boolean;
+  pivot?: Pivot3;
 }
 export interface Brand {
-    id?: string;
-    name?: string;
-    picture?: string;
+  id?: string;
+  name?: string;
+  picture?: string;
 }
 
 export interface Color {
-    id?: string;
-    name?: string;
-    picture?: string;
+  id?: string;
+  name?: string;
+  picture?: string;
 }
 
 export interface Cilindraje {
-    id?: string;
-    name?: string;
-    picture?: string;
+  id?: string;
+  name?: string;
+  picture?: string;
 }
 
 export interface Car_type {
-    id?: string;
-    name?: string;
-    picture?: string;
+  id?: string;
+  name?: string;
+  picture?: string;
 }
 
 export interface Type_Wash {
-    id?: string;
-    type?: string;
-    price?: string;
-    description?: string;
-    seleccionado?: boolean;
+  id?: string;
+  type?: string;
+  price?: string;
+  description?: string;
+  seleccionado?: boolean;
 }
 export interface Plan_type_Wash {
-    id?: string;
-    type_wash_id?: string;
-    plan_id?: string;
-    quantity?: string;
-    pivot?: Pivot2;
+  id?: string;
+  type_wash_id?: string;
+  plan_id?: string;
+  quantity?: string;
+  pivot?: Pivot2;
 
 }
 export interface Order {
-    id?: string;
-    latitude?: any;
-    longitude?: any;
-    sign?: string;
-    status?: any;
-    description?: string;
-    subscription?: string;
-    subscription_cars_id?: string;
-    suscription?: string;
-    washer_id?: string;
-    user_id?: string;
-    address?: string;
-    typesWash?: any;
-    pivot?: any;
-    created_at?: any;
-    car?: string;
+  id?: string;
+  latitude?: any;
+  longitude?: any;
+  sign?: string;
+  status?: any;
+  description?: string;
+  subscription?: string;
+  subscription_cars_id?: string;
+  suscription?: string;
+  washer_id?: string;
+  user_id?: string;
+  address?: string;
+  typesWash?: any;
+  pivot?: any;
+  created_at?: any;
+  car?: string;
 }
 
 export interface CarSuscription {
-    id?: string,
-    subscription_id?: string;
-    cars_id?: string;
-    created_at?: any;
-    updated_at?: any;
-    car?: any;
-}
-
-export interface CarSuscription2 {
   id?: any,
-  subscription_id?: any;
   cars_id?: any;
   created_at?: any;
   updated_at?: any;
-  type_wash_id?: any;
+  plan_id?: any;
+  state?: any;
+}
+
+export interface CarDetailSuscription {
+  id?: any,
+  carsus_id?: any;
+  plan_type_id?: any;
   quantity?: any;
+  created_at?: any;
+  updated_at?: any;
 }
 
 export interface opciones {
-    id?: string;
-    opcion: string;
+  id?: string;
+  opcion: string;
 }
 
 export interface Plan {

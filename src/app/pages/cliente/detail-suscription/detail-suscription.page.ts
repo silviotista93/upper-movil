@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController } from '@ionic/angular';
-import { Washtype, Plan } from 'src/app/interfaces/interfaces';
+import { Washtype, Plan, CarDetailSuscription } from 'src/app/interfaces/interfaces';
 import { SuscripcionService } from 'src/app/service/cliente/suscripcion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -16,6 +16,8 @@ export class DetailSuscriptionPage implements OnInit {
     name: ''
   };
 
+  public carDetailSus: CarDetailSuscription[] = [];
+
   constructor(
     private navCtrl: NavController,
     private loadCtrl: LoadingController,
@@ -28,7 +30,7 @@ export class DetailSuscriptionPage implements OnInit {
 
   ionViewWillEnter() {
     const name = this.route.snapshot.paramMap.get("name")
-    console.log('nombre recibe', name)
+    console.log('nombre recibe', JSON.parse(name));
   // this.loadData();
   }
 

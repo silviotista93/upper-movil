@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { environment } from '../../../environments/environment';
-import { Plan, CreateSuscription } from '../../interfaces/interfaces';
+import { Plan, CreateSuscription, CarSuscription, CarDetailSuscription } from '../../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,14 @@ export class SuscripcionService {
   createPlan: CreateSuscription = null;
   constructor(
     private http: HttpClient,
-    private userService: UserService) {}
+    private userService: UserService) { }
+
+  // ------------------
+  public carSuscriptions: CarSuscription[] = [];
+  public carDetailSus: CarDetailSuscription;
+  public plans: Plan[] = [];
+  id: any; 
+  // ------------------
 
   //#region OBTENER PLANES
   getPlans() {
@@ -46,6 +53,7 @@ export class SuscripcionService {
         });
     });
   }
+
   getSuscriptionsClient() {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -55,6 +63,26 @@ export class SuscripcionService {
     return new Promise((resolve, reject) => {
       this.http.get(`${this.URL}/api/suscripciones/suscripciones`, { headers: headerToken })
         .subscribe(async resp => {
+          // console.log('La respuetsa de mi tio jejeje', resp);
+          
+          // this.carSuscriptions = resp['suscripciones'];
+          // console.log('listado', this.carSuscriptions);
+          // // this.carSuscriptions.reverse();
+
+          // this.carSuscriptions.forEach(element => {
+          //   this.id++;
+          //   this.id = element['plans']['name'];
+          //   this.plans.push(element['plans']);
+          //   // const id = element['suscripciones']['plans']['id'];
+          //   // if (this.id) {
+          //   //   this.plan.push(element['plans']);
+          //   //   // if (this.plan[this.id]['id']) {
+          //   //   // }
+          //   // }
+          // });
+          // console.log('element', this.plans);
+          // console.log('La respuetsa de mi tio jejeje', this.carSuscriptions);
+          // resolve(this.carSuscriptions);
           resolve(resp['suscripciones']);
         }, err => {
           reject(err);
@@ -62,6 +90,17 @@ export class SuscripcionService {
     });
   }
 
+  // #region OBTENER USUARIO
+  async getSuscriptions() {
+    if (!this.carSuscriptions) {
+      this.getSuscriptionsClient();
+    }
+    this.getSuscriptionsClient();
+    return  this.carSuscriptions ;
+  }
+  // #endregion
+
+  //#region primer plan
   firstPlan(id: any) {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -77,6 +116,7 @@ export class SuscripcionService {
         });
     });
   }
+  //#endregion
 
   //#region REGISTRO DE USUARIO
   registroSuscripcion(createPlan: CreateSuscription) {
