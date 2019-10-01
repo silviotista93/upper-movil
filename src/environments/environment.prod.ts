@@ -4,7 +4,7 @@ export const environment = {
   url: 'http://localhost:8000',
   // url: 'https://upper.bmotion'
   
-  lat: null ,
-  lng: null,
+  lat: 0 ,
+  lng: 0,
   address: '',
 };

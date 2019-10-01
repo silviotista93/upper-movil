@@ -33,10 +33,11 @@ export class DetalleLavadoPage implements OnInit {
   }
   ];
   URL = environment.url;
-  public orden: Order = {};
   public car_suscription: CarSuscription = {};
   public car: Car = {};
   public detailOrden: Detailorder = null;
+
+  public orden2: Order = {};
 
   sliderOpts = {
     zoom: false,
@@ -45,66 +46,54 @@ export class DetalleLavadoPage implements OnInit {
     centeredSlides: true
   };
   oculto = 30;
+
   constructor(
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
-    private loadCtrl: LoadingController,
-  ) {
-
-  }
+    private loadCtrl: LoadingController) { }
 
 
   ngOnInit() {
-    this.idDetalleLavado = this.activatedRoute.snapshot.paramMap.get('id');
-    // this.orderService.getDetailOrden(this.idDetalleLavado);
-
-
-    //   this.orden = this.orderService.order2;
-    //   this.orderService.getCarSuscriptionOrden(this.orden.subscription_cars_id);
-    //   this.car_suscription = this.orderService.car_suscription2;
-    //   console.log('orden', this.orden);
-    //   console.log('car_suscription', this.orderService.car_suscription2);
-    //   this.car = this.orderService.car_suscription2['car'];
-    //   this.image = this.URL + this.car.picture;
-    //   console.log('carrossss', this.car);
-    //   console.log('carrossss', this.image);   
-    this.loadData();
   }
 
-  async loadData() {
+  // async loadData() {
 
-    const loading = await this.loadCtrl.create({
-      spinner: 'crescent'
-    });
-    loading.present();
-    this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).then((data: any) => {
-      this.detailOrden = data;
-      console.log('detailorden', this.detailOrden);
-      setTimeout(() => {
-        this.selectedTab(this.opciones[0].id);
-      }, 200);
-    });
-    loading.dismiss();
-    //     
-    //     this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(resp => {
-    //     this.orden = resp['detail-order']; 
-    //     this.orderService.getCarSuscriptionOrden(this.orden.subscription_cars_id);
-    //     this.car = this.orderService.car;
-    //     console.log('car_susc de detalle lavado', this.car);
-    //     
-
-    //  });
-
-  }
+  //   const loading = await this.loadCtrl.create({
+  //     spinner: 'crescent'
+  //   });
+  //   loading.present();
+    
+  //   this.orderService.getDetailOrden(this.activatedRoute.snapshot.paramMap.get('id')).then((data: any) => {
+  //     this.detailOrden = data;
+  //     console.log('detailorden', this.detailOrden);
+  //     setTimeout(() => {
+  //       this.selectedTab(this.opciones[0].id);
+  //     }, 200);
+  //   });
+  //   loading.dismiss();
+  // }
   // Initialize slide
-  async ionViewDidEnter() {
+
+  async ionViewWillEnter(){
+    const name = this.activatedRoute.snapshot.paramMap.get("name")
+    this.orden2 = JSON.parse(name);
+    console.log('objeto', this.orden2);
+    setTimeout(() => {
+      this.selectedTab(this.opciones[0].id);
+    }, 200);
+
     this.slideChanged();
-    await this.loadData();
+    // await this.loadData();
   }
+  // async ionViewDidEnter() {
+  //   this.slideChanged();
+  //   await this.loadData();
+  // }
 
   // On segment click
   selectedTab(index) {
+    // this.slider.slideTo(index);
     this.slider.slideTo(index);
     this.segment.value = index;
     console.log('selectedTab', index);

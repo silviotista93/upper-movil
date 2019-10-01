@@ -27,7 +27,7 @@ export interface RolesUsers {
 
 //#region interfaces de Carros
 export interface Car {
-  subscription?: any;
+  car_suscription?: any;
   id?: number;
   board?: string;
   picture?: string;
@@ -39,6 +39,8 @@ export interface Car {
   seleccionado?: boolean;
   pivot?: Pivot3;
 }
+
+//#region CILINDRAJE, MARCA, COLOR, TIPO DE CARRO 
 export interface Brand {
   id?: string;
   name?: string;
@@ -62,6 +64,7 @@ export interface Car_type {
   name?: string;
   picture?: string;
 }
+//#endregion
 
 export interface Type_Wash {
   id?: string;
@@ -76,32 +79,32 @@ export interface Plan_type_Wash {
   plan_id?: string;
   quantity?: string;
   pivot?: Pivot2;
+}
 
-}
 export interface Order {
-  id?: string;
-  latitude?: any;
-  longitude?: any;
-  sign?: string;
-  status?: any;
-  description?: string;
-  subscription?: string;
-  subscription_cars_id?: string;
-  suscription?: string;
-  washer_id?: string;
-  user_id?: string;
-  address?: string;
-  typesWash?: any;
-  pivot?: any;
-  created_at?: any;
-  car?: string;
+  id?: number;
+  latitude?: number;
+  longitude?: number;
+  status?: string;
+  sign?: any;
+  description?: any;
+  car_detail_subscription_id?: number;
+  user_id?: any;
+  washer_id?: any;
+  address?: any;
+  created_at?: string;
+  updated_at?: string;
+  car_detail_suscription?: CarDetailSuscription;
 }
+
 
 export interface CarSuscription {
   id?: any,
   cars_id?: any;
   created_at?: any;
   updated_at?: any;
+  date_end?: any;
+  date_start?: any;
   plan_id?: any;
   state?: any;
 }
@@ -206,7 +209,5 @@ export interface Pivot3 {
 export interface CreateSuscription {
   car_id?: any;
   plan_id?: any;
-  type_wash_id?: any;
-  quantity?: any;
 }
 

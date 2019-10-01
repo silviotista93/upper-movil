@@ -148,8 +148,6 @@ export class ModalPaymentPage implements OnInit {
     this.createPlan = {
       plan_id: this.plan_id,
       car_id: this.car_id,
-      type_wash_id: 0,
-      quantity: 2
     }
     
     

@@ -1,18 +1,16 @@
 export interface Order {
-  id: number;
-  latitude: number;
-  longitude: number;
-  status: number;
+  id?: number;
+  latitude?: number;
+  longitude?: number;
+  status?: number;
   sign?: any;
   description?: any;
-  subscription_cars_id: number;
-  user_id: number;
+  car_detail_subscription_id?: number;
+  user_id?: number;
   washer_id?: any;
-  address: string;
-  created_at: string;
-  updated_at: string;
-  suscription: Suscription;
-  plan_type_wash: Plantypewash[];
+  address?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Plantypewash {

@@ -16,7 +16,6 @@ export class SubscripcionPage implements OnInit {
 
   usuario: Usuario = {};
   public car: Car[] = [];
-  // public suscripciones: Suscripciones[] = [];
   public carSuscriptions: CarSuscription[] = [];
   public carDetailSus: CarDetailSuscription[] = [];
   public plans: Plan[] = [];
@@ -31,30 +30,17 @@ export class SubscripcionPage implements OnInit {
     public loadCtrl: LoadingController
   ) { }
 
-  async ngOnInit() {
-    // this.usuario = await this.userService.getUsuario();
-    // const loading = await this.loadCtrl.create({
-    //   spinner: 'crescent'
-    // })
-    // loading.present();
-    // this.serviSuscrip.getSuscriptionsClient().then((data: any) => {
-    //   this.suscripciones = data;
-    //   console.log('listado', this.suscripciones);
-    //   loading.dismiss();
-    // });
+  ngOnInit() {
   }
 
   async ionViewWillEnter() {
+    this.carSuscriptions = [];
     this.usuario = await this.userService.getUsuario();
-    // this.carSuscriptions = await this.serviSuscrip.getSuscriptions();
-    // this.carSuscriptions.push(await this.serviSuscrip.getSuscriptionsClient());
-    // this.carSuscriptions.push(...this.serviSuscrip.getSuscriptions());
-    // console.log('ionview jeje', this.carSuscriptions);
-    this.loadSusCriptions();
+    await this.loadSusCriptions();
   }
 
   async loadSusCriptions() {
-    this.carSuscriptions = []
+    this.carSuscriptions = [];
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     })
@@ -65,18 +51,8 @@ export class SubscripcionPage implements OnInit {
       this.carSuscriptions.reverse();
       this.carSuscriptions.forEach(element => {
         this.id++;
-        // this.id = element['plans']['name'];
         this.plans.push(element['plans']);
-        this.carDetailSus.push(element['car_detail']);
-        // const id = element['suscripciones']['plans']['id'];
-        // if (this.id) {
-        //   this.plan.push(element['plans']);
-        //   // if (this.plan[this.id]['id']) {
-        //   // }
-        // }
       });
-      // console.log('element', this.plans);
-      console.log('element', this.carDetailSus);
       loading.dismiss();
     });
   }
@@ -88,7 +64,9 @@ export class SubscripcionPage implements OnInit {
 
   goDetail(carSuscription) {
     console.log('hola bebe', carSuscription);
-    this.router.navigate(['/menu/detail-suscription', { name: JSON.stringify(this.carDetailSus) }]);
+    this.router.navigate(['/menu/detail-suscription', { name: JSON.stringify(carSuscription) }]);
+    this.carSuscriptions = [];
+    
   }
 
   //#region ABRIR MODAL PARA PAGO

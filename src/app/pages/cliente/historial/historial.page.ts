@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController } from '@ionic/angular';
 import { OrderService } from '../../../service/cliente/order.service';
-import { Order } from '../../../interfaces/order_interface';
+import { Order } from 'src/app/interfaces/interfaces';
+import { Router } from '@angular/router';
+// import { Order } from '../../../interfaces/order_interface';
 
 @Component({
   selector: 'app-historial',
@@ -16,31 +18,36 @@ export class HistorialPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private loadCtrl: LoadingController,
+    private router: Router,
     private orderService: OrderService) { }
 
   ngOnInit() {
     // this.loadData();
     // console.log(this.order);
   }
-  
-  ionViewWillEnter() {
-    this.loadData();
-    console.log(this.order);
+
+  async ionViewWillEnter() {
+    await this.loadData();
+    // console.log('historial page', this.order);
   }
 
-  pushDetalleLavado(id) {
-    this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
+  pushDetalleLavado(order) {
+    console.log('hola bebe en order', order);
+    this.router.navigate(['/menu/detalle-lavado', { name: JSON.stringify(order) }]);
+    // this.navCtrl.navigateForward(`/menu/detalle-lavado/${id}`);
   }
 
   async loadData() {
+    this.order = [];
     const loading = await this.loadCtrl.create({
       spinner: 'crescent'
     });
-
     loading.present();
-    this.orderService.getOrden().subscribe(resp => {
-      this.order.push(...resp['orders']);
+    
+    this.orderService.getOrden().then((resp: any) => {
+      this.order = resp;
       this.order.reverse();
+      console.log(' datos de array', this.order);
       loading.dismiss();
     });
     loading.dismiss();

@@ -43,18 +43,17 @@
   <ion-grid fixed style="margin-top: -26px;">
     <ion-row *ngFor="let suscri of carSuscriptions">
       <ion-col>
-        <ion-card color="light" (click)="goDetail(plan)" *ngFor="let plan of plans">
+        <ion-card color="light" (click)="goDetail(suscri)" >
           <ion-card-header>
 
-            <ion-card-title>{{ plan.name }}</ion-card-title>
+            <ion-card-title>{{ suscri['plans']['name'] }}</ion-card-title>
             <ion-card-subtitle style="color: #3c80f7; padding-top: 3px">
-              <!-- {{ suscri.suscriptions.date_end }} -->
             </ion-card-subtitle>
           </ion-card-header>
           <ion-item lines="none" style="margin-left: 2%">
 
             <ion-card-title slot="start" style="color: #FE7B37; font-size: 25px; font-weight: 900; margin-right: 2px;">
-              ${{ plan.price }}
+              ${{ suscri['plans']['price'] }}
             </ion-card-title>
             <ion-label style="color: #FE7B37">/2 Meses</ion-label>
           </ion-item>

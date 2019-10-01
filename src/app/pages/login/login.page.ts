@@ -91,6 +91,7 @@ export class LoginPage implements OnInit {
         // this.navCtrl.navigateRoot('/menu/home', { animated: true });
       } else {
         //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
+        this.facebook.logout().then(() => { }).catch(() => { });
         loading.dismiss();
       }
     });
@@ -98,10 +99,9 @@ export class LoginPage implements OnInit {
   // #endregion
 
   //#region LOGIN GOOGLE
-  async loginGoo() {
-    const loading = await this.loadCtrl.create({
-      spinner: 'crescent'
-    });
+  loginGoo() {
+
+    console.log('click google');
 
     this.google.login({})
       .then(data => {
@@ -118,11 +118,12 @@ export class LoginPage implements OnInit {
         const validated = this.userService.loginWithAccount(this.usuario);
         if (validated) {
           //   NAVEGA A LA PAGINA PRINCIPAL
-          loading.dismiss();
+          // loading.dismiss();
+        console.log(this.usuario);
           // this.navCtrl.navigateRoot('/menu/home', { animated: true });
         } else {
           //  MUESTRA ALERTA DE ERROR EN INICIO DE SESION
-          loading.dismiss();
+          // loading.dismiss();
         }
       })
       .catch(err => {

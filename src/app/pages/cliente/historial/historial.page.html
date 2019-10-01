@@ -15,27 +15,30 @@
 </ion-header>
 
 <ion-content color="secondary">
-   
+
   <ion-slides class="swiper-no-swiping" #slideHistoty mode="ios" *ngIf="order.length <= 0">
     <ion-slide>
       <ion-label>No has realizado ordenes</ion-label>
     </ion-slide>
   </ion-slides>
 
-  <ion-grid fixed style="margin-top: -26px;">
+  <ion-grid fixed *ngFor="let orders of order; let i = index">
     <ion-row>
       <ion-col>
-        <ion-card (click)="pushDetalleLavado(orders.id)" *ngFor="let orders of order" color="light">
+        <ion-card (click)="pushDetalleLavado(orders)" color="light">
           <ion-card-header>
             <ion-card-subtitle style="color: #3c80f7">{{ orders.created_at }}</ion-card-subtitle>
-            <ion-card-title>{{ orders.suscription.car[0].brand.name }}</ion-card-title>
+            <ion-card-title>{{ orders['car_detail_suscription']['car_sus'][0]['car']['brand']['name'] }}
+            </ion-card-title>
           </ion-card-header>
           <ion-item lines="none" style="margin-left: 2%">
             <img slot="start" src="/assets/iconos/icon_lavado.png" style="max-width: 8%; margin-right: 10px;">
-            <ion-card-title slot="start" style="color: #FE7B37; font-size: 18px;">{{ orders.suscription.plans.name }}
+            <ion-card-title slot="start" style="color: #FE7B37; font-size: 18px;">
+              {{  orders['car_detail_suscription']['plan_sus'][0]['wash_type']['type'] }}
             </ion-card-title>
           </ion-item>
           <div style="background-color: #97979759;height: 1px;margin-right: 8px;margin-left: 4%;margin-top: 2%;"></div>
+
           <ion-card-content style="padding: 7px;">
             <ion-item lines="none">
               <img *ngIf="orders.status == 1" slot="start" src="/assets/estado_orden/img_pedido.png"
@@ -50,11 +53,11 @@
               <img slot="end" src="/assets/iconos/flecha_siguiente.png" style="max-width: 8%;">
             </ion-item>
           </ion-card-content>
+
         </ion-card>
       </ion-col>
 
     </ion-row>
   </ion-grid>
-
 
 </ion-content>

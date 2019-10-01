@@ -37,7 +37,7 @@
     "ajv": "^6.10.0",
     "ajv-keywords": "^3.4.0",
     "com-badrit-base64": "0.2.0",
-    "cordova-android": "8.0.0",
+    "cordova-android": "8.1.0",
     "cordova-browser": "6.0.0",
     "cordova-custom-config": "^5.1.0",
     "cordova-ios": "^5.0.1",
@@ -126,7 +126,9 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-nativegeocoder": {},
-      "cordova-plugin-googleplus": {},
+      "cordova-plugin-googleplus": {
+        "PLAY_SERVICES_VERSION": "11.8.0"
+      },
       "cordova-custom-config": {}
     },
     "platforms": [

@@ -53,6 +53,7 @@ export class CarService {
     return this.http.get(`${this.URL}/api/payment/get-cars-plans`, { headers: headerToken });
   }
 
+  //#region OBTIENE LOS CARROS CON UN PLAN PARA HACER PEDIDO U ORDEN
   getCarsPlans() {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -61,6 +62,9 @@ export class CarService {
     });
     return this.http.get(`${this.URL}/api/car/cars-plans`, { headers: headerToken });
   }
+  //#endregion
+
+
   firstCar(id: any) {
     const headerToken = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -76,20 +80,7 @@ export class CarService {
         });
     });
   }
-  //  getPlanTypeWashes(id: string) {
-  //   const data = { id };
-  //   const headerToken = new HttpHeaders({
-  //     'Authorization': this.userService.token,
-  //   });
-  //   return  this.http.post(`${this.URL}/api/car/plan-type-washes`, data, { headers: headerToken })
-  //       .subscribe(async resp => {
-  //         console.log(resp);
-  //         return resp['plan-type-washes'];
-  //       }, err => {
-  //       });
-  //  }
-  // #endregion
-
+  
   // #region OBTENER MARCAS/BRANDS
   getBrand() {
     const headerToken = new HttpHeaders({

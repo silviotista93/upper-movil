@@ -32,13 +32,15 @@
             <ion-col style="text-align: -webkit-center;" align-self-center size="6" size-lg="6" size-md="6" size-sm="6"
                 size-xs="6">
                 <ion-label style="font-size: 75%;font-weight: 700;" color="dark" display-format="MMMM YYYY">
-                    {{ dataPlanCar[0].subscription[0].date_start }}</ion-label>
+                    {{carSuscription.date_start}}
+                </ion-label>
 
             </ion-col>
             <ion-col style="text-align: -webkit-center;" align-self-center size="6" size-lg="6" size-md="6" size-sm="6"
                 size-xs="6">
                 <ion-label style="font-size: 75%;font-weight: 700;" color="dark">
-                    {{ dataPlanCar[0].subscription[0].date_end }}</ion-label>
+                    {{carSuscription.date_end}}
+                </ion-label>
 
             </ion-col>
         </ion-row>
@@ -52,6 +54,7 @@
                 <ion-label style="font-size: 65%; color:#FF4E3A;font-weight: 700;">Fecha de fin</ion-label>
             </ion-col>
         </ion-row>
+
         <ion-row>
             <ion-col>
                 <ion-label style="font-size: 80%; color:#434040; margin-left: 4%">Tu Plán</ion-label>
@@ -61,14 +64,14 @@
             <ion-col>
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-subtitle color="dark">{{ dataPlanCar[0].subscription[0].plans.name }}
+                        <ion-card-subtitle color="dark">{{ plan.name }}
                         </ion-card-subtitle>
-                        <ion-card-title style="color:#FF4E3A;">${{ dataPlanCar[0].subscription[0].plans.price }}
+                        <ion-card-title style="color:#FF4E3A;">${{ plan.price }}
                         </ion-card-title>
                     </ion-card-header>
 
-                    <ion-item (click)="info_type_wash( type_wash )" *ngFor="let type_wash of typeWash">
-                        <ion-label>{{ type_wash.type }} <ion-badge color="primary">{{ type_wash.pivot.quantity }}
+                    <ion-item (click)="info_type_wash( item )" *ngFor="let item of carDetail">
+                        <ion-label>{{ item['wash_type']['type'] }} <ion-badge color="primary">{{ item.quantity }}
                             </ion-badge>
                         </ion-label>
                         <!-- <ion-button fill="outline" slot="end">Ver</ion-button> -->

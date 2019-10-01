@@ -54,7 +54,7 @@
       </ion-slides>
     </ion-slide>
     <ion-slide class="slide-2">
-
+<!-- SLIDE DE CARROS -->
       <ion-slides color="light" [options]="sliderConfig">
         <ion-slide *ngFor="let car of cars">
           <ion-card color="light">
@@ -76,7 +76,6 @@
               <ion-img *ngIf="car.picture == null" class="img-autos" style="width: unset"
                 src="/assets/images/autos/assets/iconos/cerrar_suscripcion.png"></ion-img>
               <ion-img *ngIf="car.picture !== null" class="img-autos"
-                style="    width: 100%;max-width: 400px;max-height: 272px;object-fit: cover;"
                 src="{{ URL + car.picture}}"></ion-img>
             </ion-card-content>
 

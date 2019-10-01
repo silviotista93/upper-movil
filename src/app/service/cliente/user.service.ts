@@ -164,6 +164,7 @@ export class UserService {
     await this.loadToken();
 
     if (!this.token) {
+      this.logout();
       this.navCtrl.navigateRoot('/login');
       return Promise.resolve(false);
     }
@@ -190,6 +191,12 @@ export class UserService {
             this.navCtrl.navigateRoot('/login');
             resolve(false);
           }
+        }, err => {
+          // this.uiService.errorToast('No tienes pemisos para iniciar', err);
+          console.log(err);
+          this.logout();
+          this.navCtrl.navigateRoot('/login');
+          resolve(false);
         });
     });
   }

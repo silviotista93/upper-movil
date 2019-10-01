@@ -237,8 +237,8 @@ export class HomePage implements OnInit {
         .then((result: GeocoderResult[]) => {
           // this.lat = result[0].latitude;
           // this.lng = result[0].longitude;
-          environment.lat = result[0].latitude;
-          environment.lng = result[0].longitude;
+          environment.lat = parseInt(result[0].latitude);
+          environment.lng = parseInt(result[0].longitude);
           console.log('datasad', result);
           console.log('direccicones',  environment.lat,  environment.lng);
 
